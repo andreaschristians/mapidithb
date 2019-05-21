@@ -26,8 +26,8 @@ var map = new mapboxgl.Map({
 map.on('click', function (e) {
     var lnglat = String(JSON.stringify(e.lngLat));
     var split = lnglat.split(',')
-    split[0]=parseInt(split[0].substring(7));
-    split[1]=parseInt(split[1].substring(6));
+    split[0]=parseFloat(split[0].substring(7));
+    split[1]=parseFloat(split[1].substring(6));
     map.addLayer({
         "id": "points",
         "type": "symbol",
@@ -42,8 +42,7 @@ map.on('click', function (e) {
                         "coordinates": [split[0], split[1]]
                     },
                     "properties": {
-                        "title": "Mapbox DC",
-                        "icon": "monument"
+                        "icon": "parking"
                     }
                 }]
             }
