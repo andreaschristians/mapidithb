@@ -1,0 +1,3267 @@
+[
+    {
+        "_id": "5ce4770e89eb56617bffdfef",
+        "createdAt": "2019-05-21T22:09:18.062Z",
+        "description": "Kerususuhan pecah di sekitar Gedung Bawaslu dan meluas ke Tanah Abang setelah massa aksi enggan membubarkan diri meski sudah lewat dini hari.\n#kerusuhan",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+        "username": "bagus",
+        "longitude": 106.81857687829721,
+        "latitude": -6.187119104592507,
+        "cognitoid": "--",
+        "flag": 0,
+        "hashtags": [
+            "#kerusuhan"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_17ce8a40-7c15-11e9-901f-43429aac5371",
+                "createdAt": "2019-05-21T22:09:26.898Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus20195959184.jpg"
+            },
+            {
+                "_id": "feeds_image_18975880-7c15-11e9-849f-c3709d15ed2c",
+                "createdAt": "2019-05-21T22:09:28.200Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus20195959182.jpg"
+            },
+            {
+                "_id": "feeds_image_18ff1b00-7c15-11e9-b435-9d614e25c7d4",
+                "createdAt": "2019-05-21T22:09:28.856Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus20195959183.jpg"
+            },
+            {
+                "_id": "feeds_image_191d0340-7c15-11e9-8c12-a928c142da90",
+                "createdAt": "2019-05-21T22:09:29.093Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus20195959181.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                106.81857687829721,
+                -6.187119104592507
+            ]
+        }
+    },
+    {
+        "_id": "5ce3a6d995c2fd5ea9bf1815",
+        "createdAt": "2019-05-21T07:20:57.555Z",
+        "description": "pulang kuliah,, jalan dipatiukur\n# jalanan",
+        "image_url": "default",
+        "username": "ajiwidianto",
+        "longitude": 107.61562764644623,
+        "latitude": -6.888406276702881,
+        "flag": 0,
+        "cognitoid": "us-west-2:9e3ef4a6-22ad-4a54-b54b-e75aaa3326b8",
+        "hashtags": [],
+        "images": [
+            {
+                "_id": "feeds_image_ff1b85b0-7b98-11e9-ac40-b964f7114def",
+                "createdAt": "2019-05-21T07:21:07.876Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/ajiwidianto1558423260.jpg"
+            }
+        ],
+        "comments": [
+            {
+                "_id": "feeds_comment_466e5c70-7c26-11e9-81e1-a70d8833a0d1",
+                "createdAt": "2019-05-22T00:12:26.651Z",
+                "image_url": "",
+                "message": "Pernah ke Bu Tatang ga bro?",
+                "username": "machrus"
+            }
+        ],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.61562764644623,
+                -6.888406276702881
+            ]
+        }
+    },
+    {
+        "_id": "5ce3843644eb9ee8fad9b91a",
+        "createdAt": "2019-05-21T04:53:10.410Z",
+        "description": "#lunch",
+        "image_url": "https://s3-us-west-2.amazonaws.com/geomapid-assets/astronot.png",
+        "username": "yohan1506",
+        "longitude": 115.18318933,
+        "latitude": -8.70998307,
+        "flag": 0,
+        "cognitoid": "us-west-2:d4d19a20-4545-48e7-90d1-127e04c3c151",
+        "hashtags": [
+            "#lunch"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_57d0c4f0-7b84-11e9-914c-a3f5ce8629d4",
+                "createdAt": "2019-05-21T04:53:16.899Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/yohan15061558414389.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                115.18318933,
+                -8.70998307
+            ]
+        }
+    },
+    {
+        "_id": "5ce3775c97c46b886dbfb81d",
+        "createdAt": "2019-05-21T03:58:20.867Z",
+        "description": "Attending Indonesia - German Business Partnership #business",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+        "username": "bagus",
+        "longitude": 106.83097522874056,
+        "latitude": -6.23809069270575,
+        "cognitoid": "--",
+        "flag": 0,
+        "hashtags": [
+            "#business"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_b0f9e8c0-7b7c-11e9-99a5-4d42036fb568",
+                "createdAt": "2019-05-21T03:58:30.894Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus20195581058211.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                106.83097522874056,
+                -6.23809069270575
+            ]
+        }
+    },
+    {
+        "_id": "5ce370c75c32ff5dcaef7946",
+        "createdAt": "2019-05-21T03:30:15.068Z",
+        "description": "#survei di pleasant hill dulu",
+        "image_url": "https://s3-us-west-2.amazonaws.com/geomapid-assets/astronot.png",
+        "username": "yehezkiel",
+        "longitude": 0,
+        "latitude": 0,
+        "flag": 0,
+        "cognitoid": "us-west-2:64ac0c24-a3a9-40cf-9333-14cef0197fda",
+        "hashtags": [
+            "#survei"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_c30ecd90-7b78-11e9-9e17-89e72dbe8583",
+                "createdAt": "2019-05-21T03:30:22.347Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/yehezkiel1558409415.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                0,
+                0
+            ]
+        }
+    },
+    {
+        "_id": "5ce370905c32ff25b7ef7945",
+        "createdAt": "2019-05-21T03:29:20.410Z",
+        "description": "#belajar dulu guys",
+        "image_url": "https://s3-us-west-2.amazonaws.com/geomapid-assets/astronot.png",
+        "username": "yehezkiel",
+        "longitude": 0,
+        "latitude": 0,
+        "flag": 0,
+        "cognitoid": "us-west-2:64ac0c24-a3a9-40cf-9333-14cef0197fda",
+        "hashtags": [
+            "#belajar"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_a1c82050-7b78-11e9-9e17-89e72dbe8583",
+                "createdAt": "2019-05-21T03:29:26.727Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/yehezkiel1558409361.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                0,
+                0
+            ]
+        }
+    },
+    {
+        "_id": "5ce32e0b4241230839ada324",
+        "createdAt": "2019-05-20T22:45:31.519Z",
+        "description": "Jakarta, CNN Indonesia â€â€ Mabes Polri dikabarkan telah menetapkan status siaga I kepada seluruh jajaran kepolisian dalam rangka menghadapi pengumuman hasil penghitungan suara tingkat nasional oleh Komisi Pemilihan Umum (KPU) pada Rabu (22/5). #PEMILU",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+        "username": "bagus",
+        "longitude": 106.8227003756432,
+        "latitude": -6.187446734866294,
+        "cognitoid": "--",
+        "flag": 0,
+        "hashtags": [
+            "#PEMILU"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_17bb2960-7b51-11e9-ba1f-a71999f0ea25",
+                "createdAt": "2019-05-20T22:46:24.579Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus2019545545321.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                106.8227003756432,
+                -6.187446734866294
+            ]
+        }
+    },
+    {
+        "_id": "5ce32d384241231607ada323",
+        "createdAt": "2019-05-20T22:42:00.403Z",
+        "description": "Gunung Merapi di perbatasan Daerah Istimewa Yogyakarta dan Jawa Tengah mengeluarkan awan panas guguran pada Senin (20/5) sore. Berdasarkan pantauan dari CCTV Balai Penyelidikan dan Pengembangan Teknologi Kebencanaan Geologi (BPPTKG) jarak luncur awan panas guguran mencapai 1.100 meter. #siagamerapi",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+        "username": "bagus",
+        "longitude": 110.46185649170503,
+        "latitude": -7.596981973686544,
+        "cognitoid": "--",
+        "flag": 0,
+        "hashtags": [
+            "#siagamerapi"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_7fe169b0-7b50-11e9-ba1f-a71999f0ea25",
+                "createdAt": "2019-05-20T22:42:10.590Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus201954254211.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                110.46185649170503,
+                -7.596981973686544
+            ]
+        }
+    },
+    {
+        "_id": "5ce287b52be15d409f20ef40",
+        "createdAt": "2019-05-20T10:55:49.889Z",
+        "description": "#freetajil di masjid hidayatul arifin. Selamat berbuka",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+        "username": "bagus",
+        "longitude": 106.87538648970485,
+        "latitude": -6.3704692397137705,
+        "cognitoid": "--",
+        "flag": 0,
+        "hashtags": [
+            "#freetajil"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_d8e0f4d0-7aed-11e9-b6ca-f9cee09fbf84",
+                "createdAt": "2019-05-20T10:55:59.805Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus20195551755502.jpg"
+            },
+            {
+                "_id": "feeds_image_d8feb600-7aed-11e9-866b-db8da3cb9b23",
+                "createdAt": "2019-05-20T10:55:59.978Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus20195551755503.jpg"
+            },
+            {
+                "_id": "feeds_image_d92f14d0-7aed-11e9-8506-8999e70ec2ca",
+                "createdAt": "2019-05-20T10:56:00.189Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus20195551755501.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                106.87538648970485,
+                -6.3704692397137705
+            ]
+        }
+    },
+    {
+        "_id": "5ce01426bd68449f65d90afa",
+        "createdAt": "2019-05-18T14:18:14.121Z",
+        "description": "Cemilan malam cuanki di Rancabentang, Harga pas dikantong\n\n#Kuliner",
+        "image_url": null,
+        "username": "jerryandrian7",
+        "longitude": 107.56110844990002,
+        "latitude": -6.906877788700014,
+        "cognitoid": "--",
+        "flag": 0,
+        "hashtags": [
+            "#Kuliner"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_cf3ecfa0-7977-11e9-81e0-314e2faa701c",
+                "createdAt": "2019-05-18T14:18:31.871Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/jerryandrian71558189094.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.56110844990002,
+                -6.906877788700014
+            ]
+        }
+    },
+    {
+        "_id": "5cdff7aa3044d1c1ebaf7cf2",
+        "createdAt": "2019-05-18T12:16:42.257Z",
+        "description": "Yang suka pedes patut di coba nih sambelnya mantap abis\n#Kuliner",
+        "image_url": "https://s3-us-west-2.amazonaws.com/geomapid-assets/astronot.png",
+        "username": "dianto",
+        "longitude": 107.59414774,
+        "latitude": -6.90690033,
+        "flag": 0,
+        "cognitoid": "us-west-2:a059c1c0-4154-4213-b09e-07dbe8f31e43",
+        "hashtags": [
+            "#Kuliner"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_cfd3a550-7966-11e9-b6c1-5df9d65a4b15",
+                "createdAt": "2019-05-18T12:16:51.400Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/dianto1558181803.jpg"
+            },
+            {
+                "_id": "feeds_image_d015de70-7966-11e9-9f13-292c313b2da2",
+                "createdAt": "2019-05-18T12:16:51.749Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/dianto1558181803_2.jpg"
+            },
+            {
+                "_id": "feeds_image_d12ad0e0-7966-11e9-9200-ddd6bf08b6ef",
+                "createdAt": "2019-05-18T12:16:53.548Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/dianto1558181803_3.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.59414774,
+                -6.90690033
+            ]
+        }
+    },
+    {
+        "_id": "5cdff10c0a2a4135ea147c7b",
+        "createdAt": "2019-05-18T11:48:28.598Z",
+        "description": "ayam bakar paporit ðŸ˜‚\nbegal\n#tempatmakan",
+        "image_url": "default",
+        "username": "ajiwidianto",
+        "longitude": 107.61800457,
+        "latitude": -6.87660143,
+        "flag": 0,
+        "cognitoid": "us-west-2:9e3ef4a6-22ad-4a54-b54b-e75aaa3326b8",
+        "hashtags": [
+            "#tempatmakan"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_dd2de840-7962-11e9-998e-b9559cf95d0a",
+                "createdAt": "2019-05-18T11:48:35.774Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/ajiwidianto1558180109.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.61800457,
+                -6.87660143
+            ]
+        }
+    },
+    {
+        "_id": "5cdfe1c013fc0e1d7178fddb",
+        "createdAt": "2019-05-18T10:43:12.427Z",
+        "description": "Pasar ini terletak di simpang dago, mulai ramai disore hari. disiji menjual juga makanan untik berbuka\n\n#Pasar",
+        "image_url": null,
+        "username": "jerryandrian7",
+        "longitude": 107.61384839999998,
+        "latitude": -6.8850992999999825,
+        "cognitoid": "--",
+        "flag": 0,
+        "hashtags": [
+            "#Pasar"
+        ],
+        "images": [],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.61384839999998,
+                -6.8850992999999825
+            ]
+        }
+    },
+    {
+        "_id": "5cdfc67f602762e193930326",
+        "createdAt": "2019-05-18T08:46:55.941Z",
+        "description": "regina hotel & alfamart dago\n#penginapan #tempat belanja ",
+        "image_url": "default",
+        "username": "ajiwidianto",
+        "longitude": 107.62075976,
+        "latitude": -6.86748416,
+        "flag": 0,
+        "cognitoid": "us-west-2:9e3ef4a6-22ad-4a54-b54b-e75aaa3326b8",
+        "hashtags": [
+            "#penginapan",
+            "#tempat"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_80254350-7949-11e9-8409-87139edcbfcd",
+                "createdAt": "2019-05-18T08:47:01.385Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/ajiwidianto1558169216.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.62075976,
+                -6.86748416
+            ]
+        }
+    },
+    {
+        "_id": "5cdfc5d06027623595930325",
+        "createdAt": "2019-05-18T08:44:00.421Z",
+        "description": "spbu dago\n#spbu",
+        "image_url": "default",
+        "username": "ajiwidianto",
+        "longitude": 107.6208204,
+        "latitude": -6.8687178,
+        "flag": 0,
+        "cognitoid": "us-west-2:9e3ef4a6-22ad-4a54-b54b-e75aaa3326b8",
+        "hashtags": [
+            "#spbu"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_181825c0-7949-11e9-8409-87139edcbfcd",
+                "createdAt": "2019-05-18T08:44:06.785Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/ajiwidianto1558169040.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.6208204,
+                -6.8687178
+            ]
+        }
+    },
+    {
+        "_id": "5cdfc50e6027621886930323",
+        "createdAt": "2019-05-18T08:40:46.906Z",
+        "description": "borma dago\n# tempatbelanja",
+        "image_url": "default",
+        "username": "ajiwidianto",
+        "longitude": 107.61767291,
+        "latitude": -6.8766914,
+        "flag": 0,
+        "cognitoid": "us-west-2:9e3ef4a6-22ad-4a54-b54b-e75aaa3326b8",
+        "hashtags": [],
+        "images": [
+            {
+                "_id": "feeds_image_a50698f0-7948-11e9-8409-87139edcbfcd",
+                "createdAt": "2019-05-18T08:40:54.666Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/ajiwidianto1558168847.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.61767291,
+                -6.8766914
+            ]
+        }
+    },
+    {
+        "_id": "5cdf8f0fdb1da35857b4fe75",
+        "createdAt": "2019-05-18T04:50:23.950Z",
+        "description": "#begal\nAda begal hari Kamis lalu, korban selamat, motor dan harta benda raib.",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilemachrus2019510114.jpg",
+        "username": "machrus",
+        "longitude": 107.58100833333334,
+        "latitude": -6.958806666666668,
+        "flag": 0,
+        "cognitoid": "us-west-2:e1947d6f-e759-4c1d-993b-f40603ac7cc9",
+        "hashtags": [
+            "#begal"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_76108e40-7928-11e9-a90a-8b6500b0853e",
+                "createdAt": "2019-05-18T04:50:32.048Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/machrus1558155023.jpg"
+            }
+        ],
+        "comments": [
+            {
+                "_id": "feeds_comment_ef9138d0-792a-11e9-8241-0bf904e7aaf7",
+                "createdAt": "2019-05-18T05:08:14.853Z",
+                "image_url": "",
+                "message": "kejadian waktu sahur, pukul 3 dini hari",
+                "username": "machrus"
+            },
+            {
+                "_id": "feeds_comment_eaa2d560-792d-11e9-8819-b731c658d4fc",
+                "createdAt": "2019-05-18T05:29:34.812Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profileidhamkurniawan201955465423.jpg",
+                "message": "Hati2 yg lewat itu kalo malam2",
+                "username": "idhamkurniawan"
+            },
+            {
+                "_id": "feeds_comment_a23b8810-79b6-11e9-a2d4-3590d0d89e3d",
+                "createdAt": "2019-05-18T21:48:13.771Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+                "message": "Innalilahi ",
+                "username": "bagus"
+            }
+        ],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.58100833333334,
+                -6.958806666666668
+            ]
+        }
+    },
+    {
+        "_id": "5cdf7f792c27a300dcea9280",
+        "createdAt": "2019-05-18T03:43:53.977Z",
+        "description": "#primajasa",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilemachrus2019510114.jpg",
+        "username": "machrus",
+        "longitude": 107.44501166666666,
+        "latitude": -6.795301666666667,
+        "flag": 0,
+        "cognitoid": "us-west-2:e1947d6f-e759-4c1d-993b-f40603ac7cc9",
+        "hashtags": [
+            "#primajasa"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_2ba3e860-791f-11e9-b190-e177f5ac01ca",
+                "createdAt": "2019-05-18T03:44:00.807Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/machrus1558151034.jpg"
+            }
+        ],
+        "comments": [
+            {
+                "_id": "feeds_comment_d32a2620-7920-11e9-b315-4f982482bf3b",
+                "createdAt": "2019-05-18T03:55:52.261Z",
+                "image_url": "",
+                "message": "ping",
+                "username": "machrus"
+            },
+            {
+                "_id": "feeds_comment_91a96f80-79b6-11e9-a2d4-3590d0d89e3d",
+                "createdAt": "2019-05-18T21:47:46.801Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+                "message": "Ping",
+                "username": "bagus"
+            }
+        ],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.44501166666666,
+                -6.795301666666667
+            ]
+        }
+    },
+    {
+        "_id": "5cdf7f122c27a37ca8ea927f",
+        "createdAt": "2019-05-18T03:42:10.219Z",
+        "description": "#jembatankereta",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilemachrus2019510114.jpg",
+        "username": "machrus",
+        "longitude": 107.44324999999999,
+        "latitude": -6.787968333333334,
+        "flag": 0,
+        "cognitoid": "us-west-2:e1947d6f-e759-4c1d-993b-f40603ac7cc9",
+        "hashtags": [
+            "#jembatankereta"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_ef664eb0-791e-11e9-b190-e177f5ac01ca",
+                "createdAt": "2019-05-18T03:42:20.588Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/machrus1558150930.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.44324999999999,
+                -6.787968333333334
+            ]
+        }
+    },
+    {
+        "_id": "5cdf527bf6ebb41c7cc8b50a",
+        "createdAt": "2019-05-18T00:31:55.556Z",
+        "description": "Alhamdulillah #selamat",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilemachrus2019510114.jpg",
+        "username": "machrus",
+        "longitude": 106.64909153263544,
+        "latitude": -6.1232242469666245,
+        "flag": 0,
+        "cognitoid": "us-west-2:e1947d6f-e759-4c1d-993b-f40603ac7cc9",
+        "hashtags": [
+            "#selamat"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_784775d0-7904-11e9-ae35-719b57762018",
+                "createdAt": "2019-05-18T00:32:53.662Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/machrus1558139515.jpg"
+            }
+        ],
+        "comments": [
+            {
+                "_id": "feeds_comment_924ab370-7904-11e9-a94e-4540a1a286c0",
+                "createdAt": "2019-05-18T00:33:37.410Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+                "message": "Alhamdulillah ",
+                "username": "bagus"
+            }
+        ],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                106.64909153263544,
+                -6.1232242469666245
+            ]
+        }
+    },
+    {
+        "_id": "5cdf454f692dde71bea4f6e6",
+        "createdAt": "2019-05-17T23:35:43.785Z",
+        "description": "Bismillah semoga selamat sampai tujuan #ramadhan #bermanfaatuntukumat",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilemachrus2019510114.jpg",
+        "username": "machrus",
+        "longitude": 105.1765728048,
+        "latitude": -5.242215443449979,
+        "flag": 0,
+        "cognitoid": "us-west-2:e1947d6f-e759-4c1d-993b-f40603ac7cc9",
+        "hashtags": [
+            "#ramadhan",
+            "#bermanfaatuntukumat"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_8018a020-78fc-11e9-97bd-6b3b441e22a1",
+                "createdAt": "2019-05-17T23:35:50.865Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/machrus1558136143.jpg"
+            }
+        ],
+        "comments": [
+            {
+                "_id": "feeds_comment_9c6139e0-78fc-11e9-94f7-f386cd313a20",
+                "createdAt": "2019-05-17T23:36:38.477Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+                "message": "Aamiin YRA ",
+                "username": "bagus"
+            },
+            {
+                "_id": "feeds_comment_354c90a0-78fd-11e9-94f7-f386cd313a20",
+                "createdAt": "2019-05-17T23:40:54.401Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+                "message": "Sampe jakarta jam berapa?",
+                "username": "bagus"
+            },
+            {
+                "_id": "feeds_comment_bc2d86b0-78fd-11e9-94f7-f386cd313a20",
+                "createdAt": "2019-05-17T23:44:40.300Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+                "message": "Dicuekin",
+                "username": "bagus"
+            }
+        ],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                105.1765728048,
+                -5.242215443449979
+            ]
+        }
+    },
+    {
+        "_id": "5cdf3b3343bf729232b8cb7c",
+        "createdAt": "2019-05-17T22:52:35.700Z",
+        "description": "Radin II #airport",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilemachrus2019510114.jpg",
+        "username": "machrus",
+        "longitude": 105.17639972939992,
+        "latitude": -5.242947964349857,
+        "cognitoid": "--",
+        "flag": 0,
+        "hashtags": [
+            "#airport"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_7a220a90-78f6-11e9-94d1-2f024a6ab481",
+                "createdAt": "2019-05-17T22:52:43.945Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/machrus1558133553.jpg"
+            }
+        ],
+        "comments": [
+            {
+                "_id": "feeds_comment_a4399350-78f8-11e9-920f-f138f9b75c16",
+                "createdAt": "2019-05-17T23:08:13.582Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+                "message": "Terbang jam berapa? ",
+                "username": "bagus"
+            },
+            {
+                "_id": "feeds_comment_22257550-78fd-11e9-911d-eb1f17ef0e4e",
+                "createdAt": "2019-05-17T23:40:22.769Z",
+                "image_url": "",
+                "message": "insyaallah setengah 7 berangkat",
+                "username": "machrus"
+            }
+        ],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                105.17639972939992,
+                -5.242947964349857
+            ]
+        }
+    },
+    {
+        "_id": "5cdf0c48b2d626d30e2f24f3",
+        "createdAt": "2019-05-17T19:32:24.725Z",
+        "description": "Jam 2:30 machrus udah dateng ke bandara #kepagian hehe",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+        "username": "bagus",
+        "longitude": 105.1766258386012,
+        "latitude": -5.242957128216738,
+        "cognitoid": "--",
+        "flag": 0,
+        "hashtags": [
+            "#kepagian"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_83460ac0-78da-11e9-bb2d-9387c05e34f5",
+                "createdAt": "2019-05-17T19:32:33.329Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus2019532232251.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                105.1766258386012,
+                -5.242957128216738
+            ]
+        }
+    },
+    {
+        "_id": "5cded4f91a81a57129a30684",
+        "createdAt": "2019-05-17T15:36:25.661Z",
+        "description": "Setelah 2 jam perjalanan masih hutan aja. #adventure",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+        "username": "bagus",
+        "longitude": 105.3449097276715,
+        "latitude": -4.321551360193939,
+        "cognitoid": "--",
+        "flag": 0,
+        "hashtags": [
+            "#adventure"
+        ],
+        "images": [],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                105.3449097276715,
+                -4.321551360193939
+            ]
+        }
+    },
+    {
+        "_id": "5cded3d41a81a58236a30683",
+        "createdAt": "2019-05-17T15:31:32.023Z",
+        "description": "Suasana malam hari di Rancabentang\n\n#SuasanaMalam",
+        "image_url": null,
+        "username": "jerryandrian7",
+        "longitude": 107.56051428,
+        "latitude": -6.90454224,
+        "cognitoid": "--",
+        "flag": 0,
+        "hashtags": [
+            "#SuasanaMalam"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_de9a98e0-78b8-11e9-8705-8578a0f30fbb",
+                "createdAt": "2019-05-17T15:31:42.909Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/jerryandrian71558107091.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.56051428,
+                -6.90454224
+            ]
+        }
+    },
+    {
+        "_id": "5cdece05d9539272b1cda715",
+        "createdAt": "2019-05-17T15:06:45.709Z",
+        "description": "Jasa pembuatan bordir ini terletak di daerah rancabentang. Melayani pembuatan baju, atribut sekolah dll. Dan harga yang ditawarnyapun relatif murah dibanding jasa bordir pada umumnya\n\n#Bordir",
+        "image_url": null,
+        "username": "jerryandrian7",
+        "longitude": 107.56045010000001,
+        "latitude": -6.9045167999999935,
+        "cognitoid": "--",
+        "flag": 0,
+        "hashtags": [
+            "#Bordir"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_6eecd7e0-78b5-11e9-8705-8578a0f30fbb",
+                "createdAt": "2019-05-17T15:07:07.890Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/jerryandrian71558105605.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.56045010000001,
+                -6.9045167999999935
+            ]
+        }
+    },
+    {
+        "_id": "5cdec4c0976b9969bf9aefd8",
+        "createdAt": "2019-05-17T14:27:12.167Z",
+        "description": "Perjalanan kembali ke lampung dari rawajitu. Suasana sepi banget ga ada apa2 kecuali hutan #adventure",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+        "username": "bagus",
+        "longitude": 105.49767656095547,
+        "latitude": -4.188574458477942,
+        "cognitoid": "--",
+        "flag": 0,
+        "hashtags": [
+            "#adventure"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_e1da49a0-78af-11e9-80aa-a51b7fd24249",
+                "createdAt": "2019-05-17T14:27:23.779Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus20195272127121.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                105.49767656095547,
+                -4.188574458477942
+            ]
+        }
+    },
+    {
+        "_id": "5cdeabed57719f3d1779772f",
+        "createdAt": "2019-05-17T12:41:17.323Z",
+        "description": "rekomendasi tempat bukber yg murah tapi enak ayam penyet Joko solo tempatnya\n#kuliner",
+        "image_url": null,
+        "username": "dianto",
+        "longitude": 107.66693982,
+        "latitude": -6.90403994,
+        "cognitoid": "--",
+        "flag": 0,
+        "hashtags": [
+            "#kuliner"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_1337e9d0-78a1-11e9-8d41-8762f611271b",
+                "createdAt": "2019-05-17T12:41:23.197Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/dianto1558096877.jpg"
+            },
+            {
+                "_id": "feeds_image_13c69540-78a1-11e9-87a6-e3e1685a462c",
+                "createdAt": "2019-05-17T12:41:24.957Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/dianto1558096877_2.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.66693982,
+                -6.90403994
+            ]
+        }
+    },
+    {
+        "_id": "5cdea9eb57719fca7d79772e",
+        "createdAt": "2019-05-17T12:32:43.222Z",
+        "description": "arus lalu lintas dijalan Cimuncang lumayan lancar dan ramai\n#Jalanan #aruslalulintas",
+        "image_url": null,
+        "username": "dianto",
+        "longitude": 107.63418413,
+        "latitude": -6.89235538,
+        "cognitoid": "--",
+        "flag": 0,
+        "hashtags": [
+            "#Jalanan",
+            "#aruslalulintas"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_e117b030-789f-11e9-8d41-8762f611271b",
+                "createdAt": "2019-05-17T12:32:49.595Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/dianto1558096363.jpg"
+            },
+            {
+                "_id": "feeds_image_e1bbb860-789f-11e9-b916-936e9ae5fa8c",
+                "createdAt": "2019-05-17T12:32:51.431Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/dianto1558096363_2.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.63418413,
+                -6.89235538
+            ]
+        }
+    },
+    {
+        "_id": "5cdea99657719f64cc79772d",
+        "createdAt": "2019-05-17T12:31:18.622Z",
+        "description": "#bukber sama RND Kapital ðŸ™ðŸ»ðŸ™ðŸ»",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilegallendra2019454115412.jpg",
+        "username": "gallendra",
+        "longitude": 106.81014294885048,
+        "latitude": -6.223996961286013,
+        "cognitoid": "--",
+        "flag": 0,
+        "hashtags": [
+            "#bukber"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_bba5f6e0-789f-11e9-8d41-8762f611271b",
+                "createdAt": "2019-05-17T12:31:46.751Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/gallendra20195311931191.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                106.81014294885048,
+                -6.223996961286013
+            ]
+        }
+    },
+    {
+        "_id": "5cdea4fb57719f943179772b",
+        "createdAt": "2019-05-17T12:11:39.743Z",
+        "description": "#rapat retreat dulu",
+        "image_url": "https://s3-us-west-2.amazonaws.com/geomapid-assets/astronot.png",
+        "username": "yehezkiel",
+        "longitude": 0,
+        "latitude": 0,
+        "cognitoid": "--",
+        "flag": 0,
+        "hashtags": [
+            "#rapat"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_ef5bc170-789c-11e9-8d41-8762f611271b",
+                "createdAt": "2019-05-17T12:11:45.116Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/yehezkiel1558095099.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                0,
+                0
+            ]
+        }
+    },
+    {
+        "_id": "5cdea48757719fd78f79772a",
+        "createdAt": "2019-05-17T12:09:43.124Z",
+        "description": "#makan nasi telor dulu",
+        "image_url": "https://s3-us-west-2.amazonaws.com/geomapid-assets/astronot.png",
+        "username": "yehezkiel",
+        "longitude": 0,
+        "latitude": 0,
+        "cognitoid": "--",
+        "flag": 0,
+        "hashtags": [
+            "#makan"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_aa40b730-789c-11e9-8d41-8762f611271b",
+                "createdAt": "2019-05-17T12:09:50.052Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/yehezkiel1558094983.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                0,
+                0
+            ]
+        }
+    },
+    {
+        "_id": "5cde9812f2c1a16203e5b724",
+        "createdAt": "2019-05-17T11:16:34.391Z",
+        "description": "Poto copy beli kertas HVS # tempat belanja \n",
+        "image_url": "-",
+        "username": "yohanes",
+        "longitude": 107.61484166666666,
+        "latitude": -6.886303333333332,
+        "cognitoid": "--",
+        "flag": 0,
+        "hashtags": [],
+        "images": [],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.61484166666666,
+                -6.886303333333332
+            ]
+        }
+    },
+    {
+        "_id": "5cde952af2c1a103fce5b723",
+        "createdAt": "2019-05-17T11:04:10.762Z",
+        "description": "Narik guys # ATM",
+        "image_url": "-",
+        "username": "yohanes",
+        "longitude": 107.62040999999999,
+        "latitude": -6.885156666666667,
+        "cognitoid": "--",
+        "flag": 0,
+        "hashtags": [],
+        "images": [
+            {
+                "_id": "feeds_image_82f09000-7893-11e9-9947-c9413daae57f",
+                "createdAt": "2019-05-17T11:04:18.634Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/yohanes1558091049.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.62040999999999,
+                -6.885156666666667
+            ]
+        }
+    },
+    {
+        "_id": "5cde8edcd6a0c926fd4d2416",
+        "createdAt": "2019-05-17T10:37:16.520Z",
+        "description": "Macet guys di pasteur Bandung",
+        "image_url": "-",
+        "username": "yohanes",
+        "longitude": 107.593395,
+        "latitude": -6.898441666666668,
+        "cognitoid": "--",
+        "flag": 0,
+        "hashtags": [],
+        "images": [
+            {
+                "_id": "feeds_image_c1e1fbe0-788f-11e9-b74a-e53a8559621d",
+                "createdAt": "2019-05-17T10:37:26.154Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/yohanes1558089435.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.593395,
+                -6.898441666666668
+            ]
+        }
+    },
+    {
+        "_id": "5cde8edced33a0ed168a05bf",
+        "createdAt": "2019-05-17T10:37:16.330Z",
+        "description": "KFC cabang BEC\n#kuliner",
+        "image_url": null,
+        "username": "dianto",
+        "longitude": 107.60928517,
+        "latitude": -6.90906179,
+        "cognitoid": "--",
+        "flag": 0,
+        "hashtags": [
+            "#kuliner"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_d8cf46f0-788f-11e9-b74a-e53a8559621d",
+                "createdAt": "2019-05-17T10:38:03.843Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/dianto1558089436.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.60928517,
+                -6.90906179
+            ]
+        }
+    },
+    {
+        "_id": "5cde818bc23685fc48c069e9",
+        "createdAt": "2019-05-17T09:40:27.315Z",
+        "description": "enak ini baso bakar harga pertusuknya cuman 1000\n#kuliner",
+        "image_url": null,
+        "username": "dianto",
+        "longitude": 107.61592497,
+        "latitude": -6.88758304,
+        "cognitoid": "--",
+        "flag": 0,
+        "hashtags": [
+            "#kuliner"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_d35c7240-7887-11e9-bb26-539207cae00e",
+                "createdAt": "2019-05-17T09:40:39.571Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/dianto1558086027.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.61592497,
+                -6.88758304
+            ]
+        }
+    },
+    {
+        "_id": "5cde6997ab5c7208c4252e15",
+        "createdAt": "2019-05-17T07:58:15.837Z",
+        "description": "Siomay Tulen #kulinerbandung",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/133-05-2019-01-31-11-1841995150984",
+        "username": "yacob89",
+        "longitude": 107.55311608314514,
+        "latitude": -6.973421573638916,
+        "flag": 0,
+        "cognitoid": "us-west-2:5bcfc39b-27ea-4fe5-8e19-1b655be23ce6",
+        "hashtags": [
+            "#kulinerbandung"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_8b27fb60-7879-11e9-a3bf-67a8b39ae7ad",
+                "createdAt": "2019-05-17T07:58:24.505Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/yacob891558079895.jpg"
+            }
+        ],
+        "comments": [
+            {
+                "_id": "feeds_comment_deea5670-787f-11e9-ae8d-97e32f40b174",
+                "createdAt": "2019-05-17T08:43:42.948Z",
+                "image_url": "",
+                "message": "Enak nih siomaynya",
+                "username": "yacob89"
+            },
+            {
+                "_id": "feeds_comment_a3617ae0-788c-11e9-a64f-0584b350c16a",
+                "createdAt": "2019-05-17T10:15:06.622Z",
+                "image_url": "",
+                "message": "Bagi-bagi lah kak",
+                "username": "machrus"
+            }
+        ],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.55311608314514,
+                -6.973421573638916
+            ]
+        }
+    },
+    {
+        "_id": "5cde68668737c22d97e17566",
+        "createdAt": "2019-05-17T07:53:10.102Z",
+        "description": "mudik dimulai #stasiun #stasiunsenen",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/134-05-2019-23-22-32-3141596490859",
+        "username": "muftirio",
+        "longitude": 106.83063142859369,
+        "latitude": -6.176243270008855,
+        "cognitoid": "--",
+        "flag": 0,
+        "hashtags": [
+            "#stasiun",
+            "#stasiunsenen"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_d544df20-7878-11e9-a3bf-67a8b39ae7ad",
+                "createdAt": "2019-05-17T07:53:19.326Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/muftirio1558079590.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                106.83063142859369,
+                -6.176243270008855
+            ]
+        }
+    },
+    {
+        "_id": "5cde5936a54c11c8bf7e3249",
+        "createdAt": "2019-05-17T06:48:22.829Z",
+        "description": "#disini barangnya nyampur",
+        "image_url": "https://s3-us-west-2.amazonaws.com/geomapid-assets/astronot.png",
+        "username": "yehezkiel",
+        "longitude": 0,
+        "latitude": 0,
+        "cognitoid": "--",
+        "flag": 0,
+        "hashtags": [
+            "#disini"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_c551b4c0-786f-11e9-8850-111c2bda08ba",
+                "createdAt": "2019-05-17T06:48:27.164Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/yehezkiel1558075702.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                0,
+                0
+            ]
+        }
+    },
+    {
+        "_id": "5cde58f4a54c1187cd7e3248",
+        "createdAt": "2019-05-17T06:47:16.285Z",
+        "description": "#ibadahjumat PMK dulu",
+        "image_url": "https://s3-us-west-2.amazonaws.com/geomapid-assets/astronot.png",
+        "username": "yehezkiel",
+        "longitude": 0,
+        "latitude": 0,
+        "cognitoid": "--",
+        "flag": 0,
+        "hashtags": [
+            "#ibadahjumat"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_9dcf9200-786f-11e9-8850-111c2bda08ba",
+                "createdAt": "2019-05-17T06:47:20.924Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/yehezkiel1558075636.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                0,
+                0
+            ]
+        }
+    },
+    {
+        "_id": "5cde564a4048bd45263b46c0",
+        "createdAt": "2019-05-17T06:35:54.098Z",
+        "description": "Foto waktu di Salatiga #throwback",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/133-05-2019-01-31-11-1841995150984",
+        "username": "yacob89",
+        "longitude": 110.5003115896115,
+        "latitude": -7.330081894814218,
+        "flag": 0,
+        "cognitoid": "us-west-2:5bcfc39b-27ea-4fe5-8e19-1b655be23ce6",
+        "hashtags": [
+            "#throwback"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_090eeea0-786e-11e9-85d9-fd767d5b76d0",
+                "createdAt": "2019-05-17T06:36:01.807Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/yacob891558074953.jpg"
+            }
+        ],
+        "comments": [
+            {
+                "_id": "feeds_comment_1cdc5c10-786e-11e9-8623-9594181c9432",
+                "createdAt": "2019-05-17T06:36:35.686Z",
+                "image_url": "",
+                "message": "Keren banget ya tempatnya",
+                "username": "yacob89"
+            },
+            {
+                "_id": "feeds_comment_c368c5f0-786e-11e9-a708-699d4cf028c2",
+                "createdAt": "2019-05-17T06:41:15.035Z",
+                "image_url": "",
+                "message": "Suasana pedesaan enak",
+                "username": "yacob89"
+            },
+            {
+                "_id": "feeds_comment_25391c30-7874-11e9-8e9e-cb129e2f127f",
+                "createdAt": "2019-05-17T07:19:46.991Z",
+                "image_url": "",
+                "message": "Cuaca sejuk karena ini di pegunungan hehe",
+                "username": "yacob89"
+            }
+        ],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                110.5003115896115,
+                -7.330081894814218
+            ]
+        }
+    },
+    {
+        "_id": "5cde5526e5dbf439bc8b493a",
+        "createdAt": "2019-05-17T06:31:02.015Z",
+        "description": "Kemacetan terjadi di halte dekat dengan gerbang pangakalan TNI AU Husein Sastranegara\n\n#ArusLaluLintas",
+        "image_url": null,
+        "username": "jerryandrian7",
+        "longitude": 107.5795372225,
+        "latitude": -6.907618941499984,
+        "flag": 0,
+        "hashtags": [
+            "#ArusLaluLintas"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_5b40e9e0-786d-11e9-8850-111c2bda08ba",
+                "createdAt": "2019-05-17T06:31:10.925Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/jerryandrian71558074661_2.jpg"
+            },
+            {
+                "_id": "feeds_image_5c0a7b70-786d-11e9-85d9-fd767d5b76d0",
+                "createdAt": "2019-05-17T06:31:12.414Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/jerryandrian71558074661.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.5795372225,
+                -6.907618941499984
+            ]
+        }
+    },
+    {
+        "_id": "5cde4ac8e5dbf454b18b4936",
+        "createdAt": "2019-05-17T05:46:47.972Z",
+        "description": "Suasana di jl. dipatiukur tampak lancar siang ini. biasanya akan terjadi kemacetan disore hari karena waktu tunggu lampu merah yang lama di stopan simpang dago serta angkot yang ngetem\n\n#ArusLaluLintas",
+        "image_url": null,
+        "username": "jerryandrian7",
+        "longitude": 107.6147821,
+        "latitude": -6.886016300000008,
+        "flag": 0,
+        "hashtags": [
+            "#ArusLaluLintas"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_30938690-7867-11e9-8378-03ff6897a9ff",
+                "createdAt": "2019-05-17T05:47:02.611Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/jerryandrian71558072007.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.6147821,
+                -6.886016300000008
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cde44065776edc833054732",
+        "createdAt": "2019-05-17T05:17:58.155Z",
+        "description": "Suasana #jumatan di masjid at-taubah rawajitu selatan",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+        "username": "bagus",
+        "longitude": 105.73929201821399,
+        "latitude": -4.211639128629315,
+        "flag": 0,
+        "hashtags": [
+            "#jumatan"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_2b03de40-7863-11e9-8c3e-c5810c21ec2c",
+                "createdAt": "2019-05-17T05:18:15.258Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus20195171217583.jpg"
+            },
+            {
+                "_id": "feeds_image_2ec30920-7863-11e9-8c3e-c5810c21ec2c",
+                "createdAt": "2019-05-17T05:18:20.538Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus20195171217582.jpg"
+            },
+            {
+                "_id": "feeds_image_306f5990-7863-11e9-8c3e-c5810c21ec2c",
+                "createdAt": "2019-05-17T05:18:23.351Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus20195171217584.jpg"
+            },
+            {
+                "_id": "feeds_image_312e8ae0-7863-11e9-b6f4-c7b8d33151a9",
+                "createdAt": "2019-05-17T05:18:25.532Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus20195171217581.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                105.73929201821399,
+                -4.211639128629315
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cde33c03e4d8476a40623c9",
+        "createdAt": "2019-05-17T04:08:32.296Z",
+        "description": "Persiapan shalat jumat di Masjid Ihya Ulumuddin. Bagi teman-teman yanh berada disekitaran unikom bisa ikut berjamaah di Masjid ini\n\n#Unikom",
+        "image_url": null,
+        "username": "jerryandrian7",
+        "longitude": 107.61549430000002,
+        "latitude": -6.8867750999999595,
+        "flag": 0,
+        "hashtags": [
+            "#Unikom"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_771fb560-7859-11e9-b8e9-172c989e3535",
+                "createdAt": "2019-05-17T04:08:47.934Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/jerryandrian71558066111.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.61549430000002,
+                -6.8867750999999595
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdd7e13e7c7054b69cfc768",
+        "createdAt": "2019-05-16T15:13:23.616Z",
+        "description": "Tempat photocopy ini buka sampe malam, jadi ga perlu bingung buat temen-temen sekitaran ranca bentang maupun kebon kopi untuk print, fotocopy. dll\n\n#Photocopy",
+        "image_url": "https://s3-us-west-2.amazonaws.com/geomapid-assets/astronot.png",
+        "username": "jerryandrian7",
+        "longitude": 107.5605674,
+        "latitude": -6.90596409,
+        "flag": 0,
+        "hashtags": [
+            "#Photocopy"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_2865de70-77ed-11e9-ae38-99a3f11e1b0f",
+                "createdAt": "2019-05-16T15:13:29.522Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/jerryandrian71558019603.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.5605674,
+                -6.90596409
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdd7d3fe7c705e9e3cfc766",
+        "createdAt": "2019-05-16T15:09:51.153Z",
+        "description": "Suasana malam dijalan rancabentang \n\n#Cimahi",
+        "image_url": null,
+        "username": "jerryandrian7",
+        "longitude": 107.56071275705028,
+        "latitude": -6.906500097000168,
+        "flag": 0,
+        "hashtags": [
+            "#Cimahi"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_ac7ef760-77ec-11e9-ae38-99a3f11e1b0f",
+                "createdAt": "2019-05-16T15:10:02.309Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/jerryandrian71558019390.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.56071275705028,
+                -6.906500097000168
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdd5166510034b8fcad1a44",
+        "createdAt": "2019-05-16T12:02:46.040Z",
+        "description": "#sosialisasi siang tadi bersama dosen agama",
+        "image_url": "https://s3-us-west-2.amazonaws.com/geomapid-assets/astronot.png",
+        "username": "yehezkiel",
+        "longitude": 0,
+        "latitude": 0,
+        "flag": 0,
+        "hashtags": [
+            "#sosialisasi"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_86d11e40-77d2-11e9-b1fe-51920e64b24f",
+                "createdAt": "2019-05-16T12:02:51.251Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/yehezkiel1558008165.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                0,
+                0
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdd512c510034286fad1a43",
+        "createdAt": "2019-05-16T12:01:48.438Z",
+        "description": "#ibadah sore tadi",
+        "image_url": "https://s3-us-west-2.amazonaws.com/geomapid-assets/astronot.png",
+        "username": "yehezkiel",
+        "longitude": 0,
+        "latitude": 0,
+        "flag": 0,
+        "hashtags": [
+            "#ibadah"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_644805f0-77d2-11e9-b1fe-51920e64b24f",
+                "createdAt": "2019-05-16T12:01:53.304Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/yehezkiel1558008108.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                0,
+                0
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdd50f5510034f94aad1a42",
+        "createdAt": "2019-05-16T12:00:53.982Z",
+        "description": "#ngerjain laporan praktikum dulu",
+        "image_url": "https://s3-us-west-2.amazonaws.com/geomapid-assets/astronot.png",
+        "username": "yehezkiel",
+        "longitude": 0,
+        "latitude": 0,
+        "flag": 0,
+        "hashtags": [
+            "#ngerjain"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_436bda50-77d2-11e9-b1fe-51920e64b24f",
+                "createdAt": "2019-05-16T12:00:58.163Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/yehezkiel1558008053.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                0,
+                0
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdd50ef510034ea51ad1a41",
+        "createdAt": "2019-05-16T12:00:47.962Z",
+        "description": "Tempat bukber enak nih recommend banget, harga nya juga terjangkau harga mahasiswa..\n#KULINER",
+        "image_url": null,
+        "username": "dianto",
+        "longitude": 107.61386255,
+        "latitude": -6.88609108,
+        "flag": 0,
+        "hashtags": [
+            "#KULINER"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_415640c0-77d2-11e9-b1fe-51920e64b24f",
+                "createdAt": "2019-05-16T12:00:54.704Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/dianto1558008047.jpg"
+            },
+            {
+                "_id": "feeds_image_42115360-77d2-11e9-b536-ab58880743b7",
+                "createdAt": "2019-05-16T12:00:56.619Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/dianto1558008047_2.jpg"
+            },
+            {
+                "_id": "feeds_image_427879a0-77d2-11e9-8026-d1c26ac74613",
+                "createdAt": "2019-05-16T12:00:57.554Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/dianto1558008047_3.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.61386255,
+                -6.88609108
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdd50a8510034fd07ad1a40",
+        "createdAt": "2019-05-16T11:59:36.488Z",
+        "description": "#ngelab dulu",
+        "image_url": "https://s3-us-west-2.amazonaws.com/geomapid-assets/astronot.png",
+        "username": "yehezkiel",
+        "longitude": 0,
+        "latitude": 0,
+        "flag": 0,
+        "hashtags": [
+            "#ngelab"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_15825010-77d2-11e9-b1fe-51920e64b24f",
+                "createdAt": "2019-05-16T11:59:41.448Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/yehezkiel1558007976.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                0,
+                0
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdd4e3d5100341b64ad1a3f",
+        "createdAt": "2019-05-16T11:49:17.548Z",
+        "description": "ATM BNI dekat simpang dago \n#ATM",
+        "image_url": null,
+        "username": "dianto",
+        "longitude": 107.61658673,
+        "latitude": -6.88841532,
+        "flag": 0,
+        "hashtags": [
+            "#ATM"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_a8e20b40-77d0-11e9-b1fe-51920e64b24f",
+                "createdAt": "2019-05-16T11:49:30.180Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/dianto1558007357.jpg"
+            },
+            {
+                "_id": "feeds_image_a95f9fb0-77d0-11e9-b514-a932dcd3da89",
+                "createdAt": "2019-05-16T11:49:31.205Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/dianto1558007357_2.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.61658673,
+                -6.88841532
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdd448f3dc665cdaedf6110",
+        "createdAt": "2019-05-16T11:07:59.723Z",
+        "description": "Arus lalu lintas menjelang maghrib dibatas kota bandung menuju arah cimahi macet, dikarenakan angkot yang naik-turunkann penumpang, jam pulang kerja dan penjual makanan\n\n#Aruslalulintas",
+        "image_url": null,
+        "username": "jerryandrian7",
+        "longitude": 0,
+        "latitude": 0,
+        "flag": 0,
+        "hashtags": [
+            "#Aruslalulintas"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_dff62360-77ca-11e9-b615-adac1060c2bc",
+                "createdAt": "2019-05-16T11:08:05.183Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/jerryandrian71558004879.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                0,
+                0
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdd3f490b840fa09c4675b0",
+        "createdAt": "2019-05-16T10:45:29.825Z",
+        "description": "macet total jl.cicabe ke arah Cikadut\n#JALANAN #ARUSLALULINTAS",
+        "image_url": null,
+        "username": "dianto",
+        "longitude": 0,
+        "latitude": 0,
+        "flag": 0,
+        "hashtags": [
+            "#JALANAN",
+            "#ARUSLALULINTAS"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_bfca1540-77c7-11e9-b304-d1a486c5d342",
+                "createdAt": "2019-05-16T10:45:43.372Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/dianto1558003529.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                0,
+                0
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdd32ec614c8726db6e8e4e",
+        "createdAt": "2019-05-16T09:52:44.230Z",
+        "description": "meluanhkan waktu utk diri sendiri & teman\ndi gokana\n#tempatmakan",
+        "image_url": "default",
+        "username": "ajiwidianto",
+        "longitude": 107.60566981,
+        "latitude": -6.89363282,
+        "flag": 0,
+        "hashtags": [
+            "#tempatmakan"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_5d4749d0-77c0-11e9-a8f2-c56f2d2da217",
+                "createdAt": "2019-05-16T09:52:50.769Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/ajiwidianto1558000365.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.60566981,
+                -6.89363282
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdd313b614c8747906e8e4d",
+        "createdAt": "2019-05-16T09:45:31.286Z",
+        "description": "buber with friends\n#wisata",
+        "image_url": "default",
+        "username": "ajiwidianto",
+        "longitude": 107.6055973,
+        "latitude": -6.8936602,
+        "flag": 0,
+        "hashtags": [
+            "#wisata"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_5aee8230-77bf-11e9-a8f2-c56f2d2da217",
+                "createdAt": "2019-05-16T09:45:38.040Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/ajiwidianto1557999932.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.6055973,
+                -6.8936602
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdd2ac210703dd3aefa7af8",
+        "createdAt": "2019-05-16T09:17:54.873Z",
+        "description": "hujan rintik daerah sekeloa dan sekitarnya\n#INFOCUACA",
+        "image_url": null,
+        "username": "dianto",
+        "longitude": 107.61667536,
+        "latitude": -6.88859375,
+        "flag": 0,
+        "hashtags": [
+            "#INFOCUACA"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_82a21200-77bb-11e9-8ceb-c545b3b6cc26",
+                "createdAt": "2019-05-16T09:18:05.901Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/dianto1557998275.jpg"
+            },
+            {
+                "_id": "feeds_image_82d2e600-77bb-11e9-b2c6-f3cd1e1c9769",
+                "createdAt": "2019-05-16T09:18:06.103Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/dianto1557998275_2.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.61667536,
+                -6.88859375
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdd2a0be385609b57d8e384",
+        "createdAt": "2019-05-16T09:14:51.833Z",
+        "description": "Toko ini menjadi pilihan bagi teman-teman yang mencari parfum dengan berbagai macam pilihan. Selain, berguna untuk menghilangkan bau yang tidak sedap dibadan. Parfum juga bisa juga membuat rasa percaya diri naik apalagi saat dekat si doi ðŸ˜‚. \n\n#Parfum",
+        "image_url": "https://s3-us-west-2.amazonaws.com/geomapid-assets/astronot.png",
+        "username": "jerryandrian7",
+        "longitude": 107.6141109,
+        "latitude": -6.88522230000001,
+        "flag": 0,
+        "hashtags": [
+            "#Parfum"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_146cdfe0-77bb-11e9-b2c6-f3cd1e1c9769",
+                "createdAt": "2019-05-16T09:15:00.959Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/jerryandrian71557998093.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.6141109,
+                -6.88522230000001
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdd298ae38560fea0d8e382",
+        "createdAt": "2019-05-16T09:12:42.279Z",
+        "description": "Jembatan yang dilupakan, tapi masih digunakan penduduk #adventure",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+        "username": "bagus",
+        "longitude": 105.73404368954313,
+        "latitude": -4.141750107523186,
+        "flag": 0,
+        "hashtags": [
+            "#adventure"
+        ],
+        "images": [],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                105.73404368954313,
+                -4.141750107523186
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdd2522e3856065a3d8e381",
+        "createdAt": "2019-05-16T08:53:54.683Z",
+        "description": "Warung nasi spg terkenal dengan ayam dan sambalnya yang nikmat. warung makan ini menjadi primadona dikalangan pecinta kuliner khususnya  mahasiswa yang berada disekitaran unikom. Selain rasa yang nikmat, harganya pun pas dikantong apalagi untuk mahasiswa ðŸ˜. Warung ini wajib dikunjungi untuk berbuka puasa nanti\n\n#Kuliner",
+        "image_url": null,
+        "username": "jerryandrian7",
+        "longitude": 107.6149930217026,
+        "latitude": -6.886618872202508,
+        "flag": 0,
+        "hashtags": [
+            "#Kuliner"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_2781b310-77b8-11e9-b2c6-f3cd1e1c9769",
+                "createdAt": "2019-05-16T08:54:04.699Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/jerryandrian71557996834.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.6149930217026,
+                -6.886618872202508
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdd1b15cd31a72d45b7d938",
+        "createdAt": "2019-05-16T08:11:01.145Z",
+        "description": "Terowongan kecil untuk perahu di jembatan rawajitu #adventurer",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+        "username": "bagus",
+        "longitude": 105.73372366848002,
+        "latitude": -4.143810253594198,
+        "flag": 0,
+        "hashtags": [
+            "#adventurer"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_281416c0-77b2-11e9-88af-3df20e9c428e",
+                "createdAt": "2019-05-16T08:11:08.429Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus2019511151111.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                105.73372366848002,
+                -4.143810253594198
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdd160acd31a776b8b7d937",
+        "createdAt": "2019-05-16T07:49:30.483Z",
+        "description": "Jembatan satu jalur kecil banget tapi pas buat 1 mobil. #adventure",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+        "username": "bagus",
+        "longitude": 105.6995181805757,
+        "latitude": -4.169099603239593,
+        "flag": 0,
+        "hashtags": [
+            "#adventure"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_27d9fb50-77af-11e9-88af-3df20e9c428e",
+                "createdAt": "2019-05-16T07:49:39.668Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus20195491449311.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                105.6995181805757,
+                -4.169099603239593
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdcf98a11cb6114df99c2bd",
+        "createdAt": "2019-05-16T05:47:54.290Z",
+        "description": "Sensor kedua kita Portable Automatic Water Level telah dipasang untuk mengamati pasang surut selama 16 hari #mapidsense",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+        "username": "bagus",
+        "longitude": 105.7456229534985,
+        "latitude": -4.277830766517927,
+        "flag": 0,
+        "hashtags": [
+            "#mapidsense"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_2c529ae0-779e-11e9-9e1b-4fbc17705b24",
+                "createdAt": "2019-05-16T05:48:06.509Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus20195471247551.jpg"
+            },
+            {
+                "_id": "feeds_image_2d79dcd0-779e-11e9-b645-3fe39230d38e",
+                "createdAt": "2019-05-16T05:48:08.329Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus20195471247552.jpg"
+            }
+        ],
+        "comments": [
+            {
+                "_id": "feeds_comment_7c7c6d40-77a1-11e9-aa74-bd7da31326b6",
+                "createdAt": "2019-05-16T06:11:49.470Z",
+                "image_url": "",
+                "message": "mantuul ðŸ‘ðŸ‘",
+                "username": "pretty"
+            },
+            {
+                "_id": "feeds_comment_14dfb1d0-77ae-11e9-9ced-57b2d4df8e79",
+                "createdAt": "2019-05-16T07:41:59.135Z",
+                "image_url": "",
+                "message": "Awas jatoh",
+                "username": "yacob89"
+            }
+        ],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                105.7456229534985,
+                -4.277830766517927
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdcef7f53f569854ef20019",
+        "createdAt": "2019-05-16T05:05:03.726Z",
+        "description": "Wah ada udang gede seger disini #seafood",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+        "username": "bagus",
+        "longitude": 105.7456227020414,
+        "latitude": -4.277690579187383,
+        "flag": 0,
+        "hashtags": [
+            "#seafood"
+        ],
+        "images": [],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                105.7456227020414,
+                -4.277690579187383
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdce1add6c11c6132969d15",
+        "createdAt": "2019-05-16T04:06:05.237Z",
+        "description": "Tempat yang bisa menjadi sebuah awal dan akhir perjalanan transportasi. Selamat beraktifitas para pejuang Commuterline. #stasiun #jakartakota #stasiunawal #stasiunakhir",
+        "image_url": "https://s3-us-west-2.amazonaws.com/geomapid-assets/astronot.png",
+        "username": "glosrgr",
+        "longitude": 106.81465036788057,
+        "latitude": -6.1375810816193965,
+        "flag": 0,
+        "hashtags": [
+            "#stasiun",
+            "#jakartakota",
+            "#stasiunawal",
+            "#stasiunakhir"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_f0161b00-778f-11e9-868e-7d4705285078",
+                "createdAt": "2019-05-16T04:06:11.676Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/glosrgr1557979564.jpg"
+            },
+            {
+                "_id": "feeds_image_f0883dc0-778f-11e9-8979-89542030f06c",
+                "createdAt": "2019-05-16T04:06:13.284Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/glosrgr1557979564_2.jpg"
+            },
+            {
+                "_id": "feeds_image_f0e85f20-778f-11e9-a95e-c5ca3fee8e88",
+                "createdAt": "2019-05-16T04:06:13.697Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/glosrgr1557979564_3.jpg"
+            },
+            {
+                "_id": "feeds_image_f143eca0-778f-11e9-82ec-67138673f8a3",
+                "createdAt": "2019-05-16T04:06:14.536Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/glosrgr1557979564_4.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                106.81465036788057,
+                -6.1375810816193965
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdcde8cd6c11ccba9969d14",
+        "createdAt": "2019-05-16T03:52:44.380Z",
+        "description": "#Situasi di pasar rawajitu lampung",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+        "username": "bagus",
+        "longitude": 105.7388253138454,
+        "latitude": -4.212869633924414,
+        "flag": 0,
+        "hashtags": [
+            "#Situasi"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_126a2b80-778e-11e9-868e-7d4705285078",
+                "createdAt": "2019-05-16T03:52:50.356Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus20195521052441.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                105.7388253138454,
+                -4.212869633924414
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdcdd67d6c11c2b48969d13",
+        "createdAt": "2019-05-16T03:47:51.576Z",
+        "description": "Berasa kembali ke #jadul hehe. Mobil phanter view rumah jadul. ",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+        "username": "bagus",
+        "longitude": 105.73637184696805,
+        "latitude": -4.212756310593535,
+        "flag": 0,
+        "hashtags": [
+            "#jadul"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_69da2970-778d-11e9-868e-7d4705285078",
+                "createdAt": "2019-05-16T03:48:08.203Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus20195471047521.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                105.73637184696805,
+                -4.212756310593535
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdc58e5363f876d00fca3df",
+        "createdAt": "2019-05-15T18:22:29.620Z",
+        "description": "Stasiun paling jauh ya disini. Welcome to Planet Bekasi. #suasanastasiun #stasiunbekasi #stasiun #bekasi",
+        "image_url": "https://s3-us-west-2.amazonaws.com/geomapid-assets/astronot.png",
+        "username": "glosrgr",
+        "longitude": 106.99937252637721,
+        "latitude": -6.236462153027883,
+        "flag": 0,
+        "hashtags": [
+            "#suasanastasiun",
+            "#stasiunbekasi",
+            "#stasiun",
+            "#bekasi"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_6cb80df0-773e-11e9-8664-9b8299f4003d",
+                "createdAt": "2019-05-15T18:22:42.078Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/glosrgr1557944550.jpg"
+            },
+            {
+                "_id": "feeds_image_6e1294e0-773e-11e9-8664-9b8299f4003d",
+                "createdAt": "2019-05-15T18:22:44.203Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/glosrgr1557944550_2.jpg"
+            },
+            {
+                "_id": "feeds_image_703d8b30-773e-11e9-8664-9b8299f4003d",
+                "createdAt": "2019-05-15T18:22:47.878Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/glosrgr1557944550_3.jpg"
+            },
+            {
+                "_id": "feeds_image_71475a10-773e-11e9-8664-9b8299f4003d",
+                "createdAt": "2019-05-15T18:22:49.562Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/glosrgr1557944550_4.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                106.99937252637721,
+                -6.236462153027883
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdc579b363f871f67fca3de",
+        "createdAt": "2019-05-15T18:16:59.790Z",
+        "description": "Tempat makan chicken wings dan beer yang nikmat dan harga lumayan bersahabat, ditambah ada live music yang membuat suasana malam makin mantap. #kuliner #kulinerjakarta #jakartautara #kelapagading #holywings",
+        "image_url": "https://s3-us-west-2.amazonaws.com/geomapid-assets/astronot.png",
+        "username": "glosrgr",
+        "longitude": 106.89694610905616,
+        "latitude": -6.171372314736282,
+        "flag": 0,
+        "hashtags": [
+            "#kuliner",
+            "#kulinerjakarta",
+            "#jakartautara",
+            "#kelapagading",
+            "#holywings"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_a572def0-773d-11e9-912f-477b053463ed",
+                "createdAt": "2019-05-15T18:17:08.598Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/glosrgr1557944220.jpg"
+            },
+            {
+                "_id": "feeds_image_a8880e30-773d-11e9-912f-477b053463ed",
+                "createdAt": "2019-05-15T18:17:12.852Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/glosrgr1557944220_3.jpg"
+            },
+            {
+                "_id": "feeds_image_a9892a80-773d-11e9-8664-9b8299f4003d",
+                "createdAt": "2019-05-15T18:17:15.519Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/glosrgr1557944220_2.jpg"
+            }
+        ],
+        "comments": [
+            {
+                "_id": "feeds_comment_b096f340-7781-11e9-8602-4fbc3a06d085",
+                "createdAt": "2019-05-16T02:24:12.288Z",
+                "image_url": "",
+                "message": "Enak nih kayaknya ",
+                "username": "yacob89"
+            },
+            {
+                "_id": "feeds_comment_105dced0-7790-11e9-bf3c-1da6e6051d92",
+                "createdAt": "2019-05-16T04:07:06.762Z",
+                "image_url": "",
+                "message": "Enaaak. rasa chicken wings nya semacam shillin tapi ada tulangnyaðŸ˜‚",
+                "username": "glosrgr"
+            }
+        ],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                106.89694610905616,
+                -6.171372314736282
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdc2bc6f4679b82fef80b35",
+        "createdAt": "2019-05-15T15:09:58.552Z",
+        "description": "Jalur lintas antar kota di sumatera. Sekarang sedang dalam #perjalanan ke rawajitu, katanya masih 5 Jam lagi ðŸ˜ž",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+        "username": "bagus",
+        "longitude": 105.21144719804191,
+        "latitude": -4.914626791146504,
+        "flag": 0,
+        "hashtags": [
+            "#perjalanan"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_86474850-7723-11e9-ab3d-8fbb8cdbcfb3",
+                "createdAt": "2019-05-15T15:10:09.357Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus201959229593.jpg"
+            },
+            {
+                "_id": "feeds_image_86792dc0-7723-11e9-a8e8-7b712a8da876",
+                "createdAt": "2019-05-15T15:10:09.753Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus201959229592.jpg"
+            },
+            {
+                "_id": "feeds_image_869fc890-7723-11e9-8225-053e86dde731",
+                "createdAt": "2019-05-15T15:10:09.911Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus201959229594.jpg"
+            },
+            {
+                "_id": "feeds_image_887db050-7723-11e9-8225-053e86dde731",
+                "createdAt": "2019-05-15T15:10:12.114Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus201959229591.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                105.21144719804191,
+                -4.914626791146504
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdc1953038a1d58b74cd0bf",
+        "createdAt": "2019-05-15T13:51:15.238Z",
+        "description": "Nyobain #tolbaru lintas sumatera. Sekarang sumatera jadi lebih dekat. ",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+        "username": "bagus",
+        "longitude": 105.21164353450558,
+        "latitude": -5.2758883497559195,
+        "flag": 0,
+        "hashtags": [
+            "#tolbaru"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_85292f20-7718-11e9-be76-5bf15d6da401",
+                "createdAt": "2019-05-15T13:51:22.991Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus20195512051151.jpg"
+            },
+            {
+                "_id": "feeds_image_85b91310-7718-11e9-a13c-afe7cc3f75a7",
+                "createdAt": "2019-05-15T13:51:23.967Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus20195512051152.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                105.21164353450558,
+                -5.2758883497559195
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdc108bf5fe54e6131d8201",
+        "createdAt": "2019-05-15T13:13:47.669Z",
+        "description": "Cuaca daerah pasir impun dan sekitarnya hujan rintik\n#INFOCUACA",
+        "image_url": null,
+        "username": "dianto",
+        "longitude": 107.67732277,
+        "latitude": -6.90470644,
+        "flag": 0,
+        "hashtags": [
+            "#INFOCUACA"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_4b901ad0-7713-11e9-9408-a95b059a1a27",
+                "createdAt": "2019-05-15T13:13:58.077Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/dianto1557926026.jpg"
+            },
+            {
+                "_id": "feeds_image_4d079fa0-7713-11e9-9408-a95b059a1a27",
+                "createdAt": "2019-05-15T13:14:00.432Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/dianto1557926026_2.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.67732277,
+                -6.90470644
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdc0fc4f5fe5447881d8200",
+        "createdAt": "2019-05-15T13:10:28.711Z",
+        "description": "#monumen bundaran gajah lampung",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+        "username": "bagus",
+        "longitude": 105.25818284848839,
+        "latitude": -5.422274143642058,
+        "flag": 0,
+        "hashtags": [
+            "#monumen"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_d4594e50-7712-11e9-9408-a95b059a1a27",
+                "createdAt": "2019-05-15T13:10:38.901Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus20195102010291.jpg"
+            }
+        ],
+        "comments": [
+            {
+                "_id": "feeds_comment_eed2cd60-7712-11e9-9d93-dba09aa32268",
+                "createdAt": "2019-05-15T13:11:22.428Z",
+                "image_url": "",
+                "message": "wuih Lampung gemerlap juga ya",
+                "username": "machrus"
+            }
+        ],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                105.25818284848839,
+                -5.422274143642058
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdc03c37716a61a4d1203dc",
+        "createdAt": "2019-05-15T12:19:15.413Z",
+        "description": "Katanya sih siomay no. 1 di Bandung tapi rasanya kurang ya #kuliner #kulinerbandung",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/133-05-2019-01-31-11-1841995150984",
+        "username": "yacob89",
+        "longitude": 107.57741689682007,
+        "latitude": -6.921917796134949,
+        "flag": 0,
+        "hashtags": [
+            "#kuliner",
+            "#kulinerbandung"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_ae0d8ce0-770b-11e9-b491-03d0e707cd79",
+                "createdAt": "2019-05-15T12:19:27.428Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/yacob891557922755.jpg"
+            }
+        ],
+        "comments": [
+            {
+                "_id": "feeds_comment_08a76bd0-7711-11e9-9d93-dba09aa32268",
+                "createdAt": "2019-05-15T12:57:47.744Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+                "message": "Info darimana ini siomay no 1?",
+                "username": "bagus"
+            },
+            {
+                "_id": "feeds_comment_4c61ad90-7711-11e9-9d93-dba09aa32268",
+                "createdAt": "2019-05-15T12:59:40.323Z",
+                "image_url": "",
+                "message": "Itu ada tulisan di posternya mas",
+                "username": "yacob89"
+            },
+            {
+                "_id": "feeds_comment_5004d910-771e-11e9-82c5-f5c3da5caad7",
+                "createdAt": "2019-05-15T14:32:50.815Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+                "message": "Hahahahaha, besok kita tulis, mapid aplikasi terkeren sejagat raya haha",
+                "username": "bagus"
+            }
+        ],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.57741689682007,
+                -6.921917796134949
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdc01e37716a610141203db",
+        "createdAt": "2019-05-15T12:11:14.974Z",
+        "description": "nasi goreng enak nih buat cuaca dingin\n#Kuliner",
+        "image_url": null,
+        "username": "dianto",
+        "longitude": 107.61470522,
+        "latitude": -6.88584162,
+        "flag": 0,
+        "hashtags": [
+            "#Kuliner"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_91ffceb0-770a-11e9-b491-03d0e707cd79",
+                "createdAt": "2019-05-15T12:11:31.605Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/dianto1557922274.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.61470522,
+                -6.88584162
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdbf996b555e5132466de0e",
+        "createdAt": "2019-05-15T11:35:50.641Z",
+        "description": "Cuaca hujan deras simpang dago Dan sekitarnya\n#InfoCuaca",
+        "image_url": null,
+        "username": "dianto",
+        "longitude": 107.61466341,
+        "latitude": -6.88570324,
+        "flag": 0,
+        "hashtags": [
+            "#InfoCuaca"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_a0def960-7705-11e9-860d-45f2a7eba3e4",
+                "createdAt": "2019-05-15T11:36:09.146Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/dianto1557920149.jpg"
+            }
+        ],
+        "comments": [
+            {
+                "_id": "feeds_comment_1ce156b0-7711-11e9-9d93-dba09aa32268",
+                "createdAt": "2019-05-15T12:58:20.702Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+                "message": "Wah romantis sekali yehe",
+                "username": "bagus"
+            }
+        ],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.61466341,
+                -6.88570324
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdbe6005bcc782650605c44",
+        "createdAt": "2019-05-15T10:12:16.225Z",
+        "description": "tempat bukber enak nih makanan dan view nya juga enak\n#Kuliner",
+        "image_url": null,
+        "username": "dianto",
+        "longitude": 0,
+        "latitude": 0,
+        "flag": 0,
+        "hashtags": [
+            "#Kuliner"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_f23c6790-76f9-11e9-a47d-c91bfdb4a036",
+                "createdAt": "2019-05-15T10:12:30.893Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/dianto1557915135.jpg"
+            },
+            {
+                "_id": "feeds_image_f2ab5600-76f9-11e9-8858-91c713b9162a",
+                "createdAt": "2019-05-15T10:12:31.482Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/dianto1557915135_2.jpg"
+            },
+            {
+                "_id": "feeds_image_f3020180-76f9-11e9-875a-393ae33f8f6a",
+                "createdAt": "2019-05-15T10:12:32.941Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/dianto1557915135_3.jpg"
+            }
+        ],
+        "comments": [
+            {
+                "_id": "feeds_comment_28ae9430-7711-11e9-9d93-dba09aa32268",
+                "createdAt": "2019-05-15T12:58:40.559Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+                "message": "Keren!",
+                "username": "bagus"
+            }
+        ],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                0,
+                0
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdbe5465bcc78b747605c43",
+        "createdAt": "2019-05-15T10:09:10.310Z",
+        "description": "menunggu buka saat datang senja\n#perumahan",
+        "image_url": null,
+        "username": "ajiwidianto",
+        "longitude": 107.6198442,
+        "latitude": -6.8552546,
+        "flag": 0,
+        "hashtags": [
+            "#perumahan"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_82cb8120-76f9-11e9-8858-91c713b9162a",
+                "createdAt": "2019-05-15T10:09:24.605Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/ajiwidianto1557914950_2.jpg"
+            },
+            {
+                "_id": "feeds_image_82f85d80-76f9-11e9-a47d-c91bfdb4a036",
+                "createdAt": "2019-05-15T10:09:24.919Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/ajiwidianto1557914950.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.6198442,
+                -6.8552546
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdbdcda67bb381db91fac8e",
+        "createdAt": "2019-05-15T09:33:14.966Z",
+        "description": "ini kuliner sea food lain di jalan maleber #kuliner",
+        "image_url": null,
+        "username": "rismacitra",
+        "longitude": 107.57853213764984,
+        "latitude": -6.907659888017631,
+        "flag": 0,
+        "hashtags": [
+            "#kuliner"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_7f974a70-76f4-11e9-8feb-01af4d8c20e3",
+                "createdAt": "2019-05-15T09:33:30.868Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/rismacitra1557912795.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.57853213764984,
+                -6.907659888017631
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdbdc8467bb38227d1fac8d",
+        "createdAt": "2019-05-15T09:31:48.087Z",
+        "description": "ini ada kue balok jadul kang ade. sudah dari dulu berdirinya #kuliner",
+        "image_url": null,
+        "username": "rismacitra",
+        "longitude": 107.57900166666668,
+        "latitude": -6.908048333333333,
+        "flag": 0,
+        "hashtags": [
+            "#kuliner"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_45d62270-76f4-11e9-8feb-01af4d8c20e3",
+                "createdAt": "2019-05-15T09:31:54.250Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/rismacitra1557912708.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.57900166666668,
+                -6.908048333333333
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdbd969ee8d866382407bb7",
+        "createdAt": "2019-05-15T09:18:33.329Z",
+        "description": "antrian kendaraan karena pintu kereta api dekat jalan maleber. jangan lupa utamakan keselamatan #jalanan",
+        "image_url": null,
+        "username": "rismacitra",
+        "longitude": 107.57853213764984,
+        "latitude": -6.907659888017631,
+        "flag": 0,
+        "hashtags": [
+            "#jalanan"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_75ccf3c0-76f2-11e9-8feb-01af4d8c20e3",
+                "createdAt": "2019-05-15T09:18:56.334Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/rismacitra1557911913.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.57853213764984,
+                -6.907659888017631
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdbc16e68df5313d6649cbc",
+        "createdAt": "2019-05-15T07:36:14.455Z",
+        "description": "ATM BNI\n#ATM",
+        "image_url": null,
+        "username": "dianto",
+        "longitude": 107.6151657,
+        "latitude": -6.88674679,
+        "flag": 0,
+        "hashtags": [
+            "#ATM"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_295247b0-76e4-11e9-8889-d9e5fc9886ed",
+                "createdAt": "2019-05-15T07:36:35.067Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/dianto1557905774_2.jpg"
+            },
+            {
+                "_id": "feeds_image_2a74ceb0-76e4-11e9-9433-0974e7b52ae4",
+                "createdAt": "2019-05-15T07:36:36.889Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/dianto1557905774.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.6151657,
+                -6.88674679
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdb8c467c54b07981caf6ac",
+        "createdAt": "2019-05-15T03:49:26.761Z",
+        "description": "Pantauan arus lalu lintas dijalan taman sari dekat dengan bundaran menuju baltos, terbilang cukup lancar. Namun, akan cukup padat saat disore hari karena ada pedagang yang menjajakan makanan berbuka puasa\n\n#ArusLaluLintas",
+        "image_url": null,
+        "username": "jerryandrian7",
+        "longitude": 107.60945720000001,
+        "latitude": -6.900522599999981,
+        "flag": 0,
+        "hashtags": [
+            "#ArusLaluLintas"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_73caf820-76c4-11e9-bcc7-555c31f53a11",
+                "createdAt": "2019-05-15T03:49:35.216Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/jerryandrian71557892166.jpg"
+            }
+        ],
+        "comments": [
+            {
+                "_id": "feeds_comment_77d3f640-7711-11e9-9d93-dba09aa32268",
+                "createdAt": "2019-05-15T13:00:53.271Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+                "message": "Makasih infonya gan",
+                "username": "bagus"
+            }
+        ],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.60945720000001,
+                -6.900522599999981
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdb8a0c7c54b044a0caf6ab",
+        "createdAt": "2019-05-15T03:39:56.290Z",
+        "description": "habis ngisi bensin, terus belanja di borma ðŸ˜‚\n#tempatblanja",
+        "image_url": null,
+        "username": "ajiwidianto",
+        "longitude": 107.5590946,
+        "latitude": -6.9616881,
+        "flag": 0,
+        "hashtags": [
+            "#tempatblanja"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_20a9a5c0-76c3-11e9-bcc7-555c31f53a11",
+                "createdAt": "2019-05-15T03:40:06.269Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/ajiwidianto1557891596.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.5590946,
+                -6.9616881
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdb89b17c54b02446caf6aa",
+        "createdAt": "2019-05-15T03:38:25.201Z",
+        "description": "ngisi bensin dulu rek\n#spbu",
+        "image_url": null,
+        "username": "ajiwidianto",
+        "longitude": 107.55865602,
+        "latitude": -6.96164275,
+        "flag": 0,
+        "hashtags": [
+            "#spbu"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_ea03ee90-76c2-11e9-bcc7-555c31f53a11",
+                "createdAt": "2019-05-15T03:38:34.584Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/ajiwidianto1557891505.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.55865602,
+                -6.96164275
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdb85aa7c54b0084dcaf6a9",
+        "createdAt": "2019-05-15T03:21:14.577Z",
+        "description": "#Lampung",
+        "image_url": null,
+        "username": "machrus",
+        "longitude": 105.25960691487376,
+        "latitude": -5.382018421835058,
+        "flag": 0,
+        "hashtags": [
+            "#Lampung"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_84af7340-76c0-11e9-bcc7-555c31f53a11",
+                "createdAt": "2019-05-15T03:21:25.561Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/machrus1557890474.jpg"
+            }
+        ],
+        "comments": [
+            {
+                "_id": "feeds_comment_83f29670-76c1-11e9-8935-bd0f3559a53d",
+                "createdAt": "2019-05-15T03:28:34.086Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+                "message": "Coraknya keren ya",
+                "username": "bagus"
+            },
+            {
+                "_id": "feeds_comment_6c561840-76c4-11e9-8935-bd0f3559a53d",
+                "createdAt": "2019-05-15T03:49:22.742Z",
+                "image_url": "",
+                "message": "iya, itu corak khas Lampung mas",
+                "username": "machrus"
+            },
+            {
+                "_id": "feeds_comment_85f03600-76d3-11e9-970f-f3df98c06297",
+                "createdAt": "2019-05-15T05:37:29.104Z",
+                "image_url": "",
+                "message": "kereen",
+                "username": "pretty"
+            },
+            {
+                "_id": "feeds_comment_5703cfd0-76d5-11e9-bf9f-bbda930f6812",
+                "createdAt": "2019-05-15T05:50:29.331Z",
+                "image_url": "",
+                "message": "Corak batik di bangunan",
+                "username": "yacob89"
+            },
+            {
+                "_id": "feeds_comment_38582350-76d6-11e9-aea5-3dd5344c3d58",
+                "createdAt": "2019-05-15T05:56:47.416Z",
+                "image_url": "",
+                "message": "Asik nih main ke lampung",
+                "username": "yacob89"
+            },
+            {
+                "_id": "feeds_comment_0f9aa4f0-76d7-11e9-aea5-3dd5344c3d58",
+                "createdAt": "2019-05-15T06:02:47.775Z",
+                "image_url": "",
+                "message": "Di lampung ada tempat asik apa aja sih? ",
+                "username": "yacob89"
+            },
+            {
+                "_id": "feeds_comment_88055d90-76d7-11e9-aea5-3dd5344c3d58",
+                "createdAt": "2019-05-15T06:06:09.662Z",
+                "image_url": "",
+                "message": "Makanan khas di Lampung apa ya? ",
+                "username": "yacob89"
+            },
+            {
+                "_id": "feeds_comment_05f32210-76e1-11e9-8610-65c9a92c82e2",
+                "createdAt": "2019-05-15T07:14:07.280Z",
+                "image_url": "",
+                "message": "",
+                "username": "pretty"
+            },
+            {
+                "_id": "feeds_comment_cbb12bd0-7855-11e9-8a4c-bbb2b692bc30",
+                "createdAt": "2019-05-17T03:42:31.836Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+                "message": "Komen",
+                "username": "bagus"
+            }
+        ],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                105.25960691487376,
+                -5.382018421835058
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdb852d7c54b05968caf6a8",
+        "createdAt": "2019-05-15T03:19:09.411Z",
+        "description": "#Mall Boemi Kedaton yang lagi hits di lampung",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+        "username": "bagus",
+        "longitude": 105.25960691487376,
+        "latitude": -5.382018421835058,
+        "flag": 0,
+        "hashtags": [
+            "#Mall"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_37fd8230-76c0-11e9-bcc7-555c31f53a11",
+                "createdAt": "2019-05-15T03:19:16.887Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus20195191019102.jpg"
+            },
+            {
+                "_id": "feeds_image_3915d000-76c0-11e9-bcc7-555c31f53a11",
+                "createdAt": "2019-05-15T03:19:18.684Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus20195191019101.jpg"
+            }
+        ],
+        "comments": [
+            {
+                "_id": "feeds_comment_b9ea1600-76f2-11e9-91b1-d13dd0bf1909",
+                "createdAt": "2019-05-15T09:20:50.692Z",
+                "image_url": "",
+                "message": "Wuih ada mall juga di lampung",
+                "username": "yacob89"
+            }
+        ],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                105.25960691487376,
+                -5.382018421835058
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdb84da7c54b02534caf6a7",
+        "createdAt": "2019-05-15T03:17:46.548Z",
+        "description": "ambil pakaian lebaran ðŸ˜‚\n#tempatblanja",
+        "image_url": null,
+        "username": "ajiwidianto",
+        "longitude": 107.55783140659332,
+        "latitude": -6.960783004760742,
+        "flag": 0,
+        "hashtags": [
+            "#tempatblanja"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_09b731f0-76c0-11e9-bcc7-555c31f53a11",
+                "createdAt": "2019-05-15T03:17:59.343Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/ajiwidianto1557890266.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.55783140659332,
+                -6.960783004760742
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdb83b87c54b04719caf6a6",
+        "createdAt": "2019-05-15T03:12:56.493Z",
+        "description": "Pusat dari Industri Kulit Garut, banyak produk produk dari kulit seperti domba garut dengan kualitas premium dan harga yang bersaing. #oleh-oleh",
+        "image_url": null,
+        "username": "robbywm",
+        "longitude": 107.91485603,
+        "latitude": -7.21585707,
+        "flag": 0,
+        "hashtags": [
+            "#oleh"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_58583e40-76bf-11e9-bcc7-555c31f53a11",
+                "createdAt": "2019-05-15T03:13:01.722Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/robbywm1557889975.jpg"
+            }
+        ],
+        "comments": [
+            {
+                "_id": "feeds_comment_8b250b90-76c0-11e9-8935-bd0f3559a53d",
+                "createdAt": "2019-05-15T03:21:37.369Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+                "message": "Wah seru juga ada industri kulit digarut, harga dan kualitasnya gmna?",
+                "username": "bagus"
+            }
+        ],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.91485603,
+                -7.21585707
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdb83757c54b05b51caf6a5",
+        "createdAt": "2019-05-15T03:11:49.947Z",
+        "description": "Rumah Sakit swasta di Garut dengan pelayanan yang cukup memuaskan.",
+        "image_url": null,
+        "username": "robbywm",
+        "longitude": 107.91979537,
+        "latitude": -7.21369393,
+        "flag": 0,
+        "hashtags": [],
+        "images": [
+            {
+                "_id": "feeds_image_30b3ed80-76bf-11e9-bcc7-555c31f53a11",
+                "createdAt": "2019-05-15T03:11:55.404Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/robbywm1557889909.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.91979537,
+                -7.21369393
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdb83437c54b02c2ecaf6a4",
+        "createdAt": "2019-05-15T03:10:59.301Z",
+        "description": "Perpanjangan sim di Polres Garut dengan biaya sebesar Rp. 200.000 #sim #polres",
+        "image_url": null,
+        "username": "robbywm",
+        "longitude": 107.92017608,
+        "latitude": -7.2121557,
+        "flag": 0,
+        "hashtags": [
+            "#sim",
+            "#polres"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_13f2c860-76bf-11e9-bcc7-555c31f53a11",
+                "createdAt": "2019-05-15T03:11:06.953Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/robbywm1557889858.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.92017608,
+                -7.2121557
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdb7f667c54b0e2b2caf6a1",
+        "createdAt": "2019-05-15T02:54:30.461Z",
+        "description": "Masjid ihya 'Ulumuddin merupakan masjid yang berada dikampus unikom. Tepatnya masjid ini berasa di Gedung lama Lt.7 Unikom. Masjid ini menjadi pilihan bagi mahasiswa maupun dosen yang ingin melakukan aktivitas ibadah karena dekat dengan ruang dosen serta ruang kelas. Selain itu, masjid ini juga menyediakan perpustakaan yang bisa digunakan baik mahasiswa maupun dosen untuk membaca buku-buku pengetahuan seputar islam. Masjid ini terbilang aktif karena sering mengadakan kajian islam mingguan tepatnya di hari senin sore. Spesial bulan ramadhan dkm masjid ini selalu mengadakan kultum yang diisi oleh mahasiswa, ta'jil gratis, serta shalat tarawih berjamaah. \n#Unikom #Bandung #Masjid #Islam #Ramadhan",
+        "image_url": null,
+        "username": "jerryandrian7",
+        "longitude": 107.61564470000002,
+        "latitude": -6.886610600000009,
+        "flag": 0,
+        "hashtags": [
+            "#Unikom",
+            "#Bandung",
+            "#Masjid",
+            "#Islam",
+            "#Ramadhan"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_c993d9f0-76bc-11e9-bcc7-555c31f53a11",
+                "createdAt": "2019-05-15T02:54:43.203Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/jerryandrian71557888871_2.jpg"
+            },
+            {
+                "_id": "feeds_image_caa486a0-76bc-11e9-9c50-497af1ddc5a8",
+                "createdAt": "2019-05-15T02:54:45.854Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/jerryandrian71557888871.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.61564470000002,
+                -6.886610600000009
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdb7e0b7c54b0e3a8caf69f",
+        "createdAt": "2019-05-15T02:48:43.102Z",
+        "description": "Lampung #hujan ",
+        "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/profilebagus2019436113620.jpg",
+        "username": "bagus",
+        "longitude": 105.24933566349115,
+        "latitude": -5.376570951198579,
+        "flag": 0,
+        "hashtags": [
+            "#hujan"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_f9de7b20-76bb-11e9-bcc7-555c31f53a11",
+                "createdAt": "2019-05-15T02:48:54.723Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/bagus2019548948431.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                105.24933566349115,
+                -5.376570951198579
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdb7d707c54b01086caf69e",
+        "createdAt": "2019-05-15T02:46:08.822Z",
+        "description": "Tempat untuk reparasi dan duplikat kunci dengan peralatan yang lengkap",
+        "image_url": null,
+        "username": "robbywm",
+        "longitude": 107.8989587,
+        "latitude": -7.21184170000001,
+        "flag": 0,
+        "hashtags": [],
+        "images": [
+            {
+                "_id": "feeds_image_9c2149e0-76bb-11e9-bcc7-555c31f53a11",
+                "createdAt": "2019-05-15T02:46:17.451Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/robbywm1557888367.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.8989587,
+                -7.21184170000001
+            ]
+        },
+        "cognitoid": "--"
+    },
+    {
+        "_id": "5cdb79837c54b0cb48caf69c",
+        "createdAt": "2019-05-15T02:29:23.079Z",
+        "description": "lagi nunggu someone \n#jalanan",
+        "image_url": null,
+        "username": "ajiwidianto",
+        "longitude": 107.61112557,
+        "latitude": -6.90394049,
+        "flag": 0,
+        "hashtags": [
+            "#jalanan"
+        ],
+        "images": [
+            {
+                "_id": "feeds_image_46b364e0-76b9-11e9-bcc7-555c31f53a11",
+                "createdAt": "2019-05-15T02:29:36.043Z",
+                "image_url": "https://s3-us-west-2.amazonaws.com/mapiduserpublic/public/ajiwidianto1557887363.jpg"
+            }
+        ],
+        "comments": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                107.61112557,
+                -6.90394049
+            ]
+        },
+        "cognitoid": "--"
+    }
+]
