@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Geomapid</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.css' rel='stylesheet' />
+    <link rel='stylesheet'
+        href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.css'
+        type='text/css' />
+    <link rel='stylesheet'
+        href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v3.1.3/mapbox-gl-directions.css'
+        type='text/css' />
+    <link href='https://mapbox-gl-inspect.lukasmartinelli.ch/dist/mapbox-gl-inspect.css' rel='stylesheet' />
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.css'
+        type='text/css' />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/3.5.2/css/tabulator_simple.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/vex.css" />
+    <link rel="stylesheet" href="css/vex-theme-os.css" />
+    <link rel="stylesheet" href="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.min.css" />
+    <link rel="apple-touch-icon" sizes="57x57" href="img/icons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="img/icons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/icons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="img/icons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/icons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="img/icons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="img/icons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="img/icons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/icons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="img/icons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="img/icons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/icons/favicon-16x16.png">
+    <link rel="manifest" href="img/icons/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="img/icons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css"
+        integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+    <!--[if lte IE 8]><link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-old-ie-min.css"> <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-min.css">
+    <!--<![endif]-->
+    <!--[if lte IE 8]><link rel="stylesheet" href="css/marketing-old-ie.css"> <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" href="css/marketing.css">
+    <!--<![endif]-->
+    <link href="css/pure-drawer.css" rel="stylesheet">
+    <link href="index.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="loading">
+        <div id="loading-center">
+            <div id="loading-center-absolute">
+                <div class="object" id="object_four"></div>
+                <div class="object" id="object_three"></div>
+                <div class="object" id="object_two"></div>
+                <div class="object" id="object_one"></div>
+            </div>
+        </div>
+    </div>
+    <div id='app'>
+        <div id='map'></div>
+        <div id='geocoder'></div>
+        <div id="style-group" class="pure-button-group" role="group" aria-label="..."> <button id="streets"
+                class="style-button pure-button" onclick="switchBasemapAction(this)" disabled>Streets</button> <button
+                id="satellite" class="style-button pure-button" onclick="switchBasemapAction(this)">Satellite</button>
+            <button id="satellite-streets" class="style-button pure-button"
+                onclick="switchBasemapAction(this)">Hybrid</button> <button id="outdoors"
+                class="style-button pure-button" onclick="switchBasemapAction(this)">Terrain</button></div>
+        <div class="basemap"> <button class="basemapbtn">Basemap</button>
+            <div class="basemap-content"> <span onclick="switchBasemapAction(this)" id='streets' disabled>Streets</span>
+                <span onclick="switchBasemapAction(this)" id='satellite'>Satellite</span> <span
+                    onclick="switchBasemapAction(this)" id='satellite-streets'>Hybrid</span> <span
+                    onclick="switchBasemapAction(this)" id='outdoors'>Terrain</span></div>
+        </div>
+        <div id="layerNav">
+            <div id="layer-header-box">
+                <div id='layer-title'>Layer Management</div> <span id="layer-icon" onclick="showLayerManagement()"
+                    class="material-icons md-dark">layers</span>
+            </div>
+            <div id='layerManagement'>
+                <ul id='listLayer'></ul>
+            </div>
+        </div>
+        <div id='attributeTable'>
+            <div class="table-controls">
+                <div class='table-controls-inner'> <span> <label> Field: </label> <select id="filter-field"> </select>
+                    </span> <span> <label> Type: </label> <select id="filter-type">
+                            <option></option>
+                            <option value="=">==</option>
+                            <option value="!=">!=</option>
+                            <option value="&gt;">&gt;</option>
+                            <option value="&gt;=">&gt;=</option>
+                            <option value="&lt;">&lt;</option>
+                            <option value="&lt;=">&lt;=</option>
+                            <option value="like">include</option>
+                        </select> </span> <span> <label> Value: </label> <input id="filter-value" type="text"
+                            placeholder="value to filter"> </span><button id="filter-clear"> <i class="material-icons"
+                            style="float:right; font-size:16px;">backspace</i> </button> <button id="history-undo"> <i
+                            class="material-icons" style="float:right; font-size:16px;">undo</i> </button> <button
+                        id="history-redo"> <i class="material-icons" style="float:right; font-size:16px;">redo</i>
+                    </button>
+                    <div class='download'> <button class="downloadbtn"> <i class="material-icons"
+                                style="float:right; font-size:16px;">file_download</i> </button>
+                        <div class="download-content"> <span id="download-csv">csv</span> <span
+                                id="download-json">json</span> <span id="download-xlsx">xlsx</span> <span
+                                id="download-pdf">pdf</span></div>
+                    </div>
+                </div>
+            </div>
+            <div id="example-table" class="table"></div>
+        </div>
+        <div id="toolkit-background" style="display: none;">
+            <div id='toolkit' style="display:block">
+                <div id='toolbox-container' class='mCustomScrollbar' data-mcs-axis="x" data-mcs-theme="minimal-dark">
+                    <div class="toolbox pure-button-group" role='group'> <button id="tools-elevation"
+                            class="tools pure-button" onclick="setTool(event, 'Elevation')"> <i class="material-icons"
+                                style="font-size:34px; color:rgba(74,74,74,1);">landscape</i> </button> <button
+                            id="tools-conversion" class="tools pure-button" onclick="setTool(event, 'Conversion')"> <i
+                                class="material-icons"
+                                style="font-size:34px; color:rgba(74,74,74,1);">compare_arrows</i> </button> <button
+                            id="tools-distance" class="tools pure-button" onclick="setTool(event, 'Distance')"> <i
+                                class="material-icons" style="font-size:36px; color:rgba(74,74,74,1);">timeline</i>
+                        </button> <button id="tools-area" class="tools pure-button" onclick="setTool(event, 'Area')"> <i
+                                class="material-icons" style="font-size:32px; color:rgba(74,74,74,1);">format_shapes</i>
+                        </button> <button id="tools-bufer" class="tools pure-button" onclick="setTool(event, 'Bufer')">
+                            <i class="material-icons" style="font-size:34px; color:rgba(74,74,74,1);">adjust</i>
+                        </button> <button id="tools-buferline" class="tools pure-button"
+                            onclick="setTool(event, 'Buferline')"> <i class="material-icons"
+                                style="font-size:32px; color:rgba(74,74,74,1); transform: rotate(270deg);">format_line_spacing</i>
+                        </button> <button id="tools-interact" class="tools pure-button"
+                            onclick="setTool(event, 'Interact')"> <i class="material-icons"
+                                style="font-size:32px; color:rgba(74,74,74,1);">layers</i> </button></div>
+                </div>
+                <div id="toolbox-white-space">
+                    <div id="tool-table" class="table"></div>
+                </div>
+                <div id="Elevation" class="toolboxcontent">
+                    <div class="toolbox-text">Elevation in meter(s)</div>
+                </div>
+                <div id="Conversion" class="toolboxcontent">
+                    <div class="conversion-container">
+                        <div id='convertArea'> Convert Area <br> <input id="area-from" type='text' value='1'
+                                onkeyup='areaTo()'></input> <select id='area-from-unit' onchange='areaTo()'>
+                                <option value='kilometers' selected>km2</option>
+                                <option value='meters'>m2</option>
+                                <option value='centimetres'>cm2</option>
+                                <option value='milimeters'>mm2</option>
+                                <option value='acres'>acres</option>
+                                <option value='miles'>mile2</option>
+                                <option value='yards'>yard2</option>
+                                <option value='feet'>feet2</option>
+                                <option value='inches'>inch2</option>
+                                <option value='hectare'>hectare</option>
+                            </select> <br> <input id="area-to" type='text' value='1' onkeyup='areaFrom()'></input>
+                            <select id='area-to-unit' onchange='areaTo()'>
+                                <option value='kilometers' selected>km2</option>
+                                <option value='meters'>m2</option>
+                                <option value='centimetres'>cm2</option>
+                                <option value='milimeters'>mm2</option>
+                                <option value='acres'>acres</option>
+                                <option value='miles'>mile2</option>
+                                <option value='yards'>yard2</option>
+                                <option value='feet'>feet2</option>
+                                <option value='inches'>inch2</option>
+                                <option value='hectare'>hectare</option>
+                            </select></div>
+                        <div id='convertLength'> Convert Length <br> <input id="length-from" type='text' value='1'
+                                onkeyup='lengthTo()'></input> <select id='length-from-unit' onchange='lengthTo()'>
+                                <option value='miles' selected>miles</option>
+                                <option value='nauticalmiles'>nmi</option>
+                                <option value='inches'>inches</option>
+                                <option value='yards'>yards</option>
+                                <option value='meters'>meters</option>
+                                <option value='kilometers'>km</option>
+                                <option value='centimeters'>cm</option>
+                                <option value='feet'>feet</option>
+                                <option value='radians'>rad</option>
+                            </select> <br> <input id="length-to" type='text' value='1' onkeyup='lengthFrom()'></input>
+                            <select id='length-to-unit' onchange='lengthTo()'>
+                                <option value='miles' selected>miles</option>
+                                <option value='nauticalmiles'>nmi</option>
+                                <option value='inches'>inches</option>
+                                <option value='yards'>yards</option>
+                                <option value='meters'>meters</option>
+                                <option value='kilometers'>km</option>
+                                <option value='centimeters'>cm</option>
+                                <option value='feet'>feet</option>
+                                <option value='radians'>rad</option>
+                                <option value='degrees'>deg</option>
+                            </select></div>
+                    </div>
+                </div>
+                <div id="Interact" class="toolboxcontent">
+                    <div id="interact-container">
+                        <div id='selectLayer'> Select Layer <br> <select id='selectedLayer' onchange='interact1()'>
+                                <option value='' selected></option>
+                            </select></div>
+                    </div>
+                </div>
+                <div id="Bufer" class="toolboxcontent">
+                    <div id="buffer-container">
+                        <span->Radius :</span-> <input id="buf-digit" type='text' value='1'></input> <br> <span
+                            id="buffer-unit">Buffer Unit :</span> <select id='buffer-unit-select'>
+                            <option value='kilometers' selected>km</option>
+                            <option value='miles'>miles</option>
+                            <option value='meters'>m</option>
+                        </select> <a id='download-bufferpoint' href='#' class="download-tool"
+                            onclick="downloadTool(this)"> <i class="material-icons"
+                                style="font-size:16px; color:rgba(74,74,74,1);">file_download</i> </a>
+                    </div>
+                </div>
+                <div id="Buferline" class="toolboxcontent">
+                    <div id="bufferline-container">
+                        <span->Radius :</span-> <input id="bufli-digit" type='text' value='1'></input> <br> <span
+                            id="bufferline-unit">Buffer Unit :</span> <select id='bufferline-unit-select'>
+                            <option value='meters' selected>m</option>
+                            <option value='miles'>miles</option>
+                            <option value='kilometers'>km</option>
+                        </select> <a id='download-bufferline' href='#' class="download-tool"
+                            onclick="downloadTool(this)"> <i class="material-icons"
+                                style="font-size:16px; color:rgba(74,74,74,1);">file_download</i> </a>
+                    </div>
+                </div>
+                <div id="Distance" class="toolboxcontent">
+                    <div id="distance-container"> <span class="unit-text">Unit :</span> <select id='distanceUnit'
+                            class="unit-select">
+                            <option value='km' selected>km</option>
+                            <option value='feet'>feet</option>
+                            <option value='m'>m</option>
+                        </select> <span class="sum-text">Calculated :</span> <span class="sum-result"
+                            id='measuredDistance'></span> <a id='download-distance' href='#' class="download-tool"
+                            onclick="downloadTool(this)"> <i class="material-icons"
+                                style="font-size:16px; color:rgba(74,74,74,1);">file_download</i> </a></div>
+                </div>
+                <div id="Area" class="toolboxcontent">
+                    <div id="area-container"> <span class="unit-text">Unit :</span> <select id='areaUnit'
+                            class="unit-select">
+                            <option value='km2' selected>km2</option>
+                            <option value='ha'>ha</option>
+                        </select> <span class="sum-text">Calculated :</span> <span class="sum-result"
+                            id='calculated-area'></span> <a id='download-area' href='#' class="download-tool"
+                            onclick="downloadTool(this)"> <i class="material-icons"
+                                style="font-size:16px; color:rgba(74,74,74,1);">file_download</i> </a></div>
+                </div>
+            </div>
+        </div>
+        <div class="footer"> <a id="mapid-logo" href="https://www.mapid.io" target="_blank"> <img
+                    src="assets/mapid-logo.svg"> </a> <span id='geomapid-logo'> <img id="geo-logo"
+                    src="assets/geo-icon.png"> <img id="mapid-text-logo" src="assets/mapid-icon.png"> </span> <span
+                id='fb-container'>
+                <div id="footer-buttons-group" class="pure-button-group" role="group" aria-label="..."> <button
+                        id="analyst-button" class="footer-button" onclick="showToolbox()"> <i style='font-size:30px'
+                            class='material-icons'>work</i> <span>Toolbox</span> </button> <button id="attribute-button"
+                        class="footer-button" onclick="showDetail()"> <i style='font-size:30px'
+                            class='material-icons'>table_chart</i> <span>Details</span> </button> <button
+                        id="inspect-button" class="footer-button" onclick="showInspect()"> <i style='font-size:30px'
+                            class='material-icons'>find_in_page</i> <span>Inspect</span> </button> <button
+                        id="export-button" class="footer-button" onclick="showNavigation()"> <i style='font-size:30px'
+                            class='material-icons'>navigation</i> <span>Navigate</span> </button></div>
+            </span>
+            <pre id='info'></pre>
+        </div>
+    </div>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.js'></script>
+    <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+    <script
+        src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.min.js'></script>
+    <script
+        src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v3.1.3/mapbox-gl-directions.js'></script>
+    <script src='https://mapbox-gl-inspect.lukasmartinelli.ch/dist/mapbox-gl-inspect.min.js'></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/3.5.2/js/tabulator.min.js"></script>
+    <script src="js/fileSaver.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"
+        integrity="sha384-CchuzHs077vGtfhGYl9Qtc7Vx64rXBXdIAZIPbItbNyWIRTdG0oYAqki3Ry13Yzu"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.2/jspdf.plugin.autotable.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="https://d3js.org/d3.v3.min.js" language="JavaScript"></script>
+    <script src="js/liquidFillGauge.js" language="JavaScript"></script>
+    <script type="text/javascript" src="js/gauge.js"></script>
+    <script type="text/javascript" src="https://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>
+    <script src="js/vex.combined.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/bullet.js"></script>
+    <script src="index.min.js"></script>
+</body>
+
+</html>

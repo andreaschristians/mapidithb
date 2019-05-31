@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Geomapid</title>
+  <meta charset="utf-8" />
+  <link rel="shortcut icon" href="%PUBLIC_URL%/favicon2.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.css' rel='stylesheet' />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      height: 95%;
+      width: 100%;
+    }
+
+    #info {
+      position: absolute;
+      font-size: 12px;
+      text-align: center;
+      height: 5%;
+      width: 100%;
+      right: 0;
+      bottom: 0;
+      color: #222;
+      background: #fff;
+    }
+
+    #menu {
+      position: absolute;
+      background: #fff;
+      top: 10px;
+      right: 40px;
+      padding: 5px;
+      font-size: 12px;
+      font-family: 'Open Sans', sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- <noscript>You need to enable JavaScript to run this app.</noscript> -->
+  <div id="root"></div>
+  <div id='map'></div>
+  <div id='info'>
+    <img src="favicon2.ico" height="10px" width="10px"></img>
+    <input type='button' value='Toolbox'>
+    <input type='button' value='Details'>
+    <input type='button' value='Inspect'>
+    <input type='button' value='Navigate'>
+    <div id="ltt"></div>
+  </div>
+  <div id='menu'>
+    <input id='streets-v11' type='button' name='rtoggle' value='streets' checked='checked'>
+    <input id='satellite-v9' type='button' name='rtoggle' value='satellite'>
+    <input id='satellite-street' type='button' name='rtoggle' value='hybrid'>
+    <input id='dark-v10' type='button' name='rtoggle' value='terrain'>
+    <input type='text' name='rtoggle' placeholder="Search">
+  </div>
+  <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYW5kcmVhc2NocmlzdGlhbiIsImEiOiJjanZ2cnZhMjg0NWtmNDN1aTMxcGphY21xIn0.CDEBH4hJPmAhRDOtzz73Mw';
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [107.6503, -6.951],
+      zoom: 10.8
+    });
+    map.on('mousemove', function (e) {
+      document.getElementById('ltt').innerHTML = JSON.stringify(e.lngLat);
+    });
+    map.addControl(new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true
+      },
+      trackUserLocation: true
+    }));
+
+    var layerList = document.getElementById('menu');
+    var inputs = layerList.getElementsByTagName('input');
+
+    function switchLayer(layer) {
+      var layerId = layer.target.id;
+      map.setStyle('mapbox://styles/mapbox/' + layerId);
+    }
+
+    for (var i = 0; i < inputs.length; i++) {
+      inputs[i].onclick = switchLayer;
+    }
+  </script>
+</body>
+
+</html>
