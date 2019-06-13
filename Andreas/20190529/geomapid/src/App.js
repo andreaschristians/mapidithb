@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import './App.css';
-import { Button } from 'semantic-ui-react'
+import { Button, Message, Popup } from 'semantic-ui-react'
 
 class App extends Component {
   constructor() {
@@ -45,10 +45,35 @@ class App extends Component {
             <img src="geo-icon.png" height="10px" alt="Geo"></img>
             <img src="mapid-icon.png" height="10px" alt="Mapid"></img>
           </Button></a>
-          <Button id="Bawah" content='Toolbox' icon='briefcase' labelPosition='left'></Button>
-          <Button id="Bawah" content='Details' icon='bars' labelPosition='left'></Button>
-          <Button id="Bawah" content='Inspect' icon='search' labelPosition='left'></Button>
-          <Button id="Navigation" content='Navigate' icon='location arrow' labelPosition='left'></Button>
+          <Popup trigger={<Button id="Bawah" content='Toolbox' icon='briefcase' labelPosition='left'></Button>} on='click' className='login-popup'>
+            <div className='popup-main'>
+              <Message attached='bottom'>
+                This is Inspect
+              </Message>
+            </div>
+          </Popup>
+          <Popup trigger={<Button id="Bawah" content='Details' icon='bars' labelPosition='left'></Button>} on='click' className='login-popup'>
+            <div className='popup-main'>
+              <Message attached='bottom'>
+                This is Inspect
+              </Message>
+            </div>
+          </Popup>
+          <Popup trigger={<Button id="Bawah" content='Inspect' icon='search' labelPosition='left'></Button>} on='click' className='login-popup'>
+            <div className='popup-main'>
+              <Message attached='bottom'>
+                This is Inspect
+              </Message>
+            </div>
+          </Popup>
+          <Popup trigger={<Button id="Navigation" content='Navigate' icon='location arrow' labelPosition='left'></Button>} on='click' className='login-popup'>
+            <div className='popup-main'>
+              <Message attached='bottom'>
+                This is Navigation
+              </Message>
+            </div>
+          </Popup>
+
           <Button id="Bawah" size="Large" content='Langtitude'><div id="isi"></div></Button>
         </div>
       </div>

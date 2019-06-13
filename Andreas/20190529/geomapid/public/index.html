@@ -81,7 +81,6 @@
 
 <body>
   <div id='map'></div>
-
   <div id='distance' class='distance-container'></div>
   <div class='calculation-box'>
     <div id='calculated-area'></div>
@@ -119,7 +118,6 @@
       },
       trackUserLocation: true
     }));
-
 
     // //Direction
     // map.addControl(new MapboxDirections({
@@ -263,7 +261,7 @@
       var answer = document.getElementById('calculated-area');
       if (data.features.length > 0) {
         var area = turf.area(data);
-        // restrict to area to 2 decimal points
+        // restrict to area to 3 decimal points
         var rounded_area = Math.round(area * 100) / 100000000;
         rounded_area = parseInt(rounded_area * 1000) / 1000;
         answer.innerHTML = 'Total Area : '+rounded_area + ' km2';
