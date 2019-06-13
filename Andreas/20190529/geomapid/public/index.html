@@ -9,20 +9,25 @@
   <link rel="shortcut icon" href="%PUBLIC_URL%/favicon2.ico" />
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.css' rel='stylesheet' />
   <link rel='stylesheet'
     href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.0/mapbox-gl-directions.css'
     type='text/css' />
   <link rel='stylesheet'
     href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.3.0/mapbox-gl-geocoder.css'
     type='text/css' />
+  <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.css'
+    type='text/css' />
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.css' rel='stylesheet' />
   <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.js'></script>
   <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
+  <script src="https://api.mapbox.com/mapbox-assembly/mbx/v0.18.0/assembly.js"></script>
+  <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js'></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.js'></script>
   <script
     src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.0/mapbox-gl-directions.js'></script>
   <script
     src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.3.0/mapbox-gl-geocoder.min.js'></script>
-  <script src="https://api.mapbox.com/mapbox-assembly/mbx/v0.18.0/assembly.js"></script>
   <style>
     #map {
       position: absolute;
@@ -32,12 +37,55 @@
       width: 100%;
     }
 
+    .calculation-box {
+      position: absolute;
+      bottom: 100px;
+      left: 10px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      font-size: 11px;
+      line-height: 18px;
+      display: block;
+      margin: 0;
+      padding: 5px 10px;
+      border-radius: 3px;
+    }
+
+    p {
+      font-family: 'Open Sans';
+      margin: 0;
+      font-size: 13px;
+    }
+
+    .distance-container {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 1;
+    }
+
+    .distance-container>* {
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      font-size: 11px;
+      line-height: 18px;
+      display: block;
+      margin: 0;
+      padding: 5px 10px;
+      border-radius: 3px;
+    }
+
     ;
   </style>
 </head>
 
 <body>
   <div id='map'></div>
+
+  <div id='distance' class='distance-container'></div>
+  <div class='calculation-box'>
+    <div id='calculated-area'></div>
+  </div>
   <div id="root"></div>
   <script>
     //MapBox
@@ -72,10 +120,132 @@
       trackUserLocation: true
     }));
 
-    //Direction
+
+    // //Direction
     // map.addControl(new MapboxDirections({
     //   accessToken: mapboxgl.accessToken
     // }), 'bottom-right');
+
+    //polygon
+    var draw = new MapboxDraw({
+      displayControlsDefault: false,
+      controls: {
+        polygon: true,
+        trash: true
+      }
+    });
+    map.addControl(draw);
+
+    map.on('draw.create', updateArea);
+    map.on('draw.delete', updateArea);
+    map.on('draw.update', updateArea);
+
+    //distance
+    var distanceContainer = document.getElementById('distance');
+
+    // GeoJSON object to hold our measurement features
+    var geojson = {
+      "type": "FeatureCollection",
+      "features": []
+    };
+
+    // Used to draw a line between points
+    var linestring = {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": []
+      }
+    };
+
+    map.on('load', function () {
+      map.addSource('geojson', {
+        "type": "geojson",
+        "data": geojson
+      });
+
+      // Add styles to the map
+      map.addLayer({
+        id: 'measure-points',
+        type: 'circle',
+        source: 'geojson',
+        paint: {
+          'circle-radius': 5,
+          'circle-color': '#000'
+        },
+        filter: ['in', '$type', 'Point']
+      });
+      map.addLayer({
+        id: 'measure-lines',
+        type: 'line',
+        source: 'geojson',
+        layout: {
+          'line-cap': 'round',
+          'line-join': 'round'
+        },
+        paint: {
+          'line-color': '#000',
+          'line-width': 2.5
+        },
+        filter: ['in', '$type', 'LineString']
+      });
+
+      map.on('click', function (e) {
+        var features = map.queryRenderedFeatures(e.point, { layers: ['measure-points'] });
+
+        // Remove the linestring from the group
+        // So we can redraw it based on the points collection
+        if (geojson.features.length > 1) geojson.features.pop();
+
+        // Clear the Distance container to populate it with a new value
+        distanceContainer.innerHTML = '';
+
+        // If a feature was clicked, remove it from the map
+        if (features.length) {
+          var id = features[0].properties.id;
+          geojson.features = geojson.features.filter(function (point) {
+            return point.properties.id !== id;
+          });
+        } else {
+          var point = {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                e.lngLat.lng,
+                e.lngLat.lat
+              ]
+            },
+            "properties": {
+              "id": String(new Date().getTime())
+            }
+          };
+
+          geojson.features.push(point);
+        }
+
+        if (geojson.features.length > 1) {
+          linestring.geometry.coordinates = geojson.features.map(function (point) {
+            return point.geometry.coordinates;
+          });
+
+          geojson.features.push(linestring);
+
+          // Populate the distanceContainer with total distance
+          var value = document.createElement('pre');
+          value.textContent = 'Total distance: ' + turf.lineDistance(linestring).toLocaleString() + ' km';
+          distanceContainer.appendChild(value);
+        }
+
+        map.getSource('geojson').setData(geojson);
+      });
+    });
+
+    map.on('mousemove', function (e) {
+      var features = map.queryRenderedFeatures(e.point, { layers: ['measure-points'] });
+      // UI indicator for clicking/hovering a point on the map
+      map.getCanvas().style.cursor = (features.length) ? 'pointer' : 'crosshair';
+    });
 
     //Ganti Style
     var layerList = document.getElementById('menu');
@@ -88,18 +258,21 @@
       inputs[i].onclick = switchLayer;
     }
 
-    var nullIsland = {
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [0, 0]
-      },
-      properties: {
-        name: 'Null Island'
+    function updateArea(e) {
+      var data = draw.getAll();
+      var answer = document.getElementById('calculated-area');
+      if (data.features.length > 0) {
+        var area = turf.area(data);
+        // restrict to area to 2 decimal points
+        var rounded_area = Math.round(area * 100) / 100000000;
+        rounded_area = parseInt(rounded_area * 1000) / 1000;
+        answer.innerHTML = 'Total Area : '+rounded_area + ' km2';
+      } else {
+        answer.innerHTML = '';
+        if (e.type !== 'draw.delete') alert("Use the draw tools to draw a polygon!");
       }
-    };
+    }
 
-    var twoHundredMilesOut = turf.buffer(nullIsland, 200, { unit: 'miles' });
   </script>
 </body>
 

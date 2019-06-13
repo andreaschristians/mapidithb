@@ -1,10 +1,10 @@
-#StyleMaps{
+#StyleMaps {
   padding: 12px;
   position: fixed;
-  right:250px;
+  right: 250px;
 }
 
-#Bottom{
+#Bottom {
   position: fixed;
   text-align: center;
   width: 100%;
@@ -12,8 +12,18 @@
   background-color: #7e7e7e;
   bottom: 0;
   float: left;
-};
+}
 
-#Bawah{
+;
+#Bawah {
   position: fixed;
-};
+}
+
+;
+/* #map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 92.5%;
+  width: 100%;
+} */
