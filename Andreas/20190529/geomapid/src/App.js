@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import './App.css';
-import { Button, Message, Popup } from 'semantic-ui-react'
+import './App.css'; 
+import { Button, Message, Popup, Table, Checkbox } from 'semantic-ui-react'
 
 class App extends Component {
   constructor() {
@@ -32,51 +32,112 @@ class App extends Component {
     return (
       <div id="Page" >
         <div id="StyleMaps">
-          <Button.Group>
-            <Button>Streets</Button>
-            <Button>Satelite</Button>
-            <Button>Hybrid</Button>
-            <Button>Terrain</Button>
+          <Button.Group id="menu" size="small">
+            <Button value="streets">Streets</Button>
+            <Button value="satellite">Satellite</Button>
+            <Button value="dark">Hybrid</Button>
+            <Button value="light">Terrain</Button>
           </Button.Group>
         </div>
         <div id="Bottom">
           <img src="mapid-logo.svg" align="center" height="30px" alt="Logo"></img>
-          <a href="https://www.mapid.io/"><Button id="Bawah">
+          <a href="https://www.mapid.io/"><Button id="Bawah" size="small">
             <img src="geo-icon.png" height="10px" alt="Geo"></img>
             <img src="mapid-icon.png" height="10px" alt="Mapid"></img>
           </Button></a>
-          <Popup trigger={<Button id="Bawah" content='Toolbox' icon='briefcase' labelPosition='left'></Button>} on='click' className='login-popup'>
+          <Popup trigger={<Button id="Bawah" size="small" content='Toolbox' icon='briefcase' labelPosition='left'></Button>} on='click' className='login-popup'>
+            <div className='popup-main'>
+              <Message attached='bottom'>
+                This is Toolbox, but Coming soon!!
+              </Message>
+            </div>
+          </Popup>
+          <Popup trigger={<Button id="Bawah" size="small" content='Details' icon='bars' labelPosition='left'></Button>} on='click' className='login-popup'>
+            <div className='popup-main'>
+              <Message attached='bottom'>
+                This is Details
+              </Message>
+            </div>
+          </Popup>
+          <Popup trigger={<Button id="Bawah" size="small" content='Inspect' icon='search' labelPosition='left'></Button>} on='click' className='login-popup'>
             <div className='popup-main'>
               <Message attached='bottom'>
                 This is Inspect
               </Message>
             </div>
           </Popup>
-          <Popup trigger={<Button id="Bawah" content='Details' icon='bars' labelPosition='left'></Button>} on='click' className='login-popup'>
-            <div className='popup-main'>
-              <Message attached='bottom'>
-                This is Inspect
-              </Message>
-            </div>
-          </Popup>
-          <Popup trigger={<Button id="Bawah" content='Inspect' icon='search' labelPosition='left'></Button>} on='click' className='login-popup'>
-            <div className='popup-main'>
-              <Message attached='bottom'>
-                This is Inspect
-              </Message>
-            </div>
-          </Popup>
-          <Popup trigger={<Button id="Navigation" content='Navigate' icon='location arrow' labelPosition='left'></Button>} on='click' className='login-popup'>
-            <div className='popup-main'>
+          <Popup trigger={<Button id="Navigation" size="small" content='Navigate' icon='location arrow' labelPosition='left'></Button>} on='click' className='login-popup'>
+            <div id='show_nav'>
               <Message attached='bottom'>
                 This is Navigation
               </Message>
             </div>
           </Popup>
 
-          <Button id="Bawah" size="Large" content='Langtitude'><div id="isi"></div></Button>
+          <Button id="Bawah" size="small" content='Langtitude'><div id="isi"></div></Button>
         </div>
+        <Table collapsing id="tbl" style={{"height": "10px", "overflow": "scroll"}}>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell />
+              <Table.HeaderCell>Layer Manager</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+
+          <Table.Body>
+            <Table.Row>
+              <Table.Cell collapsing>
+                <Checkbox slider />
+              </Table.Cell>
+              <Table.Cell>NowMapidStory</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell collapsing>
+                <Checkbox slider />
+              </Table.Cell>
+              <Table.Cell>CCTV</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell collapsing>
+                <Checkbox slider />
+              </Table.Cell>
+              <Table.Cell>Bendungan_Indonesia</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell collapsing>
+                <Checkbox slider />
+              </Table.Cell>
+              <Table.Cell>Survey_Tanjung_Duren</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell collapsing>
+                <Checkbox slider />
+              </Table.Cell>
+              <Table.Cell>NowMapidStory</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell collapsing>
+                <Checkbox slider />
+              </Table.Cell>
+              <Table.Cell>CCTV</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell collapsing>
+                <Checkbox slider />
+              </Table.Cell>
+              <Table.Cell>Bendungan_Indonesia</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell collapsing>
+                <Checkbox slider />
+              </Table.Cell>
+              <Table.Cell>Survey_Tanjung_Duren</Table.Cell>
+            </Table.Row>
+          </Table.Body>
+
+        </Table>
       </div>
+
     );
   }
 }

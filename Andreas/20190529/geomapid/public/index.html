@@ -124,19 +124,19 @@
     //   accessToken: mapboxgl.accessToken
     // }), 'bottom-right');
 
-    //polygon
-    var draw = new MapboxDraw({
-      displayControlsDefault: false,
-      controls: {
-        polygon: true,
-        trash: true
-      }
-    });
-    map.addControl(draw);
+    // //polygon
+    // var draw = new MapboxDraw({
+    //   displayControlsDefault: false,
+    //   controls: {
+    //     polygon: true,
+    //     trash: true
+    //   }
+    // });
+    // map.addControl(draw);
 
-    map.on('draw.create', updateArea);
-    map.on('draw.delete', updateArea);
-    map.on('draw.update', updateArea);
+    // map.on('draw.create', updateArea);
+    // map.on('draw.delete', updateArea);
+    // map.on('draw.update', updateArea);
 
     //distance
     var distanceContainer = document.getElementById('distance');
@@ -247,7 +247,7 @@
 
     //Ganti Style
     var layerList = document.getElementById('menu');
-    var inputs = layerList.getElementsByTagName('input');
+    var inputs = layerList.getElementsByTagName('Button');
     function switchLayer(layer) {
       var layerId = layer.target.id;
       map.setStyle('mapbox://styles/mapbox/' + layerId);
@@ -262,9 +262,9 @@
       if (data.features.length > 0) {
         var area = turf.area(data);
         // restrict to area to 3 decimal points
-        var rounded_area = Math.round(area * 100) / 100000000;
+        var rounded_area = Math.round(area) / 1000000;
         rounded_area = parseInt(rounded_area * 1000) / 1000;
-        answer.innerHTML = 'Total Area : '+rounded_area + ' km2';
+        answer.innerHTML  = 'Total Area : '+rounded_area + ' km<sup>2</sup>';
       } else {
         answer.innerHTML = '';
         if (e.type !== 'draw.delete') alert("Use the draw tools to draw a polygon!");

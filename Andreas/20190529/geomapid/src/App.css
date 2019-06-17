@@ -19,6 +19,15 @@
   position: fixed;
 }
 
+#tbl {
+  position: fixed;
+  overflow-x: scroll;
+  max-height: 100px;
+}
+.mapboxgl-ctrl-top-right{
+  float: right;
+  position: fixed;
+}
 ;
 /* #map {
   position: absolute;
