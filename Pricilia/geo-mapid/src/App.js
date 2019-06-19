@@ -11,6 +11,7 @@ import MapGL, {
   GeolocateControl,
   Marker
 } from '@urbica/react-map-gl';
+import Draw from '@urbica/react-map-gl-draw';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import {
@@ -34,10 +35,9 @@ import {
 } from 'semantic-ui-react';
 import { randomPoint } from '@turf/random';
 import Cluster from '@urbica/react-map-gl-cluster';
+import DrawControl from "react-mapbox-gl-draw";
 
-    const bbox = [-160, -70, 160, 70];
-    const points = randomPoint(50, { bbox }).features;
-    points.forEach((point, index) => (point.id = index));
+  
 
 class App extends Component {
   
@@ -50,21 +50,21 @@ class App extends Component {
         zoom: 11
       },
       mapColor: 'mapbox://styles/mapbox/streets-v11',
-      currentPos: null
+      currentPos: null,
+      features: []
     };
     this.updateDimensions = this.updateDimensions.bind(this); // <-- Contoh deklarasi functions/methods
     this.radioChange = this.radioChange.bind(this);
     this.getPosition = this.getPosition.bind(this);
 
-    const { point } = require('@turf/helpers');
-    const distance = require('@turf/distance').default;
+    // const { point } = require('@turf/helpers');
+    // const distance = require('@turf/distance').default;
     
-    let pt1 = point([8.534860, 11.999970]);
-    let pt2 = point([3.39467, 6.45407]);
-    let result = distance(pt1, pt2, { units: 'kilometers' });
+    // let pt1 = point([8.534860, 11.999970]);
+    // let pt2 = point([3.39467, 6.45407]);
+    // let result = distance(pt1, pt2, { units: 'kilometers' });
     
-    console.log(`Distance : ${result} KM`);
-
+    // console.log(`Distance : ${result} KM`);
   }
 
   componentWillMount() {
@@ -99,8 +99,6 @@ class App extends Component {
     this.setState({ currentPos: e.latlng });
   }
 
-
-  
   render() {
     const position = [this.state.viewport.latitude, this.state.viewport.longitude];
     const changeStyle = {
@@ -121,6 +119,10 @@ class App extends Component {
       borderRadius: '20px',
       textAlign: 'center'
     };
+
+    const bbox = [-160, -70, 160, 70];
+    const points = randomPoint(50, { bbox }).features;
+    points.forEach((point, index) => (point.id = index));
     
     const ClusterMarker = ({ longitude, latitude, pointCount }) => (
       <Marker longitude={longitude} latitude={latitude}>
@@ -168,8 +170,14 @@ class App extends Component {
                 <div style={style} />
               </Marker>
             ))}
-          </Cluster>
+          </Cluster> 
+
+          <Draw
+            onDrawCreate={({features}) => this.setState({features})}
+            onDrawUpdate={({features}) => this.setState({features})}
+          />
         </MapGL>  
+        
       </div>  
     )
   }
