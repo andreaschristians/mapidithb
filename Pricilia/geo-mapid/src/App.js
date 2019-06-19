@@ -37,8 +37,6 @@ import { randomPoint } from '@turf/random';
 import Cluster from '@urbica/react-map-gl-cluster';
 import DrawControl from "react-mapbox-gl-draw";
 
-  
-
 class App extends Component {
   
   constructor() {
@@ -56,6 +54,7 @@ class App extends Component {
     this.updateDimensions = this.updateDimensions.bind(this); // <-- Contoh deklarasi functions/methods
     this.radioChange = this.radioChange.bind(this);
     this.getPosition = this.getPosition.bind(this);
+
 
     // const { point } = require('@turf/helpers');
     // const distance = require('@turf/distance').default;
@@ -123,7 +122,7 @@ class App extends Component {
     const bbox = [-160, -70, 160, 70];
     const points = randomPoint(50, { bbox }).features;
     points.forEach((point, index) => (point.id = index));
-    
+
     const ClusterMarker = ({ longitude, latitude, pointCount }) => (
       <Marker longitude={longitude} latitude={latitude}>
         <div style={{ ...style, background: '#f28a25' }}>{pointCount}</div>
