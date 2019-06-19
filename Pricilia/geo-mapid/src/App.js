@@ -32,9 +32,15 @@ import {
   Form, 
   Radio
 } from 'semantic-ui-react';
-import Draw from '@urbica/react-map-gl-draw';
+import { randomPoint } from '@turf/random';
+import Cluster from '@urbica/react-map-gl-cluster';
+
+    const bbox = [-160, -70, 160, 70];
+    const points = randomPoint(50, { bbox }).features;
+    points.forEach((point, index) => (point.id = index));
 
 class App extends Component {
+  
   constructor() {
     super() 
     this.state = {
@@ -58,6 +64,7 @@ class App extends Component {
     let result = distance(pt1, pt2, { units: 'kilometers' });
     
     console.log(`Distance : ${result} KM`);
+
   }
 
   componentWillMount() {
@@ -92,6 +99,8 @@ class App extends Component {
     this.setState({ currentPos: e.latlng });
   }
 
+
+  
   render() {
     const position = [this.state.viewport.latitude, this.state.viewport.longitude];
     const changeStyle = {
@@ -104,7 +113,23 @@ class App extends Component {
       marginLeft: '5px'
     };
 
+    const style = {
+      width: '20px',
+      height: '20px',
+      color: '#fff',
+      background: '#1978c8',
+      borderRadius: '20px',
+      textAlign: 'center'
+    };
+    
+    const ClusterMarker = ({ longitude, latitude, pointCount }) => (
+      <Marker longitude={longitude} latitude={latitude}>
+        <div style={{ ...style, background: '#f28a25' }}>{pointCount}</div>
+      </Marker>
+    );
+
     return ( 
+
       <div class = "map-container" style={{ height: this.state.height }}>
         <div id ='menu' style={changeStyle} >
           <input id='streets-v11' type='radio' name='rtoggle' value='mapbox://styles/mapbox/streets-v11' onChange={this.radioChange}/>
@@ -130,10 +155,20 @@ class App extends Component {
           onViewportChange = {viewport => this.setState({ viewport })}
         >
 
-         
           <GeolocateControl position='top-right' />
           <NavigationControl showCompass showZoom position='top-right' />
 
+          <Cluster radius={40} extent={512} nodeSize={64} component={ClusterMarker}>
+            {points.map(point => (
+              <Marker
+                key={point.id}
+                longitude={point.geometry.coordinates[0]}
+                latitude={point.geometry.coordinates[1]}
+              >
+                <div style={style} />
+              </Marker>
+            ))}
+          </Cluster>
         </MapGL>  
       </div>  
     )
