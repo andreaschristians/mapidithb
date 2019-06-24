@@ -31,3 +31,64 @@
     transform: rotate(360deg);
   }
 }
+
+#locate {
+  position: fixed;
+  padding: 10px;
+}
+
+#StyleMaps {
+  top: 0;
+  padding: 7px;
+  position: fixed;
+  z-index: 999;
+  left: 240px;
+}
+
+#Bottom {
+  position: absolute;
+  z-index: 999;
+  text-align: center;
+  width: 100%;
+  padding: 5px;
+  background-color: #7e7e7e;
+  bottom: 0;
+  float: left;
+}
+
+;
+#Bawah {
+  position: absolute;
+  z-index: 999;
+}
+
+#tbl {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 999;
+  overflow-x: scroll;
+  max-height: 100px;
+  margin-right: 0.5em;
+  margin-top: 0.5em;
+}
+
+.mapboxgl-ctrl-top-right {
+  float: right;
+  position: fixed;
+}
+
+#tools {
+  background-color: #b8edfcaf;
+  width: 400px;
+  height: 250px;
+}
+
+#buttontools {
+  position: relative;
+  padding: 5px;
+  height: 40px;
+  overflow-x: hidden;
+}
+
+;
