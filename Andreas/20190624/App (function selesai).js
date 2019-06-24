@@ -1,13 +1,6 @@
 import React, { Component } from "react";
-import ReactMapGL, { Marker, GeolocateControl } from "react-map-gl";
-import {
-  Button,
-  Popup,
-  Label,
-  Table,
-  Message,
-  Checkbox
-} from "semantic-ui-react";
+import ReactMapGL, { Marker } from "react-map-gl";
+import { Button, Popup, Label } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import LineTo from "react-lineto";
 import * as turf from "@turf/turf";
@@ -37,8 +30,10 @@ class App extends Component {
   };
   _onClickMap(e) {
     console.log(e.lngLat);
-    let lnglat = e.lngLat;
-    document.getElementById("isilang").innerHTML = lnglat;
+    let lat = e.lnglat;
+    // var lng = e.longitude;
+    // this.setState({ clong: lng });
+    this.setState({ clat: lat });
   }
   _area() {
     var polygon = turf.polygon([[[103, -6], [103, -2], [104, -7], [103, -6]]]);
@@ -70,16 +65,10 @@ class App extends Component {
           mapboxApiAccessToken={
             "pk.eyJ1IjoiYW5kcmVhc2NocmlzdGlhbiIsImEiOiJjanZ2cnZhMjg0NWtmNDN1aTMxcGphY21xIn0.CDEBH4hJPmAhRDOtzz73Mw"
           }
-          onHover={this._onClickMap}
+          onClick={this._onClickMap}
           mapStyle={this.state.MapChange}
           onViewportChange={viewport => this.setState({ viewport })}
         >
-          <div id="locate">
-            <GeolocateControl
-              positionOptions={{ enableHighAccuracy: true }}
-              trackUserLocation={true}
-            />
-          </div>
           <Marker
             latitude={-6.9494343}
             longitude={107.62099}
@@ -163,13 +152,6 @@ class App extends Component {
           <Label for="outdoors">outdoors</Label>
         </div>
         <div id="Bottom">
-          <img src="mapid-logo.svg" align="center" height="30px" alt="Logo" />
-          <a href="https://www.mapid.io/">
-            <Button id="Bawah" size="small">
-              <img src="geo-icon.png" height="10px" alt="Geo" />
-              <img src="mapid-icon.png" height="10px" alt="Mapid" />
-            </Button>
-          </a>
           <Popup
             trigger={
               <Button
@@ -204,102 +186,8 @@ class App extends Component {
                 {this.state.area}
               </Label>
             </div>
-          </Popup>{" "}
-          <Popup
-            trigger={
-              <Button
-                id="Bawah"
-                size="small"
-                content="Details"
-                icon="bars"
-                labelPosition="left"
-              />
-            }
-            on="click"
-            className="login-popup"
-          >
-            <div className="popup-main">
-              <Message attached="bottom">This is Details</Message>
-            </div>
           </Popup>
-          <Popup
-            trigger={
-              <Button
-                id="Bawah"
-                size="small"
-                content="Inspect"
-                icon="search"
-                labelPosition="left"
-              />
-            }
-            on="click"
-            className="login-popup"
-          >
-            <div className="popup-main">
-              <Message attached="bottom">This is Inspect</Message>
-            </div>
-          </Popup>
-          <Popup
-            trigger={
-              <Button
-                id="Navigation"
-                size="small"
-                content="Navigate"
-                icon="location arrow"
-                labelPosition="left"
-              />
-            }
-            on="click"
-            className="login-popup"
-          >
-            <div id="show_nav">
-              <Message attached="bottom">This is Navigation</Message>
-            </div>
-          </Popup>
-          <Button id="Bawah" size="small" content="Langtitude">
-            <div id="isilang" />
-          </Button>
         </div>
-
-        <Table
-          collapsing
-          id="tbl"
-          style={{ height: "10px", overflow: "scroll" }}
-        >
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell />
-              <Table.HeaderCell>Layer Manager</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-
-          <Table.Body>
-            <Table.Row>
-              <Table.Cell collapsing>
-                <Checkbox slider />
-              </Table.Cell>
-              <Table.Cell>NowMapidStory</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing>
-                <Checkbox slider />
-              </Table.Cell>
-              <Table.Cell>Cctv</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing>
-                <Checkbox slider />
-              </Table.Cell>
-              <Table.Cell>Bendungan_Indonesia</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing>
-                <Checkbox slider />
-              </Table.Cell>
-              <Table.Cell>Survey_Tanjung_Duren</Table.Cell>
-            </Table.Row>
-          </Table.Body>
-        </Table>
       </div>
     );
   }
