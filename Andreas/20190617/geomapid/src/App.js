@@ -36,9 +36,9 @@ class App extends Component {
     }
   };
   _onClickMap(e) {
-    console.log(e.lngLat);
-    let lnglat = e.lngLat;
-    document.getElementById("isilang").innerHTML = lnglat;
+    let lng = parseInt(e.lngLat[0]*10000)/10000;
+    let lat = parseInt(e.lngLat[1]*10000)/10000;
+    document.getElementById("isilang").innerHTML = "Long : "+lng+" Lat : "+lat;
   }
   _area() {
     var polygon = turf.polygon([[[103, -6], [103, -2], [104, -7], [103, -6]]]);
@@ -142,25 +142,25 @@ class App extends Component {
             value="mapbox://styles/mapbox/streets-v11"
             onChange={this._StyleChange}
           />
-          <Label for="streets">streets</Label>
+          <Label>streets</Label>
           <input
             type="radio"
             value="mapbox://styles/mapbox/light-v10"
             onChange={this._StyleChange}
           />
-          <Label for="light">light</Label>
+          <Label>light</Label>
           <input
             type="radio"
             value="mapbox://styles/mapbox/dark-v10"
             onChange={this._StyleChange}
           />
-          <Label for="dark">dark</Label>
+          <Label>dark</Label>
           <input
             type="radio"
             value="mapbox://styles/mapbox/outdoors-v11"
             onChange={this._StyleChange}
           />
-          <Label for="outdoors">outdoors</Label>
+          <Label>outdoors</Label>
         </div>
         <div id="Bottom">
           <img src="mapid-logo.svg" align="center" height="30px" alt="Logo" />
@@ -198,10 +198,10 @@ class App extends Component {
               </div>
 
               <Label style={{ display: "inline-block" }}>
-                {this.state.distance}
+                {this.state.distance} Km
               </Label>
               <Label style={{ display: "inline-block" }}>
-                {this.state.area}
+                {this.state.area} Km<sup>2</sup>
               </Label>
             </div>
           </Popup>{" "}
@@ -256,7 +256,7 @@ class App extends Component {
               <Message attached="bottom">This is Navigation</Message>
             </div>
           </Popup>
-          <Button id="Bawah" size="small" content="Langtitude">
+          <Button id="Bawah" size="small" >
             <div id="isilang" />
           </Button>
         </div>
