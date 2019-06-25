@@ -6,7 +6,8 @@ import {
   Label,
   Table,
   Message,
-  Checkbox
+  Checkbox,
+  Form
 } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import LineTo from "react-lineto";
@@ -36,13 +37,14 @@ class App extends Component {
     }
   };
   _onClickMap(e) {
-    let lng = parseInt(e.lngLat[0]*10000)/10000;
-    let lat = parseInt(e.lngLat[1]*10000)/10000;
-    document.getElementById("isilang").innerHTML = "Long : "+lng+" Lat : "+lat;
+    let lng = parseInt(e.lngLat[0] * 10000) / 10000;
+    let lat = parseInt(e.lngLat[1] * 10000) / 10000;
+    document.getElementById("isilang").innerHTML =
+      "Long : " + lng + " Lat : " + lat;
   }
   _area() {
     var polygon = turf.polygon([[[103, -6], [103, -2], [104, -7], [103, -6]]]);
-    var areas = parseInt(turf.area(polygon) * 100) / 100;
+    var areas = parseInt(turf.area(polygon) / 10763.91) / 100;
     this.setState({ area: areas });
   }
 
@@ -136,31 +138,31 @@ class App extends Component {
           <LineTo from="B area" to="C area" />
           <LineTo from="C area" to="A area" />
         </ReactMapGL>
-        <div id="menu" style={{ position: "fixed", top: "0" }}>
-          <input
-            type="radio"
+        <div id="menu" style={{ position: "fixed", top: "0", padding:"8px", left:"40px"}}>
+          <Button
             value="mapbox://styles/mapbox/streets-v11"
-            onChange={this._StyleChange}
-          />
-          <Label>streets</Label>
-          <input
-            type="radio"
-            value="mapbox://styles/mapbox/light-v10"
-            onChange={this._StyleChange}
-          />
-          <Label>light</Label>
-          <input
-            type="radio"
-            value="mapbox://styles/mapbox/dark-v10"
-            onChange={this._StyleChange}
-          />
-          <Label>dark</Label>
-          <input
-            type="radio"
-            value="mapbox://styles/mapbox/outdoors-v11"
-            onChange={this._StyleChange}
-          />
-          <Label>outdoors</Label>
+            onClick={this._StyleChange}
+          >
+            Streets
+          </Button>
+          <Button
+            value="mapbox://styles/mapbox/satellite-v9"
+            onClick={this._StyleChange}
+          >
+            Sattelite
+          </Button>
+          <Button
+            value="mapbox://styles/mapbox/satellite-streets-v9"
+            onClick={this._StyleChange}
+          >
+            Hybrid
+          </Button>
+          <Button
+            value="mapbox://styles/mapbox/streets-v9"
+            onClick={this._StyleChange}
+          >
+            Terrain
+          </Button>
         </div>
         <div id="Bottom">
           <img src="mapid-logo.svg" align="center" height="30px" alt="Logo" />
@@ -198,10 +200,10 @@ class App extends Component {
               </div>
 
               <Label style={{ display: "inline-block" }}>
-                {this.state.distance} Km
+                Distance : {this.state.distance} Km
               </Label>
               <Label style={{ display: "inline-block" }}>
-                {this.state.area} Km<sup>2</sup>
+                Area : {this.state.area} Km<sup>2</sup>
               </Label>
             </div>
           </Popup>{" "}
@@ -256,7 +258,7 @@ class App extends Component {
               <Message attached="bottom">This is Navigation</Message>
             </div>
           </Popup>
-          <Button id="Bawah" size="small" >
+          <Button id="Bawah" size="small">
             <div id="isilang" />
           </Button>
         </div>
@@ -294,7 +296,9 @@ class App extends Component {
             </Table.Row>
             <Table.Row>
               <Table.Cell collapsing>
-                <Checkbox slider />
+                <Form.Field>
+                  <Checkbox slider onChange={this._area} />
+                </Form.Field>
               </Table.Cell>
               <Table.Cell>Survey_Tanjung_Duren</Table.Cell>
             </Table.Row>
