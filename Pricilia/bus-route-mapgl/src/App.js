@@ -17,54 +17,29 @@ class App extends Component {
         zoom: 11
       },
       selected_bus: 1,
-      data: null
+      dataGeo: null
     };
-    // this.handleSelect = this.handleSelect.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
   }
 
-  // handleSelect(e) {
-  //   let selection = e.target.value;
+  handleSelect(e) {
+    let selection = e.target.value;
+    this.setState({selected_bus: selection});
 
-  //   this.setState({selected_bus: selection}, () => {
-  //     let geojson = 'https://data.calgary.ca/resource/hpnd-riq4.geojson?route_short_name='+this.state.selected_bus 
+    let geojson = 'https://data.calgary.ca/resource/hpnd-riq4.geojson?route_short_name='+ this.state.selected_bus;
 
-  //     fetch(geojson)
-  //       .then(response => response.json())
-  //       .then(data => {
-  //         let turf_center = center(data);
-  //         let center_coord = turf_center.geometry.coordinates;
-
-  //         const newVewport = {
-  //           ...this.state.viewport,
-  //           latitude: turf_center.latitude,
-  //           longitude: turf_center.longitude,
-  //           zoom: 12
-  //         };
-          
-  //         this.setState({ viewport: newVewport });
-  //         console.log(turf_center);
-  //       })
-  //       this.setState({data: geojson});
-  //   });
-  // }
+    fetch(geojson).then(response => response.json());
+    this.setState({dataGeo: geojson});
+  }
 
   render() {
     let items = bus_list.map((bus) => 
     <option key={bus.route_short_name} value={bus.route_short_name}>{bus.route_short_name+" - "+bus.route_long_name}</option>); 
-    
-    const myDeckLayer = new MapboxLayer({
-      id: 'my-scatterplot',
-      type: ScatterplotLayer,
-      data: [{ position: [-74.5, 40], size: 1000 }],
-      getPosition: d => d.position,
-      getRadius: d => d.size,
-      getColor: [255, 0, 0]
-    });
 
-      let geojson = 'https://data.calgary.ca/resource/hpnd-riq4.geojson?route_short_name=1'
+      // let geojson = 'https://data.calgary.ca/resource/hpnd-riq4.geojson?route_short_name=1'
 
-      fetch(geojson)
-        .then(response => response.json())
+      // fetch(geojson)
+      //   .then(response => response.json())
     
     return(
       <div>
@@ -98,7 +73,7 @@ class App extends Component {
           onViewportChange = {viewport => this.setState({ viewport })}
         >
           
-          <Source id='route' type='geojson' data={geojson} />
+          <Source id='route' type='geojson' data={this.state.dataGeo} />
           <Layer
             id='route'
             type='line'
