@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import MapGL, { CustomLayer, Source, Layer } from '@urbica/react-map-gl';
+import MapGL, { Source, Layer, NavigationControl, GeolocateControl } from '@urbica/react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import logo from './logo.svg';
 import './App.css';
 import { center } from '@turf/turf';
 import bus_list from './bus_list.json';
-import { MapboxLayer } from '@deck.gl/mapbox';
-import { ScatterplotLayer } from '@deck.gl/layers';
+import Draw from '@urbica/react-map-gl-draw';
+import { Label } from 'semantic-ui-react';
+import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 class App extends Component {
   constructor() {
     super();
@@ -16,10 +16,21 @@ class App extends Component {
         longitude: -114.0708,
         zoom: 11
       },
+      mapColor: 'mapbox://styles/mapbox/streets-v11',
       selected_bus: 1,
-      dataGeo: null
+      dataGeo: null,
+      turfCenter: null,
+      turfCoord: null
     };
     this.handleSelect = this.handleSelect.bind(this);
+    this.radioChange = this.radioChange.bind(this);
+  }
+
+  radioChange(e) {
+    console.log(e.currentTarget.value);
+    this.setState({
+      mapColor: e.currentTarget.value
+    });
   }
 
   handleSelect(e) {
@@ -30,41 +41,70 @@ class App extends Component {
 
     fetch(geojson).then(response => response.json());
     this.setState({dataGeo: geojson});
+
+    // this.setState({turfCenter: center(dataGeo)});
+    // this.setState({turfCoord: turfCenter.geometry.coordinates});
+
+    // this.setState({viewport: turfCoord});
   }
 
   render() {
+    const selectStyle = {
+      display: "inline-block", 
+      zIndex: 999,
+      position: "absolute", 
+      height: "40px",
+      width:"450px",
+      padding: "10px",
+      top:"60px", 
+      left:"5px", 
+      fontSize:"17px",
+      border: "none",
+      borderRadius: "3px",
+      color: "#fff",
+      background: "#6d6d6d", 
+      fontStyle:"bold", outline:"none"
+    };
+
+    const radioStyle = {
+      zIndex: 999,
+      position: "absolute",
+      background: '#fff',
+      padding: '10px',
+      borderRadius: '10px',
+      top: '10px',
+      left: '5px',
+      float: 'right'
+    };
+
     let items = bus_list.map((bus) => 
     <option key={bus.route_short_name} value={bus.route_short_name}>{bus.route_short_name+" - "+bus.route_long_name}</option>); 
-
-      // let geojson = 'https://data.calgary.ca/resource/hpnd-riq4.geojson?route_short_name=1'
-
-      // fetch(geojson)
-      //   .then(response => response.json())
     
     return(
       <div>
-        <select onChange={this.handleSelect} 
+        <select 
+          onChange={this.handleSelect} 
           value={this.state.value}  
-          style={{display: "inline-block", 
-          zIndex: 999,
-          position: "absolute", 
-          height: "40px",
-          width:"450px",
-          padding: "10px",
-          top:"40px", 
-          left:"40px", 
-          fontSize:"17px",
-          border: "none",
-          borderRadius: "3px",
-          color: "#fff",
-          background: "#6d6d6d", 
-          fontStyle:"bold", outline:"none"}}>
-            {items}
-          </select>
-          
+          style={selectStyle}>
+          {items}
+        </select>
+
+        <div id ='menu' style={radioStyle} >
+          <input id='streets-v11' type='radio' name='rtoggle' value='mapbox://styles/mapbox/streets-v11' onChange={this.radioChange}/>
+          <Label for='streets'>streets</Label>
+          <input id='light-v10' type='radio' name='rtoggle' value='mapbox://styles/mapbox/light-v10' onChange={this.radioChange}/>
+          <Label for='light'>light</Label>
+          <input id='dark-v10' type='radio' name='rtoggle' value='mapbox://styles/mapbox/dark-v10' onChange={this.radioChange}/>
+          <Label for='dark'>dark</Label>
+          <input id='outdoors-v11' type='radio' name='rtoggle' value='mapbox://styles/mapbox/outdoors-v11' onChange={this.radioChange}/>
+          <Label for='outdoors'>outdoors</Label>
+          <input id='satellite-v9' type='radio' name='rtoggle' value='mapbox://styles/mapbox/satellite-v9' onChange={this.radioChange}/>
+          <Label for='satellite'>satellite</Label>
+        </div>
+
         <MapGL
           style = {{ width: '100%', height: '650px' }}
-          mapStyle = {'mapbox://styles/mapbox/streets-v11'}
+          mapStyle = {this.state.mapColor}
           accessToken={'pk.eyJ1IjoiY2h5cHJpY2lsaWEiLCJhIjoiY2p2dXpnODFkM3F6OTQzcGJjYWgyYmIydCJ9.h_AlGKNQW-TtUVF-856lSA'}
           
           latitude = {this.state.viewport.latitude}
@@ -87,6 +127,10 @@ class App extends Component {
               'line-width': 8
             }}
           />
+          <GeolocateControl position='top-right' />
+          <NavigationControl showCompass showZoom position='top-right' />
+
+          <Draw/>
         </MapGL> 
       </div>
     );
