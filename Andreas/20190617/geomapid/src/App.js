@@ -21,6 +21,8 @@ class App extends Component {
     this._area = this._area.bind(this);
     this._StyleChange = this._StyleChange.bind(this);
     this._onClickMap = this._onClickMap.bind(this);
+    this._showmarker = this._showmarker.bind(this);
+    this._unshowmarker = this._unshowmarker.bind(this);
   }
 
   state = {
@@ -33,9 +35,16 @@ class App extends Component {
       area: 0,
       distance: 0,
       MapChange: "mapbox://styles/mapbox/streets-v11",
-      clat: 0
+      clat: 0,
+      img: "unhere.png"
     }
   };
+  _showmarker() {
+    this.setState({ img: "here.png" });
+  }
+  _unshowmarker() {
+    this.setState({ img: "unhere.png" });
+  }
   _onClickMap(e) {
     let lng = parseInt(e.lngLat[0] * 10000) / 10000;
     let lat = parseInt(e.lngLat[1] * 10000) / 10000;
@@ -87,9 +96,10 @@ class App extends Component {
             longitude={107.62099}
             offsetLeft={-20}
             offsetTop={-10}
+            display={"false"}
           >
             <div className="A">
-              <img src="here.png" height="50px" width="50px" alt="here" />
+              <img src={this.state.img} height="50px" width="50px" alt="" />
             </div>
           </Marker>
           <Marker
@@ -99,7 +109,7 @@ class App extends Component {
             offsetTop={-10}
           >
             <div className="B">
-              <img src="here.png" height="50px" width="50px" alt="here" />
+              <img src={this.state.img} height="50px" width="50px" alt="" />
             </div>
           </Marker>
           <LineTo from="A" to="B" />
@@ -111,7 +121,7 @@ class App extends Component {
             offsetTop={-10}
           >
             <div className="A area">
-              <img src="here.png" height="50px" width="50px" alt="here" />
+              <img src={this.state.img} height="50px" width="50px" alt="" />
             </div>
           </Marker>
           <Marker
@@ -121,7 +131,7 @@ class App extends Component {
             offsetTop={-10}
           >
             <div className="B area">
-              <img src="here.png" height="50px" width="50px" alt="here" />
+              <img src={this.state.img} height="50px" width="50px" alt="" />
             </div>
           </Marker>
           <Marker
@@ -131,35 +141,46 @@ class App extends Component {
             offsetTop={-10}
           >
             <div className="C area">
-              <img src="here.png" height="50px" width="50px" alt="here" />
+              <img src={this.state.img} height="50px" width="50px" alt="" />
             </div>
           </Marker>
           <LineTo from="A area" to="B area" />
           <LineTo from="B area" to="C area" />
           <LineTo from="C area" to="A area" />
         </ReactMapGL>
-        <div id="menu" style={{ position: "fixed", top: "0", padding:"8px", left:"40px"}}>
+        <div
+          id="menu"
+          style={{ position: "fixed", top: "0", padding: "8px", left: "40px" }}
+        >
           <Button
+            compact
             value="mapbox://styles/mapbox/streets-v11"
             onClick={this._StyleChange}
+            size="small"
           >
             Streets
           </Button>
           <Button
+            compact
             value="mapbox://styles/mapbox/satellite-v9"
             onClick={this._StyleChange}
+            size="small"
           >
             Sattelite
           </Button>
           <Button
+            compact
             value="mapbox://styles/mapbox/satellite-streets-v9"
             onClick={this._StyleChange}
+            size="small"
           >
             Hybrid
           </Button>
           <Button
+            compact
             value="mapbox://styles/mapbox/streets-v9"
             onClick={this._StyleChange}
+            size="small"
           >
             Terrain
           </Button>
@@ -167,7 +188,7 @@ class App extends Component {
         <div id="Bottom">
           <img src="mapid-logo.svg" align="center" height="30px" alt="Logo" />
           <a href="https://www.mapid.io/">
-            <Button id="Bawah" size="small">
+            <Button compact id="Bawah" size="small">
               <img src="geo-icon.png" height="10px" alt="Geo" />
               <img src="mapid-icon.png" height="10px" alt="Mapid" />
             </Button>
@@ -175,6 +196,7 @@ class App extends Component {
           <Popup
             trigger={
               <Button
+                compact
                 id="Bawah"
                 size="small"
                 content="Toolbox"
@@ -210,6 +232,7 @@ class App extends Component {
           <Popup
             trigger={
               <Button
+                compact
                 id="Bawah"
                 size="small"
                 content="Details"
@@ -227,6 +250,7 @@ class App extends Component {
           <Popup
             trigger={
               <Button
+                compact
                 id="Bawah"
                 size="small"
                 content="Inspect"
@@ -244,6 +268,7 @@ class App extends Component {
           <Popup
             trigger={
               <Button
+                compact
                 id="Navigation"
                 size="small"
                 content="Navigate"
@@ -258,7 +283,7 @@ class App extends Component {
               <Message attached="bottom">This is Navigation</Message>
             </div>
           </Popup>
-          <Button id="Bawah" size="small">
+          <Button compact id="Bawah" size="small">
             <div id="isilang" />
           </Button>
         </div>
@@ -278,29 +303,65 @@ class App extends Component {
           <Table.Body>
             <Table.Row>
               <Table.Cell collapsing>
-                <Checkbox slider />
+                <Button
+                  onClick={this._showmarker}
+                  label="ON"
+                  // onMouseUp={this._unshowmarker}
+                />
+                <Button
+                  onClick={this._unshowmarker}
+                  label="OFF"
+                  // onMouseUp={this._unshowmarker}
+                />
               </Table.Cell>
               <Table.Cell>NowMapidStory</Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell collapsing>
-                <Checkbox slider />
+                <Button
+                  onClick={this._showmarker}
+                  label="ON"
+                  // onMouseUp={this._unshowmarker}
+                />
+                <Button
+                  onClick={this._unshowmarker}
+                  label="OFF"
+                  // onMouseUp={this._unshowmarker}
+                />
               </Table.Cell>
               <Table.Cell>Cctv</Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell collapsing>
-                <Checkbox slider />
+                <Button
+                  onClick={this._showmarker}
+                  label="ON"
+                  // onMouseUp={this._unshowmarker}
+                />
+                <Button
+                  onClick={this._unshowmarker}
+                  label="OFF"
+                  // onMouseUp={this._unshowmarker}
+                />
               </Table.Cell>
               <Table.Cell>Bendungan_Indonesia</Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell collapsing>
                 <Form.Field>
-                  <Checkbox slider onChange={this._area} />
+                  <Button
+                    onClick={this._showmarker}
+                    label="ON"
+                    // onMouseUp={this._unshowmarker}
+                  />
+                  <Button
+                    onClick={this._unshowmarker}
+                    label="OFF"
+                    // onMouseUp={this._unshowmarker}
+                  />
                 </Form.Field>
               </Table.Cell>
-              <Table.Cell>Survey_Tanjung_Duren</Table.Cell>
+              <Table.Cell>Marker</Table.Cell>
             </Table.Row>
           </Table.Body>
         </Table>
