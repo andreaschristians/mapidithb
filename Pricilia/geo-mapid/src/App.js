@@ -49,12 +49,16 @@ class App extends Component {
       },
       mapColor: 'mapbox://styles/mapbox/streets-v11',
       currentPos: null,
-      features: []
+      data: {
+        type: "FeatureCollection",
+        features: []
+      }
     };
     this.updateDimensions = this.updateDimensions.bind(this); // <-- Contoh deklarasi functions/methods
     this.radioChange = this.radioChange.bind(this);
     this.getPosition = this.getPosition.bind(this);
-
+    this.setOnChange = this.setOnChange.bind(this);
+    this.setInitialProperties = this.setInitialProperties.bind(this);
 
     // const { point } = require('@turf/helpers');
     // const distance = require('@turf/distance').default;
@@ -79,6 +83,17 @@ class App extends Component {
   componentWillUnmount() {
     // <-- Event Method bawaan react
     window.removeEventListener("resize", this.updateDimensions.bind(this));
+  }
+
+  setOnChange(data) {
+    this.setState({data: data});
+    console.log(this.state.data);
+    
+  }
+
+  setInitialProperties(features) {
+    console.log(features[0].geometry.coordinates[0]);
+    console.log(features[0].geometry.coordinates[1]);
   }
 
   updateDimensions() {
@@ -146,7 +161,7 @@ class App extends Component {
         </div>
 
         <MapGL
-          style = {{ width: '100%', height: '650px' }}
+          style = {{ width: '100%', height: '500px' }}
           mapStyle = {this.state.mapColor}
           accessToken={'pk.eyJ1IjoiY2h5cHJpY2lsaWEiLCJhIjoiY2p2dXpnODFkM3F6OTQzcGJjYWgyYmIydCJ9.h_AlGKNQW-TtUVF-856lSA'}
           
@@ -159,7 +174,7 @@ class App extends Component {
           <GeolocateControl position='top-right' />
           <NavigationControl showCompass showZoom position='top-right' />
 
-          <Cluster radius={40} extent={512} nodeSize={64} component={ClusterMarker}>
+          {/* <Cluster radius={40} extent={512} nodeSize={64} component={ClusterMarker}>
             {points.map(point => (
               <Marker
                 key={point.id}
@@ -169,14 +184,20 @@ class App extends Component {
                 <div style={style} />
               </Marker>
             ))}
-          </Cluster> 
-
+          </Cluster>  */}
+          
           <Draw
-            onDrawCreate={({features}) => this.setState({features})}
-            onDrawUpdate={({features}) => this.setState({features})}
+            data={this.state.data}
+            onChange={(data) => this.setState({data})}
+            onDrawCreate={({ features }) => {
+              this.setInitialProperties(features);
+            }}
           />
+
         </MapGL>  
-        
+        <div>
+          {JSON.stringify(this.state.data)}
+        </div>
       </div>  
     )
   }
