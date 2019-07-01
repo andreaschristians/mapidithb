@@ -150,7 +150,7 @@ class App extends Component {
         </ReactMapGL>
         <div
           id="menu"
-          style={{ position: "fixed", top: "0", padding: "8px", left: "40px" }}
+          style={{ position: "fixed", top: "6px", padding: "5px", left: "40px" }}
         >
           <Button
             compact
@@ -178,7 +178,7 @@ class App extends Component {
           </Button>
           <Button
             compact
-            value="mapbox://styles/mapbox/streets-v9"
+            value="mapbox://styles/mapbox/terrain-v2"
             onClick={this._StyleChange}
             size="small"
           >
@@ -306,11 +306,15 @@ class App extends Component {
                 <Button
                   onClick={this._showmarker}
                   label="ON"
+                  compact
+                  size="small"
                   // onMouseUp={this._unshowmarker}
                 />
                 <Button
                   onClick={this._unshowmarker}
                   label="OFF"
+                  compact
+                  size="small"
                   // onMouseUp={this._unshowmarker}
                 />
               </Table.Cell>
@@ -321,11 +325,15 @@ class App extends Component {
                 <Button
                   onClick={this._showmarker}
                   label="ON"
+                  compact
+                  size="small"
                   // onMouseUp={this._unshowmarker}
                 />
                 <Button
                   onClick={this._unshowmarker}
                   label="OFF"
+                  compact
+                  size="small"
                   // onMouseUp={this._unshowmarker}
                 />
               </Table.Cell>
@@ -336,11 +344,15 @@ class App extends Component {
                 <Button
                   onClick={this._showmarker}
                   label="ON"
+                  compact
+                  size="small"
                   // onMouseUp={this._unshowmarker}
                 />
                 <Button
                   onClick={this._unshowmarker}
                   label="OFF"
+                  compact
+                  size="small"
                   // onMouseUp={this._unshowmarker}
                 />
               </Table.Cell>
@@ -352,11 +364,15 @@ class App extends Component {
                   <Button
                     onClick={this._showmarker}
                     label="ON"
+                    compact
+                    size="small"
                     // onMouseUp={this._unshowmarker}
                   />
                   <Button
                     onClick={this._unshowmarker}
                     label="OFF"
+                    compact
+                    size="small"
                     // onMouseUp={this._unshowmarker}
                   />
                 </Form.Field>
