@@ -1,18 +1,11 @@
 import React, { Component } from "react";
 import ReactMapGL, { Marker, GeolocateControl } from "react-map-gl";
-import {
-  Button,
-  Popup,
-  Label,
-  Table,
-  Message,
-  Checkbox,
-  Form
-} from "semantic-ui-react";
+import { Button, Popup, Label, Table, Message, Form } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import LineTo from "react-lineto";
 import * as turf from "@turf/turf";
 import "./App.css";
+var markers;
 
 class App extends Component {
   constructor() {
@@ -21,6 +14,7 @@ class App extends Component {
     this._area = this._area.bind(this);
     this._StyleChange = this._StyleChange.bind(this);
     this._onClickMap = this._onClickMap.bind(this);
+    this._onClick = this._onClick.bind(this);
     this._showmarker = this._showmarker.bind(this);
     this._unshowmarker = this._unshowmarker.bind(this);
   }
@@ -32,16 +26,47 @@ class App extends Component {
       latitude: -6.9184,
       longitude: 106.6093,
       zoom: 4.69,
-      area: 0,
-      distance: 0,
-      MapChange: "mapbox://styles/mapbox/streets-v11",
-      clat: 0,
-      img: "unhere.png"
-    }
+      customMarkers: []
+    },
+    area: 0,
+    distance: 0,
+    MapChange: "mapbox://styles/mapbox/streets-v11",
+    img: "unhere.png",
+    display1: "none",
+    display2: "none"
   };
+
+  componentDidMount() {
+    markers = [];
+  }
+
+  _onClick(e) {
+    // const newVewport = {
+    //   ...this.state.viewport,
+    //   latitude: e.lngLat[1],
+    //   longitude: e.lngLat[0]
+    // };
+
+    markers.push(
+      <Marker
+        latitude={e.lngLat[1]}
+        longitude={e.lngLat[0]}
+        offsetLeft={-20}
+        offsetTop={-10}
+      >
+        <div>
+          <img src="here.png" height="50px" width="50px" alt="" />
+        </div>
+      </Marker>
+    );
+    // this.setState({ viewport: newVewport });
+    return this.setState({ customMarkers: markers });
+    // console.log(this.state.customMarkers);
+  }
   _showmarker() {
     this.setState({ img: "here.png" });
   }
+
   _unshowmarker() {
     this.setState({ img: "unhere.png" });
   }
@@ -55,6 +80,8 @@ class App extends Component {
     var polygon = turf.polygon([[[103, -6], [103, -2], [104, -7], [103, -6]]]);
     var areas = parseInt(turf.area(polygon) / 10763.91) / 100;
     this.setState({ area: areas });
+    var disp = "inline-block";
+    this.setState({ display2: disp });
   }
 
   _distance() {
@@ -63,6 +90,8 @@ class App extends Component {
     var options = { units: "kilometers" };
     var distances = parseInt(turf.distance(from, to, options) * 100) / 100;
     this.setState({ distance: distances });
+    var disp = "inline-block";
+    this.setState({ display1: disp });
   }
 
   _StyleChange(e) {
@@ -82,6 +111,7 @@ class App extends Component {
             "pk.eyJ1IjoiYW5kcmVhc2NocmlzdGlhbiIsImEiOiJjanZ2cnZhMjg0NWtmNDN1aTMxcGphY21xIn0.CDEBH4hJPmAhRDOtzz73Mw"
           }
           onHover={this._onClickMap}
+          onClick={this._onClick}
           mapStyle={this.state.MapChange}
           onViewportChange={viewport => this.setState({ viewport })}
         >
@@ -91,6 +121,7 @@ class App extends Component {
               trackUserLocation={true}
             />
           </div>
+          {this.state.customMarkers}
           <Marker
             latitude={-6.9494343}
             longitude={107.62099}
@@ -147,10 +178,23 @@ class App extends Component {
           <LineTo from="A area" to="B area" />
           <LineTo from="B area" to="C area" />
           <LineTo from="C area" to="A area" />
+          <Marker
+            latitude={-7}
+            longitude={110}
+            offsetLeft={-20}
+            offsetTop={-10}
+          >
+            <img src={this.state.img} height="50px" width="50px" alt="" />
+          </Marker>
         </ReactMapGL>
         <div
           id="menu"
-          style={{ position: "fixed", top: "0", padding: "8px", left: "40px" }}
+          style={{
+            position: "fixed",
+            top: "6px",
+            padding: "5px",
+            left: "40px"
+          }}
         >
           <Button
             compact
@@ -178,7 +222,7 @@ class App extends Component {
           </Button>
           <Button
             compact
-            value="mapbox://styles/mapbox/streets-v9"
+            value="mapbox://styles/mapbox/terrain-v2"
             onClick={this._StyleChange}
             size="small"
           >
@@ -221,10 +265,10 @@ class App extends Component {
                 />
               </div>
 
-              <Label style={{ display: "inline-block" }}>
+              <Label style={{ display: this.state.display1 }}>
                 Distance : {this.state.distance} Km
               </Label>
-              <Label style={{ display: "inline-block" }}>
+              <Label style={{ display: this.state.display2 }}>
                 Area : {this.state.area} Km<sup>2</sup>
               </Label>
             </div>
@@ -304,13 +348,17 @@ class App extends Component {
             <Table.Row>
               <Table.Cell collapsing>
                 <Button
-                  onClick={this._showmarker}
+                  // onClick={this._showmarker}
                   label="ON"
+                  compact
+                  size="small"
                   // onMouseUp={this._unshowmarker}
                 />
                 <Button
-                  onClick={this._unshowmarker}
+                  // onClick={this._unshowmarker}
                   label="OFF"
+                  compact
+                  size="small"
                   // onMouseUp={this._unshowmarker}
                 />
               </Table.Cell>
@@ -319,13 +367,17 @@ class App extends Component {
             <Table.Row>
               <Table.Cell collapsing>
                 <Button
-                  onClick={this._showmarker}
+                  // onClick={this._showmarker}
                   label="ON"
+                  compact
+                  size="small"
                   // onMouseUp={this._unshowmarker}
                 />
                 <Button
-                  onClick={this._unshowmarker}
+                  // onClick={this._unshowmarker}
                   label="OFF"
+                  compact
+                  size="small"
                   // onMouseUp={this._unshowmarker}
                 />
               </Table.Cell>
@@ -334,13 +386,17 @@ class App extends Component {
             <Table.Row>
               <Table.Cell collapsing>
                 <Button
-                  onClick={this._showmarker}
+                  // onClick={this._showmarker}
                   label="ON"
+                  compact
+                  size="small"
                   // onMouseUp={this._unshowmarker}
                 />
                 <Button
-                  onClick={this._unshowmarker}
+                  // onClick={this._unshowmarker}
                   label="OFF"
+                  compact
+                  size="small"
                   // onMouseUp={this._unshowmarker}
                 />
               </Table.Cell>
@@ -352,11 +408,15 @@ class App extends Component {
                   <Button
                     onClick={this._showmarker}
                     label="ON"
+                    compact
+                    size="small"
                     // onMouseUp={this._unshowmarker}
                   />
                   <Button
                     onClick={this._unshowmarker}
                     label="OFF"
+                    compact
+                    size="small"
                     // onMouseUp={this._unshowmarker}
                   />
                 </Form.Field>
