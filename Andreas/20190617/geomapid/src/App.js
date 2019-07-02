@@ -187,15 +187,7 @@ class App extends Component {
             <img src={this.state.img} height="50px" width="50px" alt="" />
           </Marker>
         </ReactMapGL>
-        <div
-          id="menu"
-          style={{
-            position: "fixed",
-            top: "6px",
-            padding: "5px",
-            left: "40px"
-          }}
-        >
+        <div id="menu">
           <Button
             compact
             value="mapbox://styles/mapbox/streets-v11"
