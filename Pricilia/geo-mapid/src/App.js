@@ -33,6 +33,7 @@ import {
   Form, 
   Radio
 } from 'semantic-ui-react';
+import { center, distance } from '@turf/turf';
 import { randomPoint } from '@turf/random';
 import Cluster from '@urbica/react-map-gl-cluster';
 import DrawControl from "react-mapbox-gl-draw";
@@ -48,15 +49,17 @@ class App extends Component {
         zoom: 11
       },
       mapColor: 'mapbox://styles/mapbox/streets-v11',
-      currentPos: null,
       data: {
         type: "FeatureCollection",
         features: []
-      }
+      },
+      mode: 'simple_select',
+      distance: null,
+      lat: null,
+      lng: null
     };
     this.updateDimensions = this.updateDimensions.bind(this); // <-- Contoh deklarasi functions/methods
     this.radioChange = this.radioChange.bind(this);
-    this.getPosition = this.getPosition.bind(this);
     this.setOnChange = this.setOnChange.bind(this);
     this.setInitialProperties = this.setInitialProperties.bind(this);
 
@@ -92,13 +95,15 @@ class App extends Component {
   }
 
   setInitialProperties(features) {
+    this.setState({lat: features[0].geometry.coordinates[0]});
+    this.setState({lng: features[0].geometry.coordinates[1]});
     console.log(features[0].geometry.coordinates[0]);
     console.log(features[0].geometry.coordinates[1]);
   }
 
   updateDimensions() {
     // <-- Function bikinan sendiri untuk mengatur tampilan dimensi peta
-    const height = window.innerWidth >= 992 ? window.innerHeight : 400;
+    const height = window.innerWidth >= 992 ? window.innerHeight : 650;
     this.setState({ height: height });
   }
   
@@ -109,40 +114,32 @@ class App extends Component {
     });
   }
   
-  getPosition(e) {
-    this.setState({ currentPos: e.latlng });
-  }
-
   render() {
     const position = [this.state.viewport.latitude, this.state.viewport.longitude];
     const changeStyle = {
       zIndex: 999,
       position: "absolute",
-      background: '#fff',
-      padding: '10px',
-      borderRadius: '10px',
-      marginTop: '10px',
-      marginLeft: '5px'
+      background: "#fff",
+      padding: "10px",
+      borderRadius: "10px",
+      top: "10px",
+      left: "10px"
     };
 
-    const style = {
-      width: '20px',
-      height: '20px',
-      color: '#fff',
-      background: '#1978c8',
-      borderRadius: '20px',
-      textAlign: 'center'
+    const buttonStyle = {
+      zIndex: 999,
+      position: "absolute",
+      top: "70px",
+      left: "10px"
     };
 
-    const bbox = [-160, -70, 160, 70];
-    const points = randomPoint(50, { bbox }).features;
-    points.forEach((point, index) => (point.id = index));
+    const tableStyle = {
+      zIndex: 999,
+      position: "absolute",
+      top: "120px",
+      left: "10px"
+    };
 
-    const ClusterMarker = ({ longitude, latitude, pointCount }) => (
-      <Marker longitude={longitude} latitude={latitude}>
-        <div style={{ ...style, background: '#f28a25' }}>{pointCount}</div>
-      </Marker>
-    );
 
     return ( 
 
@@ -160,44 +157,64 @@ class App extends Component {
           <Label for='satellite'>satellite</Label>
         </div>
 
+        <div style={buttonStyle}>
+          <Button.Group>
+            <Button onClick={() => {this.setState({ mode: 'draw_point' })}} >
+              Point
+            </Button>
+            <Button onClick={() => this.setState({ mode: 'draw_line_string' })}>
+              Line String
+            </Button>
+            <Button onClick={() => this.setState({ mode: 'draw_polygon' })}>
+              Polygon
+            </Button>
+          </Button.Group>
+        </div>
+
+        <div style={tableStyle}>
+          <Table>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell>Longtitude</Table.HeaderCell>
+                <Table.HeaderCell>Latitude</Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+
+            <Table.Body>
+              <Table.Row>
+                <Table.Cell>{this.state.lat}</Table.Cell>
+                <Table.Cell>{this.state.lng}</Table.Cell>
+              </Table.Row>
+              
+            </Table.Body>
+          </Table>
+          <Segment>Distance: </Segment>
+        </div>
+
         <MapGL
-          style = {{ width: '100%', height: '500px' }}
+          style = {{ width: '100%', height: '100%' }}
           mapStyle = {this.state.mapColor}
           accessToken={'pk.eyJ1IjoiY2h5cHJpY2lsaWEiLCJhIjoiY2p2dXpnODFkM3F6OTQzcGJjYWgyYmIydCJ9.h_AlGKNQW-TtUVF-856lSA'}
-          
           latitude = {this.state.viewport.latitude}
           longitude = {this.state.viewport.longitude}
           zoom = {this.state.viewport.zoom}
           onViewportChange = {viewport => this.setState({ viewport })}
         >
-
+          
           <GeolocateControl position='top-right' />
           <NavigationControl showCompass showZoom position='top-right' />
 
-          {/* <Cluster radius={40} extent={512} nodeSize={64} component={ClusterMarker}>
-            {points.map(point => (
-              <Marker
-                key={point.id}
-                longitude={point.geometry.coordinates[0]}
-                latitude={point.geometry.coordinates[1]}
-              >
-                <div style={style} />
-              </Marker>
-            ))}
-          </Cluster>  */}
-          
           <Draw
-            data={this.state.data}
-            onChange={(data) => this.setState({data})}
+            // onChange={(data) => this.setState({data})}
             onDrawCreate={({ features }) => {
               this.setInitialProperties(features);
             }}
+
+            mode={this.state.mode}
+            onDrawModeChange={({ mode }) => this.setState({ mode })}
           />
 
         </MapGL>  
-        <div>
-          {JSON.stringify(this.state.data)}
-        </div>
       </div>  
     )
   }
