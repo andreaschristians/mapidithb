@@ -33,7 +33,8 @@ import {
   Form, 
   Radio
 } from 'semantic-ui-react';
-import { center, distance } from '@turf/turf';
+import { center, distance, feature } from '@turf/turf';
+import { point } from '@turf/helpers';
 import { randomPoint } from '@turf/random';
 import Cluster from '@urbica/react-map-gl-cluster';
 import DrawControl from "react-mapbox-gl-draw";
@@ -56,7 +57,8 @@ class App extends Component {
       mode: 'simple_select',
       distance: null,
       lat: null,
-      lng: null
+      lng: null,
+      coord: []
     };
     this.updateDimensions = this.updateDimensions.bind(this); // <-- Contoh deklarasi functions/methods
     this.radioChange = this.radioChange.bind(this);
@@ -90,15 +92,14 @@ class App extends Component {
 
   setOnChange(data) {
     this.setState({data: data});
-    console.log(this.state.data);
-    
+    console.log("tess"+this.state.data[0].coordinates);
   }
 
   setInitialProperties(features) {
+    
     this.setState({lat: features[0].geometry.coordinates[0]});
     this.setState({lng: features[0].geometry.coordinates[1]});
-    console.log(features[0].geometry.coordinates[0]);
-    console.log(features[0].geometry.coordinates[1]);
+    console.log(lat);
   }
 
   updateDimensions() {
@@ -157,20 +158,6 @@ class App extends Component {
           <Label for='satellite'>satellite</Label>
         </div>
 
-        <div style={buttonStyle}>
-          <Button.Group>
-            <Button onClick={() => {this.setState({ mode: 'draw_point' })}} >
-              Point
-            </Button>
-            <Button onClick={() => this.setState({ mode: 'draw_line_string' })}>
-              Line String
-            </Button>
-            <Button onClick={() => this.setState({ mode: 'draw_polygon' })}>
-              Polygon
-            </Button>
-          </Button.Group>
-        </div>
-
         <div style={tableStyle}>
           <Table>
             <Table.Header>
@@ -205,13 +192,10 @@ class App extends Component {
           <NavigationControl showCompass showZoom position='top-right' />
 
           <Draw
-            // onChange={(data) => this.setState({data})}
+            onChange={(data) => this.setState({data})}
             onDrawCreate={({ features }) => {
               this.setInitialProperties(features);
             }}
-
-            mode={this.state.mode}
-            onDrawModeChange={({ mode }) => this.setState({ mode })}
           />
 
         </MapGL>  
