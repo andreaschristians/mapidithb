@@ -97,9 +97,21 @@ class App extends Component {
 
   setInitialProperties(features) {
     
+     // const { point } = require('@turf/helpers');
+    // const distance = require('@turf/distance').default;
+    
+    // let pt1 = point([8.534860, 11.999970]);
+    // let pt2 = point([3.39467, 6.45407]);
+    // let result = distance(pt1, pt2, { units: 'kilometers' });
+
     this.setState({lat: features[0].geometry.coordinates[0]});
     this.setState({lng: features[0].geometry.coordinates[1]});
-    console.log(lat);
+    const p1 = point(features[0].geometry.coordinates[0]);
+    const p2 = point(features[0].geometry.coordinates[1]);
+    const result = distance(p1, p2, { units: 'kilometers'});
+    this.setState({distance: result});
+    console.log(features[0].geometry.coordinates[0]);
+    console.log(features[0].geometry.coordinates[1]);
   }
 
   updateDimensions() {
@@ -175,7 +187,7 @@ class App extends Component {
               
             </Table.Body>
           </Table>
-          <Segment>Distance: </Segment>
+          <Segment>Distance: {this.state.distance}</Segment>
         </div>
 
         <MapGL
