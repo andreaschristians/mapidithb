@@ -14,18 +14,6 @@
   bottom: 0;
   float: left;
 }
-#tools {
-  background-color: #b8edfcaf;
-  width: 400px;
-  height: 250px;
-}
-#buttontools {
-  position: relative;
-  padding: 5px;
-  height: 40px;
-  overflow-x: hidden;
-}
-
 #tbl {
   background-color: rgba(113, 124, 124, 0.7);
   position: absolute;
@@ -36,4 +24,13 @@
   max-height: 100px;
   margin-right: 0.5em;
   margin-top: 0.5em;
+}
+#tools {
+  position: fixed;
+  bottom:47px;
+  background-color: rgba(113, 124, 124, 0.7);
+  width: 285px;
+  height: 250px;
+  left: 0.5em;
+  padding: 5px;
 }

@@ -75,14 +75,47 @@ class App extends Component {
     this.setState({ counter: del });
     this.setState({ sumdistance: del });
   }
+  // _onClick(e) {
+  //   let lng = parseInt(e.lngLat.lng * 10000) / 10000;
+  //   let lat = parseInt(e.lngLat.lat * 10000) / 10000;
+  //   document.getElementById("isilang").innerHTML =
+  //     "Long : " + lng + " Lat : " + lat;
+  //   //procedure untuk menghitung distance dan tampilannya
+  //   var n = this.state.counter + 1; //counter array
+  //   var nilai = this.state.sumdistance; //tampungan nilai distance sebelumnya
+  //   this.setState({ counter: n }); //update counter ke variable global
+  //   point.push(
+  //     //input marker dan tampilan point ke array
+  //     <Marker longitude={e.lngLat.lng} latitude={e.lngLat.lat}>
+  //       <img src="dot.png" height="10px" width="10px" alt="" />
+  //     </Marker>
+  //   );
+  //   if (this.state.counter > 1) {
+  //     //hitung distance baru ada ketika sudah ada 2 data
+  //     var from = turf.point([
+  //       //data 1
+  //       this.state.arrPoint[n - 2].props.longitude,
+  //       this.state.arrPoint[n - 2].props.latitude
+  //     ]);
+  //     var to = turf.point([
+  //       //data 2
+  //       this.state.arrPoint[n - 1].props.longitude,
+  //       this.state.arrPoint[n - 1].props.latitude
+  //     ]);
+  //     var options = { units: "kilometers" }; //satuan perhitungan
+  //     var total = turf.distance(from, to, options); //menghitung jarak data 1 dan 2
+  //     console.log(total);
+  //     total = total + nilai; //menambahkan dengan data distance yang ada sebelumnya
+  //     this.setState({ sumdistance: total }); //update nilai distance
+  //     console.log(total);
+  //   }
+  //   coord.push([e.lngLat.lng, e.lngLat.lat]); //input data coordinate untuk membuat line
+  //   this.setState({ arrCoord: coord }); //update coordinate untuk tampilan line
+  //   this.setState({ arrPoint: point }); //update point untuk tampilan point
+  // }
   _onClick(e) {
-    let lng = parseInt(e.lngLat.lng * 10000) / 10000;
-    let lat = parseInt(e.lngLat.lat * 10000) / 10000;
-    document.getElementById("isilang").innerHTML =
-      "Long : " + lng + " Lat : " + lat;
     //procedure untuk menghitung distance dan tampilannya
     var n = this.state.counter + 1; //counter array
-    var nilai =this.state.sumdistance; //tampungan nilai distance sebelumnya
     this.setState({ counter: n }); //update counter ke variable global
     point.push(
       //input marker dan tampilan point ke array
@@ -90,26 +123,23 @@ class App extends Component {
         <img src="dot.png" height="10px" width="10px" alt="" />
       </Marker>
     );
-    if (this.state.counter > 1) {
-      //hitung distance baru ada ketika sudah ada 2 data
-      var from = turf.point([
-        //data 1
-        this.state.arrPoint[n - 2].props.longitude,
-        this.state.arrPoint[n - 2].props.latitude
-      ]);
-      var to = turf.point([
-        //data 2
-        this.state.arrPoint[n - 1].props.longitude,
-        this.state.arrPoint[n - 1].props.latitude
-      ]);
-      var options = { units: "kilometers" }; //satuan perhitungan
-      var total = turf.distance(from, to, options); //menghitung jarak data 1 dan 2
-      console.log(total);
-      total = total + nilai; //menambahkan dengan data distance yang ada sebelumnya
+    if (this.state.counter < 2) {
+      coord.push([e.lngLat.lng, e.lngLat.lat]);
+      coord.push(coord[0]);
+    } else if (this.state.counter < 4) {
+      coord.pop(); //input data coordinate untuk membuat line
+      coord.push([e.lngLat.lng, e.lngLat.lat]);
+      coord.push(coord[0]);
+    } else {
+      coord.pop(); //input data coordinate untuk membuat line
+      coord.push([e.lngLat.lng, e.lngLat.lat]);
+      coord.push(coord[0]);
+
+      var polygon = turf.polygon([coord]);
+      var total = parseInt(turf.area(polygon) / 10763.91) / 100;
+      console.log(polygon);
       this.setState({ sumdistance: total }); //update nilai distance
-      console.log(total);
     }
-    coord.push([e.lngLat.lng, e.lngLat.lat]); //input data coordinate untuk membuat line
     this.setState({ arrCoord: coord }); //update coordinate untuk tampilan line
     this.setState({ arrPoint: point }); //update point untuk tampilan point
   }
@@ -125,8 +155,9 @@ class App extends Component {
     };
 
     return (
-      <div id="Page">{/* mapbox */}
-        <MapGL                
+      <div id="Page">
+        {/* mapbox */}
+        <MapGL
           style={{ width: "100%", height: "575px" }}
           mapStyle={this.state.mapstyle}
           accessToken={
@@ -138,9 +169,11 @@ class App extends Component {
           zoom={this.state.viewport.zoom}
           onViewportChange={viewport => this.setState({ viewport })}
         >
-          <GeolocateControl position="top-right" />   {/* get my location */}  
-          {this.state.arrPoint}                       {/* munculin point */}
-          <Marker longitude={0} latitude={0}>         {/* marker hardcode */}
+          <GeolocateControl position="top-right" /> {/* get my location */}
+          {this.state.arrPoint} {/* munculin point */}
+          <Marker longitude={0} latitude={0}>
+            {" "}
+            {/* marker hardcode */}
             <img
               src={this.state.unshowmarker}
               height="50px"
@@ -159,7 +192,7 @@ class App extends Component {
           </Marker>
           <Source id="route" type="geojson" data={data} />
           {/* munculin line */}
-          <Layer                  
+          <Layer
             id="route"
             type="line"
             source="route"
@@ -173,9 +206,22 @@ class App extends Component {
             }}
           />
         </MapGL>
+        <div id="tools" className="popup-main">
+          <Button compact size="small" content="Distance" />
+          <Button compact size="small" content="Area" />
+          <Button compact size="small" onClick={this._clearMaps}>
+            Clear Maps
+          </Button>
+          <Label>
+            Distance : {parseInt(this.state.sumdistance * 100) / 100} Km
+          </Label>
+          <Label style={{ display: this.state.display2 }}>
+            Area : {this.state.area} Km<sup>2</sup>
+          </Label>
+        </div>
         {/** button change style map box */}
         <div
-          id="menu"     
+          id="menu"
           style={{
             position: "fixed",
             top: "6px",
@@ -217,7 +263,9 @@ class App extends Component {
             Terrain
           </Button>
         </div>
-        <div id="Bottom">   {/** button navigasi bawah */}
+        <div id="Bottom">
+          {" "}
+          {/** button navigasi bawah */}
           <img src="mapid-logo.svg" align="center" height="30px" alt="Logo" />
           <a href="https://www.mapid.io/">
             <Button compact size="small">
@@ -237,29 +285,7 @@ class App extends Component {
             }
             on="click"
             className="login-popup"
-          >
-            <div id="tools" className="popup-main">
-              <div id="buttontools">
-                <Button
-                  size="small"
-                  content="Hitung Distance"
-                  onClick={this._distance}
-                />
-                <Button
-                  size="small"
-                  content="Hitung Area"
-                  onClick={this._area}
-                />
-              </div>
-
-              <Label style={{ display: this.state.display1 }}>
-                Distance : {this.state.distance} Km
-              </Label>
-              <Label style={{ display: this.state.display2 }}>
-                Area : {this.state.area} Km<sup>2</sup>
-              </Label>
-            </div>
-          </Popup>
+          />
           <Popup
             trigger={
               <Button
@@ -314,21 +340,17 @@ class App extends Component {
           <Button compact size="small">
             <div id="isilang" />
           </Button>
-          <Button compact size="small" onClick={this._clearMaps}>
-            Clear Maps
-          </Button>
-          <Label>
-            Distance : {parseInt(this.state.sumdistance * 100) / 100} KM
-          </Label>
         </div>
         <Table
           collapsing
           id="tbl"
-          style={{ height: "10px", overflow: "scroll"}}
+          style={{ height: "10px", overflow: "scroll" }}
         >
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell colSpan="3"><center>Layer Manager</center></Table.HeaderCell>
+              <Table.HeaderCell colSpan="3">
+                <center>Layer Manager</center>
+              </Table.HeaderCell>
             </Table.Row>
           </Table.Header>
 
