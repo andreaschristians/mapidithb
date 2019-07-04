@@ -65,14 +65,6 @@ class App extends Component {
     this.setOnChange = this.setOnChange.bind(this);
     this.setInitialProperties = this.setInitialProperties.bind(this);
 
-    // const { point } = require('@turf/helpers');
-    // const distance = require('@turf/distance').default;
-    
-    // let pt1 = point([8.534860, 11.999970]);
-    // let pt2 = point([3.39467, 6.45407]);
-    // let result = distance(pt1, pt2, { units: 'kilometers' });
-    
-    // console.log(`Distance : ${result} KM`);
   }
 
   componentWillMount() {
@@ -97,13 +89,6 @@ class App extends Component {
 
   setInitialProperties(features) {
     
-     // const { point } = require('@turf/helpers');
-    // const distance = require('@turf/distance').default;
-    
-    // let pt1 = point([8.534860, 11.999970]);
-    // let pt2 = point([3.39467, 6.45407]);
-    // let result = distance(pt1, pt2, { units: 'kilometers' });
-
     this.setState({lat: features[0].geometry.coordinates[0]});
     this.setState({lng: features[0].geometry.coordinates[1]});
     const p1 = point(features[0].geometry.coordinates[0]);
@@ -139,12 +124,6 @@ class App extends Component {
       left: "10px"
     };
 
-    const buttonStyle = {
-      zIndex: 999,
-      position: "absolute",
-      top: "70px",
-      left: "10px"
-    };
 
     const tableStyle = {
       zIndex: 999,
@@ -155,7 +134,6 @@ class App extends Component {
 
 
     return ( 
-
       <div class = "map-container" style={{ height: this.state.height }}>
         <div id ='menu' style={changeStyle} >
           <input id='streets-v11' type='radio' name='rtoggle' value='mapbox://styles/mapbox/streets-v11' onChange={this.radioChange}/>
@@ -214,7 +192,6 @@ class App extends Component {
       </div>  
     )
   }
-
 }
 
 export default App;
