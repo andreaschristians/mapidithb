@@ -1,0 +1,36 @@
+#menu{
+    position: "fixed";
+    top: "6px";
+    padding: "5px";
+    left: "40px";
+}
+#Bottom {
+  position: absolute;
+  z-index: 999;
+  text-align: center;
+  width: 100%;
+  padding: 5px;
+  background-color: #7e7e7e;
+  bottom: 0;
+  float: left;
+}
+#tbl {
+  background-color: rgba(113, 124, 124, 0.7);
+  position: absolute;
+  left: 0.5em;
+  top: 0;
+  z-index: 999;
+  overflow-x: scroll;
+  max-height: 100px;
+  margin-right: 0.5em;
+  margin-top: 0.5em;
+}
+#tools {
+  position: fixed;
+  bottom:47px;
+  background-color: rgba(113, 124, 124, 0.7);
+  width: 285px;
+  height: 250px;
+  left: 0.5em;
+  padding: 5px;
+}
