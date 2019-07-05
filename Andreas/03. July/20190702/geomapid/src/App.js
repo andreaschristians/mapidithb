@@ -3,6 +3,8 @@ import * as turf from "@turf/turf"; //Tools bantuan untuk hitung distance dll
 import "mapbox-gl/dist/mapbox-gl.css"; //CSS mapbox
 import React, { Component } from "react"; //React
 import "semantic-ui-css/semantic.min.css"; //CSS Sematic
+import Draw from "@urbica/react-map-gl-draw";
+import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import { Button, Popup, Label, Message, Table, Form } from "semantic-ui-react"; //Tools bantuan untuk UI
 import MapGL, {
   GeolocateControl,
@@ -29,7 +31,8 @@ class App extends Component {
       unshowmarker: "unhere.png",
       sumdistance: 0.0,
       counter: 0,
-      arrCoord: []
+      arrCoord: [],
+      features: []
     };
     this._StyleChange = this._StyleChange.bind(this);
     this._onClickMap = this._onClickMap.bind(this);
@@ -114,6 +117,10 @@ class App extends Component {
   //   this.setState({ arrPoint: point }); //update point untuk tampilan point
   // }
   _onClick(e) {
+    let lng = parseInt(e.lngLat.lng * 10000) / 10000;
+    let lat = parseInt(e.lngLat.lat * 10000) / 10000;
+    document.getElementById("isilang").innerHTML =
+      "Long : " + lng + " Lat : " + lat;
     //procedure untuk menghitung distance dan tampilannya
     var n = this.state.counter + 1; //counter array
     this.setState({ counter: n }); //update counter ke variable global
@@ -204,8 +211,13 @@ class App extends Component {
               "line-color": "#888",
               "line-width": 2
             }}
+          />{" "}
+          <Draw
+            onDrawCreate={({ features }) => this.setState({ features })}
+            onDrawUpdate={({ features }) => this.setState({ features })}
           />
         </MapGL>
+        <div id="draw">{JSON.stringify(this.state.features)}</div>
         <div id="tools" className="popup-main">
           <Button compact size="small" content="Distance" />
           <Button compact size="small" content="Area" />

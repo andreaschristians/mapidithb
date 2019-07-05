@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="33px" height="34px" viewBox="0 0 33 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49 (51002) - http://www.bohemiancoding.com/sketch -->
+    <title>MAPID_Logo</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="61.5105617%" y1="131.445893%" x2="77.5103395%" y2="22.788786%" id="linearGradient-1">
+            <stop stop-color="#3AB9FE" offset="0%"></stop>
+            <stop stop-color="#1B83FC" offset="100%"></stop>
+        </linearGradient>
+        <polygon id="path-2" points="24.8571429 0.200012207 29 21.2000122 0 21.2000122"></polygon>
+        <filter x="-6.9%" y="-9.5%" width="113.8%" height="119.0%" filterUnits="objectBoundingBox" id="filter-3">
+            <feGaussianBlur stdDeviation="1.5" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="1" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="73.9192274%" y1="-15.9484791%" x2="50%" y2="100%" id="linearGradient-4">
+            <stop stop-color="#2A7DBA" offset="0%"></stop>
+            <stop stop-color="#134784" offset="100%"></stop>
+        </linearGradient>
+        <polygon id="path-5" points="18.6153846 22 24 30.5 2 22"></polygon>
+        <filter x="-9.1%" y="-23.5%" width="118.2%" height="147.1%" filterUnits="objectBoundingBox" id="filter-6">
+            <feGaussianBlur stdDeviation="1.5" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="1" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="50%" y1="0%" x2="64.9863242%" y2="50%" id="linearGradient-7">
+            <stop stop-color="#A5D34E" offset="0%"></stop>
+            <stop stop-color="#6CA826" offset="100%"></stop>
+        </linearGradient>
+        <polygon id="path-8" points="19.5000526 21.9570765 29.2000008 21.9570765 31.5 33 25.383689 30.9395169"></polygon>
+        <filter x="-16.7%" y="-18.1%" width="133.3%" height="136.2%" filterUnits="objectBoundingBox" id="filter-9">
+            <feGaussianBlur stdDeviation="1.5" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="1" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="MAPID_Logo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <g id="Triangle">
+                <use fill="url(#linearGradient-1)" fill-rule="evenodd" style="mix-blend-mode: darken;" xlink:href="#path-2"></use>
+                <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+            </g>
+            <g id="Triangle-2">
+                <use fill="url(#linearGradient-4)" fill-rule="evenodd" xlink:href="#path-5"></use>
+                <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
+            </g>
+            <g id="Rectangle-2">
+                <use fill="url(#linearGradient-7)" fill-rule="evenodd" xlink:href="#path-8"></use>
+                <use fill="black" fill-opacity="1" filter="url(#filter-9)" xlink:href="#path-8"></use>
+            </g>
+        </g>
+    </g>
+</svg>
