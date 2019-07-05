@@ -33,12 +33,13 @@ import {
   Form, 
   Radio
 } from 'semantic-ui-react';
-import { center, distance, feature } from '@turf/turf';
-import { point } from '@turf/helpers';
+import { center, distance, feature, area } from '@turf/turf';
+import { point, polygon } from '@turf/helpers';
 import { randomPoint } from '@turf/random';
 import Cluster from '@urbica/react-map-gl-cluster';
 import DrawControl from "react-mapbox-gl-draw";
 
+var coordinates = [];
 class App extends Component {
   
   constructor() {
@@ -54,17 +55,15 @@ class App extends Component {
         type: "FeatureCollection",
         features: []
       },
-      mode: 'simple_select',
-      distance: null,
-      lat: null,
-      lng: null,
-      coord: []
+      distance: 0,
+      coordinates: [],
+      area: 0
     };
     this.updateDimensions = this.updateDimensions.bind(this); // <-- Contoh deklarasi functions/methods
     this.radioChange = this.radioChange.bind(this);
     this.setOnChange = this.setOnChange.bind(this);
     this.setInitialProperties = this.setInitialProperties.bind(this);
-
+    this.clearTable = this.clearTable.bind(this);
   }
 
   componentWillMount() {
@@ -88,17 +87,73 @@ class App extends Component {
   }
 
   setInitialProperties(features) {
-    
-    this.setState({lat: features[0].geometry.coordinates[0]});
-    this.setState({lng: features[0].geometry.coordinates[1]});
-    const p1 = point(features[0].geometry.coordinates[0]);
-    const p2 = point(features[0].geometry.coordinates[1]);
-    const result = distance(p1, p2, { units: 'kilometers'});
-    this.setState({distance: result});
-    console.log(features[0].geometry.coordinates[0]);
-    console.log(features[0].geometry.coordinates[1]);
+    var i;
+    var l = features[0].geometry.coordinates.length;
+    if (features[0].geometry.type == "Point") {
+      this.setState({
+        data: {
+          features: [...this.state.data.features, {features}]
+        }
+      });
+      
+      coordinates.push(<Table.Row>
+        <Table.Cell>{ features[0].geometry.coordinates[0] }</Table.Cell>
+        <Table.Cell>{ features[0].geometry.coordinates[1] }</Table.Cell>
+      </Table.Row>);
+      this.setState({coordinates: coordinates});
+
+    } else if (features[0].geometry.type == "LineString") {
+      this.setState({
+        data: {
+          features: features
+        }
+      });
+      
+      if (l <= 2) {
+        var p1 = point(features[0].geometry.coordinates[0]);
+        var p2 = point(features[0].geometry.coordinates[1])
+        var result = distance(p1, p2, { units: 'kilometers' });
+        this.setState({ distance: result });
+        for (i = 0; i < l; i++) {
+          coordinates.push(<Table.Row>
+            <Table.Cell>{ features[0].geometry.coordinates[i][0] }</Table.Cell>
+            <Table.Cell>{ features[0].geometry.coordinates[i][1] }</Table.Cell>
+          </Table.Row>);
+        }
+        this.setState({coordinates: coordinates});
+      } else {
+        for (i = 0; i < l; i++) {
+          coordinates.push(<Table.Row>
+            <Table.Cell>{ features[0].geometry.coordinates[i][0] }</Table.Cell>
+            <Table.Cell>{ features[0].geometry.coordinates[i][1] }</Table.Cell>
+          </Table.Row>);
+        }
+        this.setState({coordinates: coordinates});
+      }
+    } else if (features[0].geometry.type == "Polygon") {
+      var x = features[0].geometry.coordinates[0].length;
+      console.log(features[0].geometry.coordinates[0][0][0]);
+      var p = polygon(features[0].geometry.coordinates);
+      var a = area(p);
+      for (i = 0; i < x; i++) {
+        coordinates.push(<Table.Row>
+          <Table.Cell>{ features[0].geometry.coordinates[0][i][0] }</Table.Cell>
+          <Table.Cell>{ features[0].geometry.coordinates[0][i][1] }</Table.Cell>
+        </Table.Row>);
+      }
+      this.setState({coordinates: coordinates, area: a});
+
+    }
   }
 
+  clearTable(e) {
+    coordinates = [];
+    this.setState({ 
+      coordinates: [], 
+      distance: 0,
+      area: 0 
+    });
+  }
   updateDimensions() {
     // <-- Function bikinan sendiri untuk mengatur tampilan dimensi peta
     const height = window.innerWidth >= 992 ? window.innerHeight : 650;
@@ -113,7 +168,6 @@ class App extends Component {
   }
   
   render() {
-    const position = [this.state.viewport.latitude, this.state.viewport.longitude];
     const changeStyle = {
       zIndex: 999,
       position: "absolute",
@@ -124,11 +178,10 @@ class App extends Component {
       left: "10px"
     };
 
-
     const tableStyle = {
       zIndex: 999,
       position: "absolute",
-      top: "120px",
+      top: "80px",
       left: "10px"
     };
 
@@ -158,14 +211,15 @@ class App extends Component {
             </Table.Header>
 
             <Table.Body>
-              <Table.Row>
-                <Table.Cell>{this.state.lat}</Table.Cell>
-                <Table.Cell>{this.state.lng}</Table.Cell>
-              </Table.Row>
-              
+              { this.state.coordinates }
             </Table.Body>
           </Table>
-          <Segment>Distance: {this.state.distance}</Segment>
+
+          <Segment>Distance: { this.state.distance } KM</Segment>
+          <Segment>Area: { this.state.area } KM<sup>2</sup></Segment>
+          <Segment> 
+          <Button onClick={ this.clearTable }>Clear</Button>
+          </Segment>
         </div>
 
         <MapGL
@@ -182,9 +236,8 @@ class App extends Component {
           <NavigationControl showCompass showZoom position='top-right' />
 
           <Draw
-            onChange={(data) => this.setState({data})}
             onDrawCreate={({ features }) => {
-              this.setInitialProperties(features);
+              this.setInitialProperties(features );
             }}
           />
 
