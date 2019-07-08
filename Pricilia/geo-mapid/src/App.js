@@ -34,7 +34,7 @@ import {
   Radio
 } from 'semantic-ui-react';
 import { center, distance, feature, area } from '@turf/turf';
-import { point, polygon } from '@turf/helpers';
+import { point, polygon, round } from '@turf/helpers';
 import { randomPoint } from '@turf/random';
 import Cluster from '@urbica/react-map-gl-cluster';
 import DrawControl from "react-mapbox-gl-draw";
@@ -112,7 +112,7 @@ class App extends Component {
       if (l <= 2) {
         var p1 = point(features[0].geometry.coordinates[0]);
         var p2 = point(features[0].geometry.coordinates[1])
-        var result = distance(p1, p2, { units: 'kilometers' });
+        var result = round(distance(p1, p2, { units: 'kilometers' }));
         this.setState({ distance: result });
         for (i = 0; i < l; i++) {
           coordinates.push(<Table.Row>
@@ -134,7 +134,7 @@ class App extends Component {
       var x = features[0].geometry.coordinates[0].length;
       console.log(features[0].geometry.coordinates[0][0][0]);
       var p = polygon(features[0].geometry.coordinates);
-      var a = area(p);
+      var a = round(area(p));
       for (i = 0; i < x; i++) {
         coordinates.push(<Table.Row>
           <Table.Cell>{ features[0].geometry.coordinates[0][i][0] }</Table.Cell>
@@ -200,6 +200,7 @@ class App extends Component {
           <input id='satellite-v9' type='radio' name='rtoggle' value='mapbox://styles/mapbox/satellite-v9' onChange={this.radioChange}/>
           <Label for='satellite'>satellite</Label>
         </div>
+
 
         <div style={tableStyle}>
           <Table>
