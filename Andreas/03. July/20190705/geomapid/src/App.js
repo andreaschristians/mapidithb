@@ -1,5 +1,5 @@
 import "./App.css"; //CSS page
-import * as turf from "@turf/turf"; //Tools bantuan untuk hitung distance dll
+// import * as turf from "@turf/turf"; //Tools bantuan untuk hitung distance dll
 import "mapbox-gl/dist/mapbox-gl.css"; //CSS mapbox
 import React, { Component } from "react"; //React
 import "semantic-ui-css/semantic.min.css"; //CSS Sematic
@@ -12,9 +12,6 @@ import MapGL, {
   Source,
   Layer
 } from "@urbica/react-map-gl"; //Mapbox Urbica
-
-var point; //Tampung point saat diclick (distance)
-var coord; //Tampung coordinate untuk buat line (distance)
 
 class App extends Component {
   constructor() {
@@ -31,24 +28,22 @@ class App extends Component {
       unshowmarker: "unhere.png",
       sumdistance: 0.0,
       counter: 0,
-      arrCoord: [],
-      features: []
+      features: [],
+      display: "none"
     };
     this._StyleChange = this._StyleChange.bind(this);
-    this._onClickMap = this._onClickMap.bind(this);
     this._onClick = this._onClick.bind(this);
     this._showmarker = this._showmarker.bind(this);
     this._unshowmarker = this._unshowmarker.bind(this);
-    this._clearMaps = this._clearMaps.bind(this);
+    this._disp = this._disp.bind(this);
+    this._undisp = this._undisp.bind(this);
   }
 
   componentDidMount() {
-    point = []; //inisialisasi
-    coord = []; //inisialisasi
     document.getElementById("isilang").innerHTML =
       "Long : 107.6093 Lat : -6.9184";
   }
-  _onClickMap(e) {
+  _onClick(e) {
     //procedure untuk hover get coordinate
     //menghilangkan koma yang banyak di belakang angka
     let lng = parseInt(e.lngLat.lng * 10000) / 10000;
@@ -68,21 +63,13 @@ class App extends Component {
   _unshowmarker() {
     this.setState({ unshowmarker: "unhere.png" });
   }
-  _clearMaps() {
-    var clear = [];
-    var del = 0;
-    point = [];
-    coord = [];
-    this.setState({ arrCoord: clear });
-    this.setState({ arrPoint: clear });
-    this.setState({ counter: del });
-    this.setState({ sumdistance: del });
+  _disp() {
+    this.setState({ display: "inline-block" });
+  }
+  _undisp() {
+    this.setState({ display: "none" });
   }
   // _onClick(e) {
-  //   let lng = parseInt(e.lngLat.lng * 10000) / 10000;
-  //   let lat = parseInt(e.lngLat.lat * 10000) / 10000;
-  //   document.getElementById("isilang").innerHTML =
-  //     "Long : " + lng + " Lat : " + lat;
   //   //procedure untuk menghitung distance dan tampilannya
   //   var n = this.state.counter + 1; //counter array
   //   var nilai = this.state.sumdistance; //tampungan nilai distance sebelumnya
@@ -116,40 +103,36 @@ class App extends Component {
   //   this.setState({ arrCoord: coord }); //update coordinate untuk tampilan line
   //   this.setState({ arrPoint: point }); //update point untuk tampilan point
   // }
-  _onClick(e) {
-    let lng = parseInt(e.lngLat.lng * 10000) / 10000;
-    let lat = parseInt(e.lngLat.lat * 10000) / 10000;
-    document.getElementById("isilang").innerHTML =
-      "Long : " + lng + " Lat : " + lat;
-    //procedure untuk menghitung distance dan tampilannya
-    var n = this.state.counter + 1; //counter array
-    this.setState({ counter: n }); //update counter ke variable global
-    point.push(
-      //input marker dan tampilan point ke array
-      <Marker longitude={e.lngLat.lng} latitude={e.lngLat.lat}>
-        <img src="dot.png" height="10px" width="10px" alt="" />
-      </Marker>
-    );
-    if (this.state.counter < 2) {
-      coord.push([e.lngLat.lng, e.lngLat.lat]);
-      coord.push(coord[0]);
-    } else if (this.state.counter < 4) {
-      coord.pop(); //input data coordinate untuk membuat line
-      coord.push([e.lngLat.lng, e.lngLat.lat]);
-      coord.push(coord[0]);
-    } else {
-      coord.pop(); //input data coordinate untuk membuat line
-      coord.push([e.lngLat.lng, e.lngLat.lat]);
-      coord.push(coord[0]);
+  // _onClick(e) {
+  //   //procedure untuk menghitung distance dan tampilannya
+  //   var n = this.state.counter + 1; //counter array
+  //   this.setState({ counter: n }); //update counter ke variable global
+  //   point.push(
+  //     //input marker dan tampilan point ke array
+  //     <Marker longitude={e.lngLat.lng} latitude={e.lngLat.lat}>
+  //       <img src="dot.png" height="10px" width="10px" alt="" />
+  //     </Marker>
+  //   );
+  //   if (this.state.counter < 2) {
+  //     coord.push([e.lngLat.lng, e.lngLat.lat]);
+  //     coord.push(coord[0]);
+  //   } else if (this.state.counter < 4) {
+  //     coord.pop(); //input data coordinate untuk membuat line
+  //     coord.push([e.lngLat.lng, e.lngLat.lat]);
+  //     coord.push(coord[0]);
+  //   } else {
+  //     coord.pop(); //input data coordinate untuk membuat line
+  //     coord.push([e.lngLat.lng, e.lngLat.lat]);
+  //     coord.push(coord[0]);
 
-      var polygon = turf.polygon([coord]);
-      var total = parseInt(turf.area(polygon) / 10763.91) / 100;
-      console.log(polygon);
-      this.setState({ sumdistance: total }); //update nilai distance
-    }
-    this.setState({ arrCoord: coord }); //update coordinate untuk tampilan line
-    this.setState({ arrPoint: point }); //update point untuk tampilan point
-  }
+  //     var polygon = turf.polygon([coord]);
+  //     var total = parseInt(turf.area(polygon) / 10763.91) / 100;
+  //     console.log(polygon);
+  //     this.setState({ sumdistance: total }); //update nilai distance
+  //   }
+  //   this.setState({ arrCoord: coord }); //update coordinate untuk tampilan line
+  //   this.setState({ arrPoint: point }); //update point untuk tampilan point
+  // }
 
   render() {
     const data = {
@@ -218,19 +201,14 @@ class App extends Component {
           />
         </MapGL>
         <div id="draw">{JSON.stringify(this.state.features)}</div>
-        <div id="tools" className="popup-main">
-          <Button compact size="small" content="Distance" />
-          <Button compact size="small" content="Area" />
-          <Button compact size="small" onClick={this._clearMaps}>
-            Clear Maps
+        <div id="tools" style={{ display: this.state.display }}>
+          <Button compact size="small" onClick={this._undisp}>
+            Hide
           </Button>
-          <Label>
-            Distance : {parseInt(this.state.sumdistance * 100) / 100} Km
-          </Label>
-          <Label style={{ display: this.state.display2 }}>
-            Area : {this.state.area} Km<sup>2</sup>
-          </Label>
+          <Label />
+          <Label />
         </div>
+
         {/** button change style map box */}
         <div
           id="menu"
@@ -275,8 +253,8 @@ class App extends Component {
             Terrain
           </Button>
         </div>
+
         <div id="Bottom">
-          {" "}
           {/** button navigasi bawah */}
           <img src="mapid-logo.svg" align="center" height="30px" alt="Logo" />
           <a href="https://www.mapid.io/">
@@ -285,18 +263,13 @@ class App extends Component {
               <img src="mapid-icon.png" height="10px" alt="Mapid" />
             </Button>
           </a>
-          <Popup
-            trigger={
-              <Button
-                compact
-                size="small"
-                content="Toolbox"
-                icon="briefcase"
-                labelPosition="left"
-              />
-            }
-            on="click"
-            className="login-popup"
+          <Button
+            compact
+            size="small"
+            content="Toolbox"
+            icon="briefcase"
+            labelPosition="left"
+            onClick={this._disp}
           />
           <Popup
             trigger={
@@ -349,15 +322,10 @@ class App extends Component {
               <Message attached="bottom">This is Navigation</Message>
             </div>
           </Popup>
-          <Button compact size="small">
-            <div id="isilang" />
-          </Button>
+          <Label id="isilang" />
         </div>
-        <Table
-          collapsing
-          id="tbl"
-          style={{ height: "10px", overflow: "scroll" }}
-        >
+
+        <Table collapsing id="tbl">
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell colSpan="3">
@@ -365,7 +333,6 @@ class App extends Component {
               </Table.HeaderCell>
             </Table.Row>
           </Table.Header>
-
           <Table.Body>
             <Table.Row>
               <Table.Cell collapsing>
