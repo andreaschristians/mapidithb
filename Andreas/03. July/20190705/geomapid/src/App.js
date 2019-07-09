@@ -1,17 +1,12 @@
 import "./App.css"; //CSS page
-// import * as turf from "@turf/turf"; //Tools bantuan untuk hitung distance dll
+import * as turf from "@turf/turf"; //Tools bantuan untuk hitung distance dll
 import "mapbox-gl/dist/mapbox-gl.css"; //CSS mapbox
 import React, { Component } from "react"; //React
 import "semantic-ui-css/semantic.min.css"; //CSS Sematic
 import Draw from "@urbica/react-map-gl-draw";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import { Button, Popup, Label, Message, Table, Form } from "semantic-ui-react"; //Tools bantuan untuk UI
-import MapGL, {
-  GeolocateControl,
-  Marker,
-  Source,
-  Layer
-} from "@urbica/react-map-gl"; //Mapbox Urbica
+import MapGL, { GeolocateControl, Marker, Source } from "@urbica/react-map-gl"; //Mapbox Urbica
 
 class App extends Component {
   constructor() {
@@ -26,13 +21,17 @@ class App extends Component {
       },
       mapstyle: "mapbox://styles/mapbox/streets-v11",
       unshowmarker: "unhere.png",
-      sumdistance: 0.0,
+      sumdistance: 0,
+      sumarea: 0,
       counter: 0,
       features: [],
+      arrCoord: [],
       display: "none"
     };
     this._StyleChange = this._StyleChange.bind(this);
+    this._onClickArea = this._onClickArea.bind(this);
     this._onClick = this._onClick.bind(this);
+    this._onClickDistance = this._onClickDistance.bind(this);
     this._showmarker = this._showmarker.bind(this);
     this._unshowmarker = this._unshowmarker.bind(this);
     this._disp = this._disp.bind(this);
@@ -69,70 +68,27 @@ class App extends Component {
   _undisp() {
     this.setState({ display: "none" });
   }
-  // _onClick(e) {
-  //   //procedure untuk menghitung distance dan tampilannya
-  //   var n = this.state.counter + 1; //counter array
-  //   var nilai = this.state.sumdistance; //tampungan nilai distance sebelumnya
-  //   this.setState({ counter: n }); //update counter ke variable global
-  //   point.push(
-  //     //input marker dan tampilan point ke array
-  //     <Marker longitude={e.lngLat.lng} latitude={e.lngLat.lat}>
-  //       <img src="dot.png" height="10px" width="10px" alt="" />
-  //     </Marker>
-  //   );
-  //   if (this.state.counter > 1) {
-  //     //hitung distance baru ada ketika sudah ada 2 data
-  //     var from = turf.point([
-  //       //data 1
-  //       this.state.arrPoint[n - 2].props.longitude,
-  //       this.state.arrPoint[n - 2].props.latitude
-  //     ]);
-  //     var to = turf.point([
-  //       //data 2
-  //       this.state.arrPoint[n - 1].props.longitude,
-  //       this.state.arrPoint[n - 1].props.latitude
-  //     ]);
-  //     var options = { units: "kilometers" }; //satuan perhitungan
-  //     var total = turf.distance(from, to, options); //menghitung jarak data 1 dan 2
-  //     console.log(total);
-  //     total = total + nilai; //menambahkan dengan data distance yang ada sebelumnya
-  //     this.setState({ sumdistance: total }); //update nilai distance
-  //     console.log(total);
-  //   }
-  //   coord.push([e.lngLat.lng, e.lngLat.lat]); //input data coordinate untuk membuat line
-  //   this.setState({ arrCoord: coord }); //update coordinate untuk tampilan line
-  //   this.setState({ arrPoint: point }); //update point untuk tampilan point
-  // }
-  // _onClick(e) {
-  //   //procedure untuk menghitung distance dan tampilannya
-  //   var n = this.state.counter + 1; //counter array
-  //   this.setState({ counter: n }); //update counter ke variable global
-  //   point.push(
-  //     //input marker dan tampilan point ke array
-  //     <Marker longitude={e.lngLat.lng} latitude={e.lngLat.lat}>
-  //       <img src="dot.png" height="10px" width="10px" alt="" />
-  //     </Marker>
-  //   );
-  //   if (this.state.counter < 2) {
-  //     coord.push([e.lngLat.lng, e.lngLat.lat]);
-  //     coord.push(coord[0]);
-  //   } else if (this.state.counter < 4) {
-  //     coord.pop(); //input data coordinate untuk membuat line
-  //     coord.push([e.lngLat.lng, e.lngLat.lat]);
-  //     coord.push(coord[0]);
-  //   } else {
-  //     coord.pop(); //input data coordinate untuk membuat line
-  //     coord.push([e.lngLat.lng, e.lngLat.lat]);
-  //     coord.push(coord[0]);
-
-  //     var polygon = turf.polygon([coord]);
-  //     var total = parseInt(turf.area(polygon) / 10763.91) / 100;
-  //     console.log(polygon);
-  //     this.setState({ sumdistance: total }); //update nilai distance
-  //   }
-  //   this.setState({ arrCoord: coord }); //update coordinate untuk tampilan line
-  //   this.setState({ arrPoint: point }); //update point untuk tampilan point
-  // }
+  _onClickArea() {
+    var arr = this.state.features[0].geometry.coordinates;
+    var polygon = turf.polygon(arr);
+    var total = parseInt(turf.area(polygon) / 10763.91) / 100;
+    this.setState({ sumarea: total }); //update nilai distance
+    this.setState({ arrCoord: arr }); //update nilai distance
+  }
+  _onClickDistance() {
+    var arr = this.state.features[0].geometry.coordinates;
+    var i;
+    var total=0;
+    for (i = 1; i < arr.length; i++) {
+      var from = turf.point([arr[i - 1][0], arr[i - 1][1]]);
+      var to = turf.point([arr[i][0], arr[i][1]]);
+      var options = { units: "kilometers" }; //satuan perhitungan
+      total += turf.distance(from, to, options); //menghitung jarak data 1 dan 2
+      total=parseInt(total*100)/100;
+      this.setState({ sumdistance: total }); //update nilai distance
+      this.setState({ arrCoord: arr });
+    }
+  }
 
   render() {
     const data = {
@@ -160,7 +116,6 @@ class App extends Component {
           onViewportChange={viewport => this.setState({ viewport })}
         >
           <GeolocateControl position="top-right" /> {/* get my location */}
-          {this.state.arrPoint} {/* munculin point */}
           <Marker longitude={0} latitude={0}>
             {" "}
             {/* marker hardcode */}
@@ -171,7 +126,6 @@ class App extends Component {
               alt=""
             />
           </Marker>
-          ,
           <Marker longitude={107.60654} latitude={-6.9459}>
             <img
               src={this.state.unshowmarker}
@@ -181,32 +135,46 @@ class App extends Component {
             />
           </Marker>
           <Source id="route" type="geojson" data={data} />
-          {/* munculin line */}
-          <Layer
-            id="route"
-            type="line"
-            source="route"
-            layout={{
-              "line-join": "round",
-              "line-cap": "round"
-            }}
-            paint={{
-              "line-color": "#888",
-              "line-width": 2
-            }}
-          />{" "}
           <Draw
             onDrawCreate={({ features }) => this.setState({ features })}
             onDrawUpdate={({ features }) => this.setState({ features })}
           />
         </MapGL>
-        <div id="draw">{JSON.stringify(this.state.features)}</div>
-        <div id="tools" style={{ display: this.state.display }}>
+        {/* <div id="draw">{JSON.stringify(this.state.features)}</div> */}
+        <div
+          id="tools"
+          style={{ display: this.state.display, overflow: "scroll",float:"left" }}
+        >
           <Button compact size="small" onClick={this._undisp}>
             Hide
           </Button>
-          <Label />
-          <Label />
+          <Button compact size="small" onClick={this._onClickArea}>
+            Sum Area
+          </Button>
+          <Button compact size="small" onClick={this._onClickDistance}>
+            Sum Distance
+          </Button>
+          <Label>{this.state.sumarea} Km<sup>2</sup></Label>
+          <Label>{this.state.sumdistance} Km</Label>
+
+          <Table collapsing id="tbl" style={{ top: "60px"}}>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell>
+                  <center>longitude</center>
+                </Table.HeaderCell>
+                <Table.HeaderCell>
+                  <center>Langtitude</center>
+                </Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              <Table.Row>
+                <Table.Cell>{(this.state.arrCoord)}</Table.Cell>
+                <Table.Cell />
+              </Table.Row>
+            </Table.Body>
+          </Table>
         </div>
 
         {/** button change style map box */}
@@ -275,6 +243,7 @@ class App extends Component {
             trigger={
               <Button
                 compact
+                disabled
                 size="small"
                 content="Details"
                 icon="bars"
@@ -292,6 +261,7 @@ class App extends Component {
             trigger={
               <Button
                 compact
+                disabled
                 size="small"
                 content="Inspect"
                 icon="search"
@@ -309,6 +279,7 @@ class App extends Component {
             trigger={
               <Button
                 compact
+                disabled
                 size="small"
                 content="Navigate"
                 icon="location arrow"
