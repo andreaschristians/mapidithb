@@ -16,28 +16,17 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import {
   Button,
-  Icon,
   Label,
-  Grid,
   Segment,
-  Input,
   Table,
-  Tab,
-  List,
-  Image,
-  Card,
-  Sidebar,
-  Menu,
-  Header,
-  Modal,
-  Form, 
-  Radio
+  Select
 } from 'semantic-ui-react';
 import { center, distance, feature, area } from '@turf/turf';
 import { point, polygon, round } from '@turf/helpers';
 import { randomPoint } from '@turf/random';
 import Cluster from '@urbica/react-map-gl-cluster';
 import DrawControl from "react-mapbox-gl-draw";
+import bus_list from './bus_list.json';
 
 var coordinates = [];
 class App extends Component {
@@ -46,8 +35,8 @@ class App extends Component {
     super() 
     this.state = {
       viewport: {
-        latitude: 37.78,
-        longitude: -122.41,
+        latitude: 51.0486,
+        longitude: -114.0708,
         zoom: 11
       },
       mapColor: 'mapbox://styles/mapbox/streets-v11',
@@ -57,13 +46,16 @@ class App extends Component {
       },
       distance: 0,
       coordinates: [],
-      area: 0
+      area: 0,
+      selected_bus: 1,
+      dataGeo: null
     };
     this.updateDimensions = this.updateDimensions.bind(this); // <-- Contoh deklarasi functions/methods
     this.radioChange = this.radioChange.bind(this);
     this.setOnChange = this.setOnChange.bind(this);
     this.setInitialProperties = this.setInitialProperties.bind(this);
     this.clearTable = this.clearTable.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
   }
 
   componentWillMount() {
@@ -154,6 +146,7 @@ class App extends Component {
       area: 0 
     });
   }
+
   updateDimensions() {
     // <-- Function bikinan sendiri untuk mengatur tampilan dimensi peta
     const height = window.innerWidth >= 992 ? window.innerHeight : 650;
@@ -167,6 +160,16 @@ class App extends Component {
     });
   }
   
+  handleSelect(e) {
+    let selection = e.target.value;
+    this.setState({selected_bus: selection});
+
+    let geojson = 'https://data.calgary.ca/resource/hpnd-riq4.geojson?route_short_name='+ this.state.selected_bus;
+
+    fetch(geojson).then(response => response.json());
+    this.setState({dataGeo: geojson});
+  }
+
   render() {
     const changeStyle = {
       zIndex: 999,
@@ -185,7 +188,26 @@ class App extends Component {
       left: "10px"
     };
 
+    const selectStyle = {
+      display: "inline-block", 
+      zIndex: 999,
+      position: "absolute", 
+      height: "40px",
+      width:"450px",
+      padding: "10px",
+      top:"10px", 
+      left:"400px", 
+      fontSize:"17px",
+      border: "none",
+      borderRadius: "3px",
+      color: "#fff",
+      background: "#6d6d6d", 
+      fontStyle:"bold", outline:"none"
+    };
 
+    let items = bus_list.map((bus) => 
+    <option key={bus.route_short_name} value={bus.route_short_name}>{bus.route_short_name+" - "+bus.route_long_name}</option>); 
+    
     return ( 
       <div class = "map-container" style={{ height: this.state.height }}>
         <div id ='menu' style={changeStyle} >
@@ -201,6 +223,14 @@ class App extends Component {
           <Label for='satellite'>satellite</Label>
         </div>
 
+        <div>
+          <select 
+            onChange={this.handleSelect} 
+            value={this.state.value}  
+            style={selectStyle}>
+            {items}
+          </select>
+        </div>  
 
         <div style={tableStyle}>
           <Table>
@@ -241,7 +271,20 @@ class App extends Component {
               this.setInitialProperties(features );
             }}
           />
-
+          <Source id='route' type='geojson' data={this.state.dataGeo} />
+          <Layer
+            id='route'
+            type='line'
+            source='route'
+            layout={{
+              'line-join': 'round',
+              'line-cap': 'round'
+            }}
+            paint={{
+              'line-color': '#888',
+              'line-width': 8
+            }}
+          />
         </MapGL>  
       </div>  
     )
