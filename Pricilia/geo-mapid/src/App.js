@@ -207,7 +207,7 @@ class App extends Component {
 
     let items = bus_list.map((bus) => 
     <option key={bus.route_short_name} value={bus.route_short_name}>{bus.route_short_name+" - "+bus.route_long_name}</option>); 
-    
+
     return ( 
       <div class = "map-container" style={{ height: this.state.height }}>
         <div id ='menu' style={changeStyle} >
@@ -285,6 +285,7 @@ class App extends Component {
               'line-width': 8
             }}
           />
+
         </MapGL>  
       </div>  
     )
