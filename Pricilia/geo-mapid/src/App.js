@@ -233,19 +233,21 @@ class App extends Component {
         </div>  
 
         <div style={tableStyle}>
-          <Table>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell>Longtitude</Table.HeaderCell>
-                <Table.HeaderCell>Latitude</Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
+          <Segment style={{overflow: 'auto', maxHeight: 200 }}>
+            <Table >
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell>Longtitude</Table.HeaderCell>
+                  <Table.HeaderCell>Latitude</Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
 
-            <Table.Body>
-              { this.state.coordinates }
-            </Table.Body>
-          </Table>
-
+              <Table.Body>
+                { this.state.coordinates }
+              </Table.Body>
+            </Table>
+          </Segment>
+          
           <Segment>Distance: { this.state.distance } KM</Segment>
           <Segment>Area: { this.state.area } KM<sup>2</sup></Segment>
           <Segment> 
