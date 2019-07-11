@@ -6,7 +6,7 @@ import "semantic-ui-css/semantic.min.css"; //CSS Sematic
 import Draw from "@urbica/react-map-gl-draw";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import { Button, Label, Table, Form } from "semantic-ui-react"; //Tools bantuan untuk UI
-import MapGL, { GeolocateControl, Marker, Source } from "@urbica/react-map-gl"; //Mapbox Urbica
+import MapGL, { GeolocateControl, Marker } from "@urbica/react-map-gl"; //Mapbox Urbica
 
 class App extends Component {
   constructor() {
@@ -18,33 +18,39 @@ class App extends Component {
         longitude: 107.6093,
         zoom: 5.5
       },
+      data: {
+        type: "FeatureCollection",
+        features: []
+      },
       mapstyle: "mapbox://styles/mapbox/streets-v11",
       unshowmarker: "unhere.png",
       unshowmarkercctv: "unhere.png",
-      sumdistance: 0,
-      sumarea: 0,
-      features: [0,0],
-      arrCoord: [0,0],
       arrTbl: [],
+      label: [],
+      layer: "0.5em",
       display: "none",
-      mode: "simple_select"
+      mode: "simple_select",
+      close: "inline-block",
+      open: "none",
+      table: "none",
+      conver: "none"
     };
     this._StyleChange = this._StyleChange.bind(this);
-    this._onClickArea = this._onClickArea.bind(this);
     this._onClick = this._onClick.bind(this);
-    this._onClickDistance = this._onClickDistance.bind(this);
+    this._sum = this._sum.bind(this);
     this._showmarker = this._showmarker.bind(this);
     this._unshowmarker = this._unshowmarker.bind(this);
+    // this._unshowtable = this._unshowtable.bind(this);
+    this._unshowlayer = this._unshowlayer.bind(this);
+    this._showlayer = this._showlayer.bind(this);
     this._showmarkerCCTV = this._showmarkerCCTV.bind(this);
     this._unshowmarkerCCTV = this._unshowmarkerCCTV.bind(this);
     this._disp = this._disp.bind(this);
     this._undisp = this._undisp.bind(this);
-    this._showLngLatarea = this._showLngLatarea.bind(this);
-    this._showLngLatdis = this._showLngLatdis.bind(this);
     this._mode = this._mode.bind(this);
     this._modearea = this._modearea.bind(this);
+    this._converter = this._converter.bind(this);
   }
-
   componentDidMount() {
     document.getElementById("isilang").innerHTML =
       "Long : 107.6093 Lat : -6.9184";
@@ -56,36 +62,6 @@ class App extends Component {
     let lat = parseInt(e.lngLat.lat * 10000) / 10000;
     document.getElementById("isilang").innerHTML =
       "Long : " + lng + " Lat : " + lat;
-  }
-  _showLngLatarea() {
-    var arr = [];
-    var i;
-    for (i = 1; i < this.state.arrCoord[0].length; i++) {
-      var a = parseInt(this.state.arrCoord[0][i - 1][0] * 10000) / 10000;
-      var b = parseInt(this.state.arrCoord[0][i - 1][1] * 10000) / 10000;
-      arr.push(
-        <Table.Row collapsing>
-          <Table.Cell>{a}</Table.Cell>
-          <Table.Cell>{b}</Table.Cell>
-        </Table.Row>
-      );
-    }
-    this.setState({ arrTbl: arr });
-  }
-  _showLngLatdis() {
-    var arr = [];
-    var i;
-    for (i = 0; i < this.state.arrCoord.length; i++) {
-      var a = parseInt(this.state.arrCoord[i][0] * 10000) / 10000;
-      var b = parseInt(this.state.arrCoord[i][1] * 10000) / 10000;
-      arr.push(
-        <Table.Row collapsing>
-          <Table.Cell>{a}</Table.Cell>
-          <Table.Cell>{b}</Table.Cell>
-        </Table.Row>
-      );
-    }
-    this.setState({ arrTbl: arr });
   }
   _StyleChange(e) {
     //procedure untuk change style maps
@@ -111,30 +87,76 @@ class App extends Component {
     this.setState({ display: "inline-block" });
   }
   _undisp() {
-    this.setState({ display: "none" });
+    this.setState({
+      display: "none",
+      arrTbl: [],
+      label: [],
+      data: {
+        type: "FeatureCollection",
+        features: []
+      }
+    });
   }
-  _onClickArea() {
-    var arr = this.state.features[0].geometry.coordinates;
-    var polygon = turf.polygon(arr);
-    var total = parseInt(turf.area(polygon) / 10763.91) / 100;
-    this.setState({ sumarea: total }); //update nilai distance
-    this.setState({ arrCoord: arr });
-    this._showLngLatarea();
+  _unshowlayer() {
+    this.setState({ layer: "-265px", close: "none", open: "inline-block" });
   }
-  _onClickDistance() {
-    var arr = this.state.features[0].geometry.coordinates;
-    var i;
-    var total = 0;
-    for (i = 1; i < arr.length; i++) {
-      var from = turf.point([arr[i - 1][0], arr[i - 1][1]]);
-      var to = turf.point([arr[i][0], arr[i][1]]);
-      var options = { units: "kilometers" }; //satuan perhitungan
-      total += turf.distance(from, to, options); //menghitung jarak data 1 dan 2
-      total = parseInt(total * 100) / 100;
-      this.setState({ sumdistance: total }); //update nilai distance
-      this.setState({ arrCoord: arr });
+  _showlayer() {
+    this.setState({ layer: "0.5em", close: "inline-block", open: "none" });
+  }
+  _sum(feat) {
+    if (this.state.data.features.length === 0) {
+      this.state.data.features.unshift(feat[0]);
+    } else {
+      if (this.state.data.features[0].id !== feat[0].id) {
+        this.state.data.features.unshift(feat[0]);
+      }
     }
-    this._showLngLatdis();
+    var arr = this.state.data.features[0].geometry.coordinates;
+    var i, j, a, b;
+    var total = 0;
+    var array = [];
+    this.setState({ label: [], table: "", conver: "none" });
+    if (this.state.data.features[0].geometry.type === "LineString") {
+      for (i = 1; i < arr.length; i++) {
+        var from = turf.point([arr[i - 1][0], arr[i - 1][1]]);
+        var to = turf.point([arr[i][0], arr[i][1]]);
+        var options = { units: "kilometers" }; //satuan perhitungan
+        total += turf.distance(from, to, options); //menghitung jarak data 1 dan 2
+        total = parseInt(total * 100) / 100;
+      }
+      for (j = 0; j < arr.length; j++) {
+        a = parseInt(arr[j][0] * 10000) / 10000;
+        b = parseInt(arr[j][1] * 10000) / 10000;
+        array.push(
+          <Table.Row collapsing>
+            <Table.Cell>{a}</Table.Cell>
+            <Table.Cell>{b}</Table.Cell>
+          </Table.Row>
+        );
+      }
+      this.setState({ label: <Label>Distance : {total} Km</Label> });
+    } else {
+      var polygon = turf.polygon(arr);
+      total = parseInt(turf.area(polygon) / 10763.91) / 100;
+      for (i = 1; i < arr[0].length; i++) {
+        a = parseInt(arr[0][i - 1][0] * 10000) / 10000;
+        b = parseInt(arr[0][i - 1][1] * 10000) / 10000;
+        array.push(
+          <Table.Row collapsing>
+            <Table.Cell>{a}</Table.Cell>
+            <Table.Cell>{b}</Table.Cell>
+          </Table.Row>
+        );
+        this.setState({
+          label: (
+            <Label>
+              Area : {total} Km<sup>2</sup>
+            </Label>
+          )
+        });
+      }
+    }
+    this.setState({ arrTbl: array, mode: "simple_select" });
   }
   _mode() {
     this.setState({ mode: "draw_line_string" });
@@ -142,15 +164,10 @@ class App extends Component {
   _modearea() {
     this.setState({ mode: "draw_polygon" });
   }
+  _converter() {
+    this.setState({ conver: "inline-block", table: "none", label: [] });
+  }
   render() {
-    const data = {
-      //data coordinate untuk menampilkan line
-      type: "Feature",
-      geometry: {
-        type: "LineString"
-      }
-    };
-
     return (
       <div id="Page">
         {/* mapbox */}
@@ -188,10 +205,11 @@ class App extends Component {
           <Marker longitude={115.1244} latitude={-8.6543}>
             <img src={this.state.unshowmarkercctv} width="320" alt="" />
           </Marker>
-          <Source id="route" type="geojson" data={data} />
           <Draw
+            data={this.state.data}
             mode={this.state.mode}
-            onDrawCreate={({ features }) => this.setState({ features })}
+            onDrawCreate={({ features }) => this._sum(features)}
+            onDrawUpdate={({ features }) => this._sum(features)}
             combineFeaturesControl={false}
             uncombineFeaturesControl={false}
             lineStringControl={false}
@@ -208,49 +226,88 @@ class App extends Component {
             float: "left"
           }}
         >
-          <Button compact size="small" onClick={this._undisp}>
-            Hide
-          </Button>
-          <Button compact size="small" onClick={this._onClickArea}>
-            Sum Area
-          </Button>
-          <Button compact size="small" onClick={this._onClickDistance}>
-            Sum Distance
-          </Button>
-          <Button compact size="small" onClick={this._mode}>
-            L
-          </Button>
-          <Button compact size="small" onClick={this._modearea}>
-            O
-          </Button>
-          <Label>
-            {this.state.sumarea} Km<sup>2</sup>
-          </Label>
-          <Label>{this.state.sumdistance} Km</Label>
-
-          <Table
-            collapsing
-            id="tbl"
-            style={{ top: "60px" }}
+          <Button
+            compact
+            color="red"
             size="small"
-            celled
-            structured
+            onClick={this._undisp}
+            style={{
+              position: "fixed",
+              left: "253px",
+              bottom: "297px",
+              color: "white"
+            }}
           >
-            <Table.Header />
-            <Table.Body>
-              <Table.Row>
-                <Table.HeaderCell>
-                  <center>longitude</center>
-                </Table.HeaderCell>
-                <Table.HeaderCell>
-                  <center>Langtitude</center>
-                </Table.HeaderCell>
-              </Table.Row>
-              {this.state.arrTbl}
-            </Table.Body>
-          </Table>
+            X
+          </Button>
+          <div
+            style={{
+              height: "50px",
+              "overflow-x": "scroll",
+              display: "linear"
+            }}
+          >
+            <Button.Group>
+              <Button compact size="small">
+                <img src="elevation.png" width="20px" height="20px" alt="" />
+              </Button>
+              <Button compact size="small" onClick={this._converter}>
+                <img src="converter.png" width="20px" height="20px" alt="" />
+              </Button>
+              <Button compact size="small" onClick={this._mode}>
+                <img src="direction.png" width="20px" height="20px" alt="" />
+              </Button>
+              <Button compact size="small" onClick={this._modearea}>
+                <img src="area.png" width="20px" height="20px" alt="" />
+              </Button>
+              <Button compact size="small">
+                <img src="bufferpoint.png" width="20px" height="20px" alt="" />
+              </Button>
+              <Button compact size="small">
+                <img src="bufferline.png" width="20px" height="20px" alt="" />
+              </Button>
+              <Button compact size="small">
+                <img src="layer.png" width="20px" height="20px" alt="" />
+              </Button>
+            </Button.Group>
+          </div>
+          <div
+            style={{
+              "background-color": "red",
+              position: "fixed",
+              bottom: "60px",
+              height: "180px",
+              width: "265px",
+              display: this.state.conver
+            }}
+          >
+            <form>
+              <Label>Area</Label>
+            </form>
+          </div>
+            <Table
+              collapsing
+              id="tbl"
+              style={{ top: "80px", display: this.state.table }}
+              size="small"
+              celled
+              structured
+            >
+              <Table.Header />
+              <Table.Body>
+                <Table.Row>
+                  <Table.HeaderCell>
+                    <center>longitude</center>
+                  </Table.HeaderCell>
+                  <Table.HeaderCell>
+                    <center>Langtitude</center>
+                  </Table.HeaderCell>
+                </Table.Row>
+                {this.state.arrTbl}
+              </Table.Body>
+            </Table>
+          {this.state.label}
         </div>
-
         {/** button change style map box */}
         <div
           id="menu"
@@ -339,7 +396,41 @@ class App extends Component {
           <Label id="isilang" />
         </div>
 
-        <Table collapsing id="tbl">
+        <Button
+          compact
+          color="blue"
+          size="small"
+          onClick={this._unshowlayer}
+          style={{
+            position: "fixed",
+            left: "271px",
+            top: "8px",
+            display: this.state.close
+          }}
+        >
+          ~
+        </Button>
+        <Button
+          compact
+          color="blue"
+          size="small"
+          onClick={this._showlayer}
+          style={{
+            position: "fixed",
+            left: "0",
+            top: "8px",
+            display: this.state.open
+          }}
+        >
+          ...
+        </Button>
+        <Table
+          collapsing
+          id="tbl"
+          style={{
+            left: this.state.layer
+          }}
+        >
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell colSpan="3">
@@ -392,5 +483,4 @@ class App extends Component {
     );
   }
 }
-
 export default App;
