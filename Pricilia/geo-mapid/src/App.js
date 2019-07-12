@@ -27,8 +27,10 @@ import { randomPoint } from '@turf/random';
 import Cluster from '@urbica/react-map-gl-cluster';
 import DrawControl from "react-mapbox-gl-draw";
 import bus_list from './bus_list.json';
+import MatGeocoder from 'react-mui-mapbox-geocoder';
 
 var coordinates = [];
+const MAPBOX_TOKEN = 'pk.eyJ1IjoiY2h5cHJpY2lsaWEiLCJhIjoiY2p2dXpnODFkM3F6OTQzcGJjYWgyYmIydCJ9.h_AlGKNQW-TtUVF-856lSA';
 class App extends Component {
   
   constructor() {
@@ -56,6 +58,7 @@ class App extends Component {
     this.setInitialProperties = this.setInitialProperties.bind(this);
     this.clearTable = this.clearTable.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
+    this.goToGeocoderResult = this.goToGeocoderResult.bind(this);
   }
 
   componentWillMount() {
@@ -73,6 +76,9 @@ class App extends Component {
     window.removeEventListener("resize", this.updateDimensions.bind(this));
   }
 
+  goToGeocoderResult(result) {
+    // Go to result.
+  }
   setOnChange(data) {
     this.setState({data: data});
     console.log("tess"+this.state.data[0].coordinates);
@@ -208,9 +214,15 @@ class App extends Component {
     let items = bus_list.map((bus) => 
     <option key={bus.route_short_name} value={bus.route_short_name}>{bus.route_short_name+" - "+bus.route_long_name}</option>); 
 
+    const geocoderApiOptions = {
+      country: 'us',
+      proximity: {longitude: -121.0681, latitude: 38.9197},
+      bbox: [-123.8501, 38.08, -117.5604, 39.8735]
+    };
+
     return ( 
       <div class = "map-container" style={{ height: this.state.height }}>
-        <div id ='menu' style={changeStyle} >
+        {/* <div id ='menu' style={changeStyle} >
           <input id='streets-v11' type='radio' name='rtoggle' value='mapbox://styles/mapbox/streets-v11' onChange={this.radioChange}/>
           <Label for='streets'>streets</Label>
           <input id='light-v10' type='radio' name='rtoggle' value='mapbox://styles/mapbox/light-v10' onChange={this.radioChange}/>
@@ -221,16 +233,16 @@ class App extends Component {
           <Label for='outdoors'>outdoors</Label>
           <input id='satellite-v9' type='radio' name='rtoggle' value='mapbox://styles/mapbox/satellite-v9' onChange={this.radioChange}/>
           <Label for='satellite'>satellite</Label>
-        </div>
+        </div> */}
 
-        <div>
+        {/* <div>
           <select 
             onChange={this.handleSelect} 
             value={this.state.value}  
             style={selectStyle}>
             {items}
           </select>
-        </div>  
+        </div>   */}
 
         <div style={tableStyle}>
           <Segment style={{overflow: 'auto', maxHeight: 200 }}>
@@ -258,7 +270,7 @@ class App extends Component {
         <MapGL
           style = {{ width: '100%', height: '100%' }}
           mapStyle = {this.state.mapColor}
-          accessToken={'pk.eyJ1IjoiY2h5cHJpY2lsaWEiLCJhIjoiY2p2dXpnODFkM3F6OTQzcGJjYWgyYmIydCJ9.h_AlGKNQW-TtUVF-856lSA'}
+          accessToken={ MAPBOX_TOKEN }
           latitude = {this.state.viewport.latitude}
           longitude = {this.state.viewport.longitude}
           zoom = {this.state.viewport.zoom}
@@ -273,7 +285,7 @@ class App extends Component {
               this.setInitialProperties(features );
             }}
           />
-          <Source id='route' type='geojson' data={this.state.dataGeo} />
+          {/* <Source id='route' type='geojson' data={this.state.dataGeo} />
           <Layer
             id='route'
             type='line'
@@ -286,8 +298,15 @@ class App extends Component {
               'line-color': '#888',
               'line-width': 8
             }}
+          /> */}
+          
+        <MatGeocoder
+            inputPlaceholder="Search Address"
+            accessToken={MAPBOX_TOKEN}
+            onSelect={result => this.oToGeocoderResult(result)}
+            showLoader={true}
+            {...geocoderApiOptions}
           />
-
         </MapGL>  
       </div>  
     )
