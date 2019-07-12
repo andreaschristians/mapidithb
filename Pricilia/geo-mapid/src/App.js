@@ -27,10 +27,16 @@ import { randomPoint } from '@turf/random';
 import Cluster from '@urbica/react-map-gl-cluster';
 import DrawControl from "react-mapbox-gl-draw";
 import bus_list from './bus_list.json';
-import MatGeocoder from 'react-mui-mapbox-geocoder';
+import Geocoder from 'react-mapbox-gl-geocoder'
+import ReactMapGL from 'react-map-gl'
 
 var coordinates = [];
 const MAPBOX_TOKEN = 'pk.eyJ1IjoiY2h5cHJpY2lsaWEiLCJhIjoiY2p2dXpnODFkM3F6OTQzcGJjYWgyYmIydCJ9.h_AlGKNQW-TtUVF-856lSA';
+
+
+const queryParams = {
+  country: 'us'
+}
 class App extends Component {
   
   constructor() {
@@ -58,7 +64,7 @@ class App extends Component {
     this.setInitialProperties = this.setInitialProperties.bind(this);
     this.clearTable = this.clearTable.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
-    this.goToGeocoderResult = this.goToGeocoderResult.bind(this);
+    this.onSelected = this.onSelected.bind(this);
   }
 
   componentWillMount() {
@@ -76,8 +82,9 @@ class App extends Component {
     window.removeEventListener("resize", this.updateDimensions.bind(this));
   }
 
-  goToGeocoderResult(result) {
-    // Go to result.
+  onSelected (viewport, item) {
+    this.setState({viewport});
+    console.log('Selected: ', item)
   }
   setOnChange(data) {
     this.setState({data: data});
@@ -214,14 +221,18 @@ class App extends Component {
     let items = bus_list.map((bus) => 
     <option key={bus.route_short_name} value={bus.route_short_name}>{bus.route_short_name+" - "+bus.route_long_name}</option>); 
 
-    const geocoderApiOptions = {
-      country: 'us',
-      proximity: {longitude: -121.0681, latitude: 38.9197},
-      bbox: [-123.8501, 38.08, -117.5604, 39.8735]
-    };
-
+    const {viewport} = this.state
     return ( 
       <div class = "map-container" style={{ height: this.state.height }}>
+        <Segment>
+          <Geocoder
+              mapboxApiAccessToken={MAPBOX_TOKEN} 
+              onSelected={this.onSelected} 
+              viewport={viewport} 
+              hideOnSelect={true}
+              queryParams={queryParams}
+          />
+          </Segment>
         {/* <div id ='menu' style={changeStyle} >
           <input id='streets-v11' type='radio' name='rtoggle' value='mapbox://styles/mapbox/streets-v11' onChange={this.radioChange}/>
           <Label for='streets'>streets</Label>
@@ -300,14 +311,9 @@ class App extends Component {
             }}
           /> */}
           
-        <MatGeocoder
-            inputPlaceholder="Search Address"
-            accessToken={MAPBOX_TOKEN}
-            onSelect={result => this.oToGeocoderResult(result)}
-            showLoader={true}
-            {...geocoderApiOptions}
-          />
+          
         </MapGL>  
+        
       </div>  
     )
   }
