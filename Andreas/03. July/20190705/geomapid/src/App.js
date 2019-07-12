@@ -38,18 +38,8 @@ class App extends Component {
     this._StyleChange = this._StyleChange.bind(this);
     this._onClick = this._onClick.bind(this);
     this._sum = this._sum.bind(this);
-    this._showmarker = this._showmarker.bind(this);
-    this._unshowmarker = this._unshowmarker.bind(this);
     // this._unshowtable = this._unshowtable.bind(this);
-    this._unshowlayer = this._unshowlayer.bind(this);
-    this._showlayer = this._showlayer.bind(this);
     this._showmarkerCCTV = this._showmarkerCCTV.bind(this);
-    this._unshowmarkerCCTV = this._unshowmarkerCCTV.bind(this);
-    this._disp = this._disp.bind(this);
-    this._undisp = this._undisp.bind(this);
-    this._mode = this._mode.bind(this);
-    this._modearea = this._modearea.bind(this);
-    this._converter = this._converter.bind(this);
   }
   componentDidMount() {
     document.getElementById("isilang").innerHTML =
@@ -69,39 +59,10 @@ class App extends Component {
       mapstyle: e.currentTarget.value
     });
   }
-  _showmarker() {
-    this.setState({ unshowmarker: "here.png" });
-  }
-  _unshowmarker() {
-    this.setState({ unshowmarker: "unhere.png" });
-  }
   _showmarkerCCTV() {
     this.setState({
       unshowmarkercctv: "http://202.58.207.176:8090/mjpg/video.mjpg"
     });
-  }
-  _unshowmarkerCCTV() {
-    this.setState({ unshowmarkercctv: "unhere.png" });
-  }
-  _disp() {
-    this.setState({ display: "inline-block" });
-  }
-  _undisp() {
-    this.setState({
-      display: "none",
-      arrTbl: [],
-      label: [],
-      data: {
-        type: "FeatureCollection",
-        features: []
-      }
-    });
-  }
-  _unshowlayer() {
-    this.setState({ layer: "-265px", close: "none", open: "inline-block" });
-  }
-  _showlayer() {
-    this.setState({ layer: "0.5em", close: "inline-block", open: "none" });
   }
   _sum(feat) {
     if (this.state.data.features.length === 0) {
@@ -157,15 +118,6 @@ class App extends Component {
       }
     }
     this.setState({ arrTbl: array, mode: "simple_select" });
-  }
-  _mode() {
-    this.setState({ mode: "draw_line_string" });
-  }
-  _modearea() {
-    this.setState({ mode: "draw_polygon" });
-  }
-  _converter() {
-    this.setState({ conver: "inline-block", table: "none", label: [] });
   }
   render() {
     return (
@@ -230,7 +182,17 @@ class App extends Component {
             compact
             color="red"
             size="small"
-            onClick={this._undisp}
+            onClick={() =>
+              this.setState({
+                display: "none",
+                arrTbl: [],
+                label: [],
+                data: {
+                  type: "FeatureCollection",
+                  features: []
+                }
+              })
+            }
             style={{
               position: "fixed",
               left: "253px",
@@ -251,16 +213,38 @@ class App extends Component {
               <Button compact size="small">
                 <img src="elevation.png" width="20px" height="20px" alt="" />
               </Button>
-              <Button compact size="small" onClick={this._converter}>
+              <Button
+                compact
+                size="small"
+                onClick={() =>
+                  this.setState({
+                    conver: "inline-block",
+                    table: "none",
+                    label: []
+                  })
+                }
+              >
                 <img src="converter.png" width="20px" height="20px" alt="" />
               </Button>
-              <Button compact size="small" onClick={this._mode}>
+              <Button
+                compact
+                size="small"
+                onClick={() => this.setState({ mode: "draw_line_string" })}
+              >
                 <img src="direction.png" width="20px" height="20px" alt="" />
               </Button>
-              <Button compact size="small" onClick={this._modearea}>
+              <Button
+                compact
+                size="small"
+                onClick={() => this.setState({ mode: "draw_polygon" })}
+              >
                 <img src="area.png" width="20px" height="20px" alt="" />
               </Button>
-              <Button compact size="small">
+              <Button
+                compact
+                size="small"
+                onClick={() => this.setState({ mode: "draw_point" })}
+              >
                 <img src="bufferpoint.png" width="20px" height="20px" alt="" />
               </Button>
               <Button compact size="small">
@@ -273,7 +257,7 @@ class App extends Component {
           </div>
           <div
             style={{
-              "background-color": "red",
+              "background-color": "white",
               position: "fixed",
               bottom: "60px",
               height: "180px",
@@ -285,27 +269,27 @@ class App extends Component {
               <Label>Area</Label>
             </form>
           </div>
-            <Table
-              collapsing
-              id="tbl"
-              style={{ top: "80px", display: this.state.table }}
-              size="small"
-              celled
-              structured
-            >
-              <Table.Header />
-              <Table.Body>
-                <Table.Row>
-                  <Table.HeaderCell>
-                    <center>longitude</center>
-                  </Table.HeaderCell>
-                  <Table.HeaderCell>
-                    <center>Langtitude</center>
-                  </Table.HeaderCell>
-                </Table.Row>
-                {this.state.arrTbl}
-              </Table.Body>
-            </Table>
+          <Table
+            collapsing
+            id="tbl"
+            style={{ top: "80px", display: this.state.table }}
+            size="small"
+            celled
+            structured
+          >
+            <Table.Header />
+            <Table.Body>
+              <Table.Row>
+                <Table.HeaderCell>
+                  <center>longitude</center>
+                </Table.HeaderCell>
+                <Table.HeaderCell>
+                  <center>Langtitude</center>
+                </Table.HeaderCell>
+              </Table.Row>
+              {this.state.arrTbl}
+            </Table.Body>
+          </Table>
           {this.state.label}
         </div>
         {/** button change style map box */}
@@ -367,7 +351,7 @@ class App extends Component {
             content="Toolbox"
             icon="briefcase"
             labelPosition="left"
-            onClick={this._disp}
+            onClick={() => this.setState({ display: "inline-block" })}
           />
           <Button
             compact
@@ -400,7 +384,13 @@ class App extends Component {
           compact
           color="blue"
           size="small"
-          onClick={this._unshowlayer}
+          onClick={() =>
+            this.setState({
+              layer: "-265px",
+              close: "none",
+              open: "inline-block"
+            })
+          }
           style={{
             position: "fixed",
             left: "271px",
@@ -414,7 +404,13 @@ class App extends Component {
           compact
           color="blue"
           size="small"
-          onClick={this._showlayer}
+          onClick={() =>
+            this.setState({
+              layer: "0.5em",
+              close: "inline-block",
+              open: "none"
+            })
+          }
           style={{
             position: "fixed",
             left: "0",
@@ -443,8 +439,20 @@ class App extends Component {
               <Table.Cell collapsing>
                 <Form.Field>
                   <Button.Group compact size="small">
-                    <Button onClick={this._showmarker}>ON</Button>
-                    <Button onClick={this._unshowmarker}>OFF</Button>
+                    <Button
+                      onClick={() =>
+                        this.setState({ unshowmarker: "here.png" })
+                      }
+                    >
+                      ON
+                    </Button>
+                    <Button
+                      onClick={() =>
+                        this.setState({ unshowmarker: "unhere.png" })
+                      }
+                    >
+                      OFF
+                    </Button>
                   </Button.Group>
                 </Form.Field>
               </Table.Cell>
@@ -454,7 +462,13 @@ class App extends Component {
               <Table.Cell collapsing>
                 <Button.Group compact size="small">
                   <Button onClick={this._showmarkerCCTV}>ON</Button>
-                  <Button onClick={this._unshowmarkerCCTV}>OFF</Button>
+                  <Button
+                    onClick={() =>
+                      this.setState({ unshowmarkercctv: "unhere.png" })
+                    }
+                  >
+                    OFF
+                  </Button>
                 </Button.Group>
               </Table.Cell>
               <Table.Cell>CCTV</Table.Cell>
