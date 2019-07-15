@@ -3,6 +3,8 @@ import * as turf from "@turf/turf"; //Tools bantuan untuk hitung distance dll
 import "mapbox-gl/dist/mapbox-gl.css"; //CSS mapbox
 import React, { Component } from "react"; //React
 import "semantic-ui-css/semantic.min.css"; //CSS Sematic
+import Geocoder from "react-map-gl-geocoder/dist/index.js";
+import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import Draw from "@urbica/react-map-gl-draw";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import {
@@ -43,6 +45,8 @@ class App extends Component {
       open: "none",
       table: "none",
       conver: "none",
+      details: "none",
+      inspect: "none",
       inputarea: 1,
       inputarea_: 1,
       inputlength: 1,
@@ -82,19 +86,14 @@ class App extends Component {
     });
   }
   _sum(feat) {
-    if (this.state.data.features.length === 0) {
-      this.state.data.features.unshift(feat[0]);
-    } else {
-      if (this.state.data.features[0].id !== feat[0].id) {
-        this.state.data.features.unshift(feat[0]);
-      }
-    }
-    var arr = this.state.data.features[0].geometry.coordinates;
+    this.state.data.features.push(feat[0]);
     var i, j, a, b;
     var total = 0;
     var array = [];
+    var con = this.state.data.features.length - 1;
+    var arr = this.state.data.features[con].geometry.coordinates;
     this.setState({ label: [], table: "", conver: "none" });
-    if (this.state.data.features[0].geometry.type === "LineString") {
+    if (this.state.data.features[con].geometry.type === "LineString") {
       for (i = 1; i < arr.length; i++) {
         var from = turf.point([arr[i - 1][0], arr[i - 1][1]]);
         var to = turf.point([arr[i][0], arr[i][1]]);
@@ -113,7 +112,7 @@ class App extends Component {
         );
       }
       this.setState({ label: <Label>Distance : {total} Km</Label> });
-    } else if (this.state.data.features[0].geometry.type === "Polygon") {
+    } else if (this.state.data.features[con].geometry.type === "Polygon") {
       var polygon = turf.polygon(arr);
       total = parseInt(turf.area(polygon) / 10763.91) / 100;
       for (i = 1; i < arr[0].length; i++) {
@@ -160,14 +159,24 @@ class App extends Component {
       this.setState({ outputlength: hasil });
     } else if ([name][0] === "inputarea_") {
       this.setState({ inputarea_: value });
+      banding = this.state.outputarea_ / value;
+      hasil = banding * this.state.inputarea;
+      this.setState({ outputarea: hasil });
     } else if ([name][0] === "outputarea_") {
       this.setState({ outputarea_: value });
+      banding = value / this.state.inputarea_;
+      hasil = banding * this.state.inputarea;
+      this.setState({ outputarea: hasil });
     } else if ([name][0] === "inputlength_") {
       this.setState({ inputlength_: value });
     } else if ([name][0] === "outputlength_") {
       this.setState({ outputlength_: value });
     }
   }
+  onSelected = (viewport, item) => {
+    this.setState({ viewport });
+    console.log("Selected: ", item);
+  };
 
   // TAMPILAN UI
   render() {
@@ -243,6 +252,14 @@ class App extends Component {
             polygonControl={false}
             trashControl={false}
           />
+          <div style={{ position: "fixed", top: "15px", right: "50px" }}>
+            <Geocoder
+              mapboxApiAccessToken="pk.eyJ1IjoiYW5kcmVhc2NocmlzdGlhbiIsImEiOiJjanZ2cnZhMjg0NWtmNDN1aTMxcGphY21xIn0.CDEBH4hJPmAhRDOtzz73Mw"
+              onSelected={this.onSelected}
+              viewport={this.state.viewport}
+              hideOnSelect={true}
+            />
+          </div>
         </MapGL>
 
         {/* TOOLBOXS */}
@@ -274,7 +291,8 @@ class App extends Component {
               position: "fixed",
               left: "253px",
               bottom: "297px",
-              color: "white"
+              color: "white",
+              opacity: "0.7"
             }}
           >
             X
@@ -474,13 +492,149 @@ class App extends Component {
           {this.state.label}
         </div>
 
+        {/* DETAILS */}
+        <div
+          style={{
+            position: "fixed",
+            backgroundColor: " rgba(113, 124, 124, 0.7)",
+            bottom: "40px",
+            height: "200px",
+            width: "100%",
+            display: this.state.details
+          }}
+        >
+          {/* CLOSE BUTTON */}
+          <Button
+            compact
+            color="red"
+            size="small"
+            onClick={() =>
+              this.setState({
+                details: "none"
+              })
+            }
+            style={{
+              position: "fixed",
+              right: "-3px",
+              bottom: "245px",
+              color: "white",
+              opacity: "0.7"
+            }}
+          >
+            X
+          </Button>
+
+          {/* MENU DETAILS */}
+          <div
+            style={{
+              position: "fixed",
+              backgroundColor: " rgb(113, 124, 124)",
+              bottom: "195px",
+              width: "100%",
+              display: "inline-block",
+              padding: "5px"
+            }}
+          >
+            <Form size="mini">
+              <Form.Group>
+                Field:
+                <Form.Field control={Select} options={[]} width={2} />
+                Type:
+                <Form.Field
+                  width={2}
+                  control={Select}
+                  options={[
+                    { key: "a", text: "==", value: 1 },
+                    { key: "b", text: "!=", value: 2 },
+                    { key: "c", text: ">", value: 3 },
+                    { key: "d", text: ">=", value: 4 },
+                    { key: "e", text: "<", value: 5 },
+                    { key: "f", text: "<=", value: 6 },
+                    { key: "g", text: "include", value: 7 }
+                  ]}
+                />
+                Value:
+                <Form.Input width={2} />
+              </Form.Group>
+            </Form>
+            <Button.Group
+              compact
+              size="mini"
+              style={{ position: "fixed", bottom: "215px", left: "600px" }}
+            >
+              <Button icon="backward" />
+              <Button icon="reply" />
+              <Button icon="share" />
+              <Button icon="arrow down" />
+            </Button.Group>
+          </div>
+        </div>
+
+        {/* INSPECT */}
+        <div
+          style={{
+            position: "fixed",
+            backgroundColor: " rgba(113, 124, 124, 0.7)",
+            bottom: "150px",
+            left: "460px",
+            height: "300px",
+            width: "400px",
+            padding: "20px",
+            display: this.state.inspect
+          }}
+        >
+          <h3>Select layer to inspect.</h3>
+          <h3>
+            When this feature is active, you can click at the selected layer on
+            the map to audit property data. Don't forget to activate layer and
+            set icon first.
+          </h3>
+          <Form size="mini">
+            <Form.Field>
+              <Form.Group>
+                <Form.Field
+                  label="Layer Name: "
+                  width={3}
+                  placeholder="All"
+                  control={Select}
+                  options={[{ key: "a", text: "All", value: 1 }]}
+                />
+              </Form.Group>
+            </Form.Field>
+          </Form>
+          <Button.Group
+            size="mini"
+            style={{ position: "fixed", bottom: "170px", left: "720px" }}
+          >
+            <Button
+              onClick={() =>
+                this.setState({
+                  inspect: "none"
+                })
+              }
+            >
+              CANCEL
+            </Button>
+            <Button
+              onClick={() =>
+                this.setState({
+                  inspect: "none"
+                })
+              }
+              color="blue"
+            >
+              OK
+            </Button>
+          </Button.Group>
+        </div>
+
         {/** CHANGE STYLE MAPBOX */}
         <div
           style={{
             position: "fixed",
             top: "9px",
             padding: "5px",
-            right: "40px"
+            right: "200px"
           }}
         >
           <Button.Group size="mini">
@@ -517,13 +671,13 @@ class App extends Component {
 
         {/* BUTTON NAVIGATION */}
         <div id="Bottom">
-          <img src="mapid-logo.svg" align="center" height="30px" alt="logo" />
+          <a href="https://www.mapid.io/">
+            <img src="mapid-logo.svg" align="center" height="30px" alt="logo" />
+          </a>
           <Button.Group size="mini" compact>
             <Button compact size="small">
-              <a href="https://www.mapid.io/">
-                <img src="geo-icon.png" height="10px" alt="geo" />
-                <img src="mapid-icon.png" height="10px" alt="mapid" />
-              </a>
+              <img src="geo-icon.png" height="10px" alt="geo" />
+              <img src="mapid-icon.png" height="10px" alt="mapid" />
             </Button>
             <Button
               content="Toolbox"
@@ -532,16 +686,16 @@ class App extends Component {
               onClick={() => this.setState({ display: "inline-block" })}
             />
             <Button
-              disabled
               content="Details"
               icon="bars"
               labelPosition="left"
+              onClick={() => this.setState({ details: "inline-block" })}
             />
             <Button
-              disabled
               content="Inspect"
               icon="search"
               labelPosition="left"
+              onClick={() => this.setState({ inspect: "inline-block" })}
             />
             <Button
               disabled
@@ -640,12 +794,13 @@ class App extends Component {
           }
           style={{
             position: "fixed",
-            left: "271px",
+            left: "261px",
             top: "8px",
-            display: this.state.close
+            display: this.state.close,
+            opacity: "0.7"
           }}
         >
-          ~
+          {"<<"}
         </Button>
 
         {/* SHOW TABLE LAYER */}
@@ -662,12 +817,13 @@ class App extends Component {
           }
           style={{
             position: "fixed",
-            left: "0",
+            left: "-10px",
             top: "8px",
-            display: this.state.open
+            display: this.state.open,
+            opacity: "0.7"
           }}
         >
-          ...
+          {">>"}
         </Button>
       </div>
     );
