@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import logo from './mapid-logo.png';
+import geo from './geo-icon.png';
+import mapid from './mapid-icon.png';
 import './App.css';
 import MapGL, {
   NavigationControl,
@@ -19,7 +21,11 @@ import {
   Label,
   Segment,
   Table,
-  Select
+  Select,
+  Grid,
+  Tab,
+  Menu,
+  Input
 } from 'semantic-ui-react';
 import { center, distance, feature, area } from '@turf/turf';
 import { point, polygon, round } from '@turf/helpers';
@@ -27,16 +33,13 @@ import { randomPoint } from '@turf/random';
 import Cluster from '@urbica/react-map-gl-cluster';
 import DrawControl from "react-mapbox-gl-draw";
 import bus_list from './bus_list.json';
-import Geocoder from 'react-mapbox-gl-geocoder'
-import ReactMapGL from 'react-map-gl'
+import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css';
+import Geocoder from 'react-map-gl-geocoder';
+import DeckGL, { GeoJsonLayer } from "deck.gl";
 
 var coordinates = [];
 const MAPBOX_TOKEN = 'pk.eyJ1IjoiY2h5cHJpY2lsaWEiLCJhIjoiY2p2dXpnODFkM3F6OTQzcGJjYWgyYmIydCJ9.h_AlGKNQW-TtUVF-856lSA';
 
-
-const queryParams = {
-  country: 'us'
-}
 class App extends Component {
   
   constructor() {
@@ -56,17 +59,22 @@ class App extends Component {
       coordinates: [],
       area: 0,
       selected_bus: 1,
-      dataGeo: null
+      dataGeo: null,
+      searchResultLayer: null,
+      bColor: ''
     };
     this.updateDimensions = this.updateDimensions.bind(this); // <-- Contoh deklarasi functions/methods
-    this.radioChange = this.radioChange.bind(this);
+    this.mapStyleChange = this.mapStyleChange.bind(this);
     this.setOnChange = this.setOnChange.bind(this);
     this.setInitialProperties = this.setInitialProperties.bind(this);
     this.clearTable = this.clearTable.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
-    this.onSelected = this.onSelected.bind(this);
+    this.handleGeocoderViewportChange = this.handleGeocoderViewportChange.bind(this);
+    this.handleViewportChange = this.handleViewportChange.bind(this);
+    this.handleOnResult = this.handleOnResult.bind(this);
   }
 
+  mapRef = React.createRef()
   componentWillMount() {
     // <-- Event Method bawaan react
     this.updateDimensions();
@@ -82,10 +90,44 @@ class App extends Component {
     window.removeEventListener("resize", this.updateDimensions.bind(this));
   }
 
-  onSelected (viewport, item) {
-    this.setState({viewport});
-    console.log('Selected: ', item)
+  updateDimensions(viewport) {
+    // <-- Function bikinan sendiri untuk mengatur tampilan dimensi peta
+    const height = window.innerWidth >= 992 ? window.innerHeight : 650;
+    this.setState({ 
+      height: height,
+      viewport: { ...this.state.viewport, ...viewport }
+    });
   }
+
+  handleViewportChange = viewport => {
+    this.setState({
+      viewport: { ...this.state.viewport, ...viewport }
+    });
+  };
+
+  handleGeocoderViewportChange = (viewport) => {
+    const geocoderDefaultOverrides = { transitionDuration: 1000 }
+ 
+    return this.handleViewportChange({
+      ...viewport,
+      ...geocoderDefaultOverrides
+    })
+  }
+
+  handleOnResult = event => {
+    console.log(event.result);
+    this.setState({
+      searchResultLayer: new GeoJsonLayer({
+        id: "search-result",
+        data: event.result.geometry,
+        getFillColor: [255, 0, 0, 128],
+        getRadius: 1000,
+        pointRadiusMinPixels: 10,
+        pointRadiusMaxPixels: 10
+      })
+    });
+  };
+
   setOnChange(data) {
     this.setState({data: data});
     console.log("tess"+this.state.data[0].coordinates);
@@ -160,13 +202,7 @@ class App extends Component {
     });
   }
 
-  updateDimensions() {
-    // <-- Function bikinan sendiri untuk mengatur tampilan dimensi peta
-    const height = window.innerWidth >= 992 ? window.innerHeight : 650;
-    this.setState({ height: height });
-  }
-  
-  radioChange(e) {
+  mapStyleChange(e) {
     console.log(e.currentTarget.value);
     this.setState({
       mapColor: e.currentTarget.value
@@ -183,22 +219,22 @@ class App extends Component {
     this.setState({dataGeo: geojson});
   }
 
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+
   render() {
     const changeStyle = {
       zIndex: 999,
       position: "absolute",
-      background: "#fff",
-      padding: "10px",
-      borderRadius: "10px",
       top: "10px",
-      left: "10px"
+      right: "60px"
     };
 
     const tableStyle = {
       zIndex: 999,
       position: "absolute",
       top: "80px",
-      left: "10px"
+      left: "10px",
+      background: '#fff'
     };
 
     const selectStyle = {
@@ -218,33 +254,50 @@ class App extends Component {
       fontStyle:"bold", outline:"none"
     };
 
+    const navBottom = {
+      
+    }
+
     let items = bus_list.map((bus) => 
     <option key={bus.route_short_name} value={bus.route_short_name}>{bus.route_short_name+" - "+bus.route_long_name}</option>); 
 
-    const {viewport} = this.state
+    const { viewport, searchResultLayer } = this.state;
+
+    const panes = [
+      { menuItem: 'Tab 1', render: () => <Tab.Pane attached={false}>Tab 1 Content</Tab.Pane> },
+      { menuItem: 'Tab 2', render: () => <Tab.Pane attached={false}>Tab 2 Content</Tab.Pane> },
+      { menuItem: 'Tab 3', render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane> },
+    ]
+    
+    const { activeItem } = this.state;
+
     return ( 
       <div class = "map-container" style={{ height: this.state.height }}>
-        <Segment>
-          <Geocoder
-              mapboxApiAccessToken={MAPBOX_TOKEN} 
-              onSelected={this.onSelected} 
-              viewport={viewport} 
-              hideOnSelect={true}
-              queryParams={queryParams}
-          />
-          </Segment>
-        {/* <div id ='menu' style={changeStyle} >
-          <input id='streets-v11' type='radio' name='rtoggle' value='mapbox://styles/mapbox/streets-v11' onChange={this.radioChange}/>
-          <Label for='streets'>streets</Label>
-          <input id='light-v10' type='radio' name='rtoggle' value='mapbox://styles/mapbox/light-v10' onChange={this.radioChange}/>
-          <Label for='light'>light</Label>
-          <input id='dark-v10' type='radio' name='rtoggle' value='mapbox://styles/mapbox/dark-v10' onChange={this.radioChange}/>
-          <Label for='dark'>dark</Label>
-          <input id='outdoors-v11' type='radio' name='rtoggle' value='mapbox://styles/mapbox/outdoors-v11' onChange={this.radioChange}/>
-          <Label for='outdoors'>outdoors</Label>
-          <input id='satellite-v9' type='radio' name='rtoggle' value='mapbox://styles/mapbox/satellite-v9' onChange={this.radioChange}/>
-          <Label for='satellite'>satellite</Label>
-        </div> */}
+        <div id ='menu' style={changeStyle} >
+        <Button.Group>
+          <Button 
+            value='mapbox://styles/mapbox/streets-v11' 
+            onClick={ this.mapStyleChange }>Streets
+          </Button>
+          <Button 
+            value='mapbox://styles/mapbox/light-v10' 
+            onClick={ this.mapStyleChange }>Light
+          </Button>
+          <Button 
+            value='mapbox://styles/mapbox/dark-v10' 
+            onClick={ this.mapStyleChange }>Dark
+          </Button>
+          <Button 
+            value='mapbox://styles/mapbox/outdoors-v11' 
+            onClick={ this.mapStyleChange }>Outdoors
+          </Button>
+          <Button 
+            value='mapbox://styles/mapbox/satellite-v9' 
+            onClick={ this.mapStyleChange }>Satellite
+          </Button>
+        </Button.Group>
+
+        </div>
 
         {/* <div>
           <select 
@@ -256,7 +309,7 @@ class App extends Component {
         </div>   */}
 
         <div style={tableStyle}>
-          <Segment style={{overflow: 'auto', maxHeight: 200 }}>
+          {/* <Segment style={{overflow: 'auto', maxHeight: 200 }}>
             <Table >
               <Table.Header>
                 <Table.Row>
@@ -276,16 +329,36 @@ class App extends Component {
           <Segment> 
           <Button onClick={ this.clearTable }>Clear</Button>
           </Segment>
+           */}
+
+        <Menu menu={{ attached: false }}>
+          <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
+          <Menu.Item
+            name='messages'
+            active={activeItem === 'messages'}
+            onClick={this.handleItemClick}
+          />
+          <Menu.Item
+            name='friends'
+            active={activeItem === 'friends'}
+            onClick={this.handleItemClick}
+          />
+          <Menu.Menu position='right'>
+            <Menu.Item>
+              <Input icon='search' placeholder='Search...' />
+            </Menu.Item>
+          </Menu.Menu>
+        </Menu>
         </div>
 
         <MapGL
-          style = {{ width: '100%', height: '100%' }}
+          style = {{ width: '100%', height: '92%' }}
           mapStyle = {this.state.mapColor}
           accessToken={ MAPBOX_TOKEN }
           latitude = {this.state.viewport.latitude}
           longitude = {this.state.viewport.longitude}
           zoom = {this.state.viewport.zoom}
-          onViewportChange = {viewport => this.setState({ viewport })}
+          onViewportChange={this.handleViewportChange}
         >
           
           <GeolocateControl position='top-right' />
@@ -311,9 +384,31 @@ class App extends Component {
             }}
           /> */}
           
-          
+          {/* <Geocoder
+            mapRef={this.mapRef}
+            onResult={this.handleOnResult}
+            onViewportChange={this.handleGeocoderViewportChange}
+            mapboxApiAccessToken={MAPBOX_TOKEN}
+            position="top-left"
+          />
+          <DeckGL {...viewport} layers={[searchResultLayer]} /> */}
         </MapGL>  
-        
+        <div style={ navBottom }>
+        <Menu fluid widths={7} borderless>
+          <Menu.Item>
+            <img src={ logo } />
+          </Menu.Item>
+          <Menu.Item>
+            <img src={ geo } height='60%' width='60%'/> 
+            <img src={ mapid } height='60%' width='60%'/> 
+          </Menu.Item>
+          <Menu.Item name='Toolbox'  onClick={this.handleItemClick} />
+          <Menu.Item name='Details'  onClick={this.handleItemClick} />
+          <Menu.Item name='Inspect'  onClick={this.handleItemClick} />
+          <Menu.Item name='Navigate'  onClick={this.handleItemClick} />
+          <Menu.Item name='Navigate'  onClick={this.handleItemClick} />
+        </Menu>
+        </div>
       </div>  
     )
   }
