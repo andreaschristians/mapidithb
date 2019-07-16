@@ -5,37 +5,20 @@ import mapid from './mapid-icon.png';
 import './App.css';
 import MapGL, {
   NavigationControl,
-  AttributionControl,
-  Source,
-  Layer,
-  FeatureState,
-  Popup, 
-  GeolocateControl,
-  Marker
+  GeolocateControl
 } from '@urbica/react-map-gl';
 import Draw from '@urbica/react-map-gl-draw';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import {
   Button,
-  Label,
-  Segment,
   Table,
-  Select,
-  Grid,
-  Tab,
-  Menu,
-  Input
+  Menu
 } from 'semantic-ui-react';
 import { center, distance, feature, area } from '@turf/turf';
 import { point, polygon, round } from '@turf/helpers';
-import { randomPoint } from '@turf/random';
-import Cluster from '@urbica/react-map-gl-cluster';
 import DrawControl from "react-mapbox-gl-draw";
-import bus_list from './bus_list.json';
-import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css';
-import Geocoder from 'react-map-gl-geocoder';
-import DeckGL, { GeoJsonLayer } from "deck.gl";
+
 
 var coordinates = [];
 const MAPBOX_TOKEN = 'pk.eyJ1IjoiY2h5cHJpY2lsaWEiLCJhIjoiY2p2dXpnODFkM3F6OTQzcGJjYWgyYmIydCJ9.h_AlGKNQW-TtUVF-856lSA';
@@ -58,7 +41,6 @@ class App extends Component {
       distance: 0,
       coordinates: [],
       area: 0,
-      selected_bus: 1,
       dataGeo: null,
       searchResultLayer: null,
       bColor: ''
@@ -68,8 +50,8 @@ class App extends Component {
     this.setOnChange = this.setOnChange.bind(this);
     this.setInitialProperties = this.setInitialProperties.bind(this);
     this.clearTable = this.clearTable.bind(this);
-    this.handleSelect = this.handleSelect.bind(this);
   }
+  
   componentWillMount() {
     // <-- Event Method bawaan react
     this.updateDimensions();
@@ -175,18 +157,6 @@ class App extends Component {
     });
   }
   
-  handleSelect(e) {
-    let selection = e.target.value;
-    this.setState({selected_bus: selection});
-
-    let geojson = 'https://data.calgary.ca/resource/hpnd-riq4.geojson?route_short_name='+ this.state.selected_bus;
-
-    fetch(geojson).then(response => response.json());
-    this.setState({dataGeo: geojson});
-  }
-
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
-
   render() {
     const changeStyle = {
       zIndex: 999,
@@ -202,31 +172,6 @@ class App extends Component {
       left: "10px",
       background: '#fff'
     };
-
-    const selectStyle = {
-      display: "inline-block", 
-      zIndex: 999,
-      position: "absolute", 
-      height: "40px",
-      width:"450px",
-      padding: "10px",
-      top:"10px", 
-      left:"400px", 
-      fontSize:"17px",
-      border: "none",
-      borderRadius: "3px",
-      color: "#fff",
-      background: "#6d6d6d", 
-      fontStyle:"bold", outline:"none"
-    };
-
-    const navBottom = {
-      
-    }
-
-    let items = bus_list.map((bus) => 
-    <option key={bus.route_short_name} value={bus.route_short_name}>{bus.route_short_name+" - "+bus.route_long_name}</option>); 
-
 
     return ( 
       <div class = "map-container" style={{ height: this.state.height }}>
@@ -256,15 +201,6 @@ class App extends Component {
 
         </div>
 
-        {/* <div>
-          <select 
-            onChange={this.handleSelect} 
-            value={this.state.value}  
-            style={selectStyle}>
-            {items}
-          </select>
-        </div>   */}
-
         <div style={tableStyle}>
           {/* <Segment style={{overflow: 'auto', maxHeight: 200 }}>
             <Table >
@@ -291,13 +227,13 @@ class App extends Component {
         </div>
 
         <MapGL
-          style = {{ width: '100%', height: '92%' }}
+          style = {{ width: '100%', height: '91.5%' }}
           mapStyle = {this.state.mapColor}
           accessToken={ MAPBOX_TOKEN }
           latitude = {this.state.viewport.latitude}
           longitude = {this.state.viewport.longitude}
           zoom = {this.state.viewport.zoom}
-          onViewportChange={this.handleViewportChange}
+          onViewportChange={viewport => this.setState({ viewport })}
         >
           
           <GeolocateControl position='top-right' />
@@ -308,21 +244,7 @@ class App extends Component {
               this.setInitialProperties(features );
             }}
           />
-          {/* <Source id='route' type='geojson' data={this.state.dataGeo} />
-          <Layer
-            id='route'
-            type='line'
-            source='route'
-            layout={{
-              'line-join': 'round',
-              'line-cap': 'round'
-            }}
-            paint={{
-              'line-color': '#888',
-              'line-width': 8
-            }}
-          /> */}
-          
+         
           {/* <Geocoder
             mapRef={this.mapRef}
             onResult={this.handleOnResult}
@@ -332,7 +254,7 @@ class App extends Component {
           />
           <DeckGL {...viewport} layers={[searchResultLayer]} /> */}
         </MapGL>  
-        <div style={ navBottom }>
+        <div>
         <Menu fluid widths={7} borderless>
           <Menu.Item>
             <img src={ logo } />
