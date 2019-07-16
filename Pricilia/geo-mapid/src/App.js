@@ -69,12 +69,7 @@ class App extends Component {
     this.setInitialProperties = this.setInitialProperties.bind(this);
     this.clearTable = this.clearTable.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
-    this.handleGeocoderViewportChange = this.handleGeocoderViewportChange.bind(this);
-    this.handleViewportChange = this.handleViewportChange.bind(this);
-    this.handleOnResult = this.handleOnResult.bind(this);
   }
-
-  mapRef = React.createRef()
   componentWillMount() {
     // <-- Event Method bawaan react
     this.updateDimensions();
@@ -98,35 +93,6 @@ class App extends Component {
       viewport: { ...this.state.viewport, ...viewport }
     });
   }
-
-  handleViewportChange = viewport => {
-    this.setState({
-      viewport: { ...this.state.viewport, ...viewport }
-    });
-  };
-
-  handleGeocoderViewportChange = (viewport) => {
-    const geocoderDefaultOverrides = { transitionDuration: 1000 }
- 
-    return this.handleViewportChange({
-      ...viewport,
-      ...geocoderDefaultOverrides
-    })
-  }
-
-  handleOnResult = event => {
-    console.log(event.result);
-    this.setState({
-      searchResultLayer: new GeoJsonLayer({
-        id: "search-result",
-        data: event.result.geometry,
-        getFillColor: [255, 0, 0, 128],
-        getRadius: 1000,
-        pointRadiusMinPixels: 10,
-        pointRadiusMaxPixels: 10
-      })
-    });
-  };
 
   setOnChange(data) {
     this.setState({data: data});
@@ -261,15 +227,6 @@ class App extends Component {
     let items = bus_list.map((bus) => 
     <option key={bus.route_short_name} value={bus.route_short_name}>{bus.route_short_name+" - "+bus.route_long_name}</option>); 
 
-    const { viewport, searchResultLayer } = this.state;
-
-    const panes = [
-      { menuItem: 'Tab 1', render: () => <Tab.Pane attached={false}>Tab 1 Content</Tab.Pane> },
-      { menuItem: 'Tab 2', render: () => <Tab.Pane attached={false}>Tab 2 Content</Tab.Pane> },
-      { menuItem: 'Tab 3', render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane> },
-    ]
-    
-    const { activeItem } = this.state;
 
     return ( 
       <div class = "map-container" style={{ height: this.state.height }}>
@@ -331,24 +288,6 @@ class App extends Component {
           </Segment>
            */}
 
-        <Menu menu={{ attached: false }}>
-          <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
-          <Menu.Item
-            name='messages'
-            active={activeItem === 'messages'}
-            onClick={this.handleItemClick}
-          />
-          <Menu.Item
-            name='friends'
-            active={activeItem === 'friends'}
-            onClick={this.handleItemClick}
-          />
-          <Menu.Menu position='right'>
-            <Menu.Item>
-              <Input icon='search' placeholder='Search...' />
-            </Menu.Item>
-          </Menu.Menu>
-        </Menu>
         </div>
 
         <MapGL
@@ -413,5 +352,6 @@ class App extends Component {
     )
   }
 }
+
 
 export default App;
