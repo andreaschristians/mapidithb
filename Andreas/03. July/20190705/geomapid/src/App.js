@@ -366,12 +366,66 @@ class App extends Component {
           <GeolocateControl position="top-right" />
 
           {/* POLICE */}
+          <Marker longitude={106.8544} latitude={-6.1994}>
+            <Icon name="user secret" style={{ display: this.state.police }} />
+          </Marker>
+          <Marker longitude={106.8732} latitude={-6.2041}>
+            <Icon name="user secret" style={{ display: this.state.police }} />
+          </Marker>
           <Marker longitude={106.8258} latitude={-6.2347}>
             <Icon name="user secret" style={{ display: this.state.police }} />
           </Marker>
           <Marker longitude={106.7767} latitude={-6.2785}>
             <Icon name="user secret" style={{ display: this.state.police }} />
           </Marker>
+          {/* <Marker longitude={106.7767} latitude={-6.2785}>
+            <Icon name="user secret" style={{ display: this.state.police }} />
+          </Marker>
+          <Marker longitude={106.7767} latitude={-6.2785}>
+            <Icon name="user secret" style={{ display: this.state.police }} />
+          </Marker>
+          <Marker longitude={106.7767} latitude={-6.2785}>
+            <Icon name="user secret" style={{ display: this.state.police }} />
+          </Marker>
+          <Marker longitude={106.7767} latitude={-6.2785}>
+            <Icon name="user secret" style={{ display: this.state.police }} />
+          </Marker>
+          <Marker longitude={106.7767} latitude={-6.2785}>
+            <Icon name="user secret" style={{ display: this.state.police }} />
+          </Marker>
+          <Marker longitude={106.7767} latitude={-6.2785}>
+            <Icon name="user secret" style={{ display: this.state.police }} />
+          </Marker>
+          <Marker longitude={106.7767} latitude={-6.2785}>
+            <Icon name="user secret" style={{ display: this.state.police }} />
+          </Marker>
+          <Marker longitude={106.7767} latitude={-6.2785}>
+            <Icon name="user secret" style={{ display: this.state.police }} />
+          </Marker>
+          <Marker longitude={106.7767} latitude={-6.2785}>
+            <Icon name="user secret" style={{ display: this.state.police }} />
+          </Marker>
+          <Marker longitude={106.7767} latitude={-6.2785}>
+            <Icon name="user secret" style={{ display: this.state.police }} />
+          </Marker>
+          <Marker longitude={106.7767} latitude={-6.2785}>
+            <Icon name="user secret" style={{ display: this.state.police }} />
+          </Marker>
+          <Marker longitude={106.7767} latitude={-6.2785}>
+            <Icon name="user secret" style={{ display: this.state.police }} />
+          </Marker>
+          <Marker longitude={106.7767} latitude={-6.2785}>
+            <Icon name="user secret" style={{ display: this.state.police }} />
+          </Marker>
+          <Marker longitude={106.7767} latitude={-6.2785}>
+            <Icon name="user secret" style={{ display: this.state.police }} />
+          </Marker>
+          <Marker longitude={106.7767} latitude={-6.2785}>
+            <Icon name="user secret" style={{ display: this.state.police }} />
+          </Marker>
+          <Marker longitude={106.7767} latitude={-6.2785}>
+            <Icon name="user secret" style={{ display: this.state.police }} />
+          </Marker> */}
 
           {/* CCTV */}
           <Marker longitude={115.1244} latitude={-8.6543}>
@@ -399,6 +453,36 @@ class App extends Component {
             >
               <img
                 src="http://210.23.68.3:84/mjpg/video.mjpg"
+                width="320"
+                alt=""
+              />
+            </Popup>
+          </Marker>
+          <Marker longitude={106.9587} latitude={-6.258}>
+            <Popup
+              on="click"
+              pinned
+              trigger={
+                <Icon name="video" style={{ display: this.state.cctv }} />
+              }
+            >
+              <img
+                src="http://203.77.210.41:2000/mjpg/video.mjpg"
+                width="320"
+                alt=""
+              />
+            </Popup>
+          </Marker>
+          <Marker longitude={112.7010} latitude={-7.2873}>
+            <Popup
+              on="click"
+              pinned
+              trigger={
+                <Icon name="video" style={{ display: this.state.cctv }} />
+              }
+            >
+              <img
+                src="http://116.68.252.222:89/mjpg/video.mjpg"
                 width="320"
                 alt=""
               />
@@ -846,7 +930,6 @@ class App extends Component {
             display: this.state.navigation
           }}
         >
-          
           {/* CLOSE BUTTON */}
           <Button
             compact
@@ -1081,7 +1164,7 @@ class App extends Component {
           {">>"}
         </Button>
       </div>
-    );
+    ); 
   }
 }
 export default App;
