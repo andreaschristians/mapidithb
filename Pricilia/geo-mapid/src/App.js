@@ -13,7 +13,14 @@ import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import {
   Button,
   Table,
-  Menu
+  Menu,
+  Header,
+  Image,
+  Icon,
+  List,
+  Rail,
+  Placeholder,
+  Segment
 } from 'semantic-ui-react';
 import { center, distance, feature, area } from '@turf/turf';
 import { point, polygon, round } from '@turf/helpers';
@@ -42,7 +49,6 @@ class App extends Component {
       coordinates: [],
       area: 0,
       dataGeo: null,
-      searchResultLayer: null,
       bColor: ''
     };
     this.updateDimensions = this.updateDimensions.bind(this); // <-- Contoh deklarasi functions/methods
@@ -168,9 +174,8 @@ class App extends Component {
     const tableStyle = {
       zIndex: 999,
       position: "absolute",
-      top: "80px",
-      left: "10px",
-      background: '#fff'
+      top: "10px",
+      background: '#e0e1e2'
     };
 
     return ( 
@@ -202,6 +207,84 @@ class App extends Component {
         </div>
 
         <div style={tableStyle}>
+        
+        <Placeholder>
+        
+        <Segment style={{overflow: 'auto', maxHeight: 200, width: 260}}>
+          <List>
+            <List.Item>
+              <List.Content floated='right'>
+              <Icon name='sidebar' />
+              </List.Content>
+              <Icon name='eye slash' />
+              <List.Content>NowMapidStory</List.Content>
+            </List.Item>
+            <List.Item>
+              <List.Content floated='right'>
+              <Icon name='sidebar' />
+              </List.Content>
+              <Icon name='eye slash' />
+              <List.Content>Cctv</List.Content>
+            </List.Item>
+            <List.Item>
+              <List.Content floated='right'>
+              <Icon name='sidebar' />
+              </List.Content>
+              <Icon name='eye slash' />
+              <List.Content>Bendungan_Indonesia</List.Content>
+            </List.Item>
+            <List.Item>
+              <List.Content floated='right'>
+              <Icon name='sidebar' />
+              </List.Content>
+              <Icon name='eye slash' />
+              <List.Content>Reklamasi_Teluk_Jakarta</List.Content>
+            </List.Item>
+            <List.Item>
+              <List.Content floated='right'>
+              <Icon name='sidebar' />
+              </List.Content>
+              <Icon name='eye slash' />
+              <List.Content>Titik_Banjir_Jakarta_2014</List.Content>
+            </List.Item>
+            <List.Item>
+              <List.Content floated='right'>
+              <Icon name='sidebar' />
+              </List.Content>
+              <Icon name='eye slash' />
+              <List.Content>Tanjung_Duren</List.Content>
+            </List.Item>
+            <List.Item>
+              <List.Content floated='right'>
+              <Icon name='sidebar' />
+              </List.Content>
+              <Icon name='eye slash' />
+              <List.Content>Survey_Tanjung_Duren</List.Content>
+            </List.Item>
+            <List.Item>
+              <List.Content floated='right'>
+              <Icon name='sidebar' />
+              </List.Content>
+              <Icon name='eye slash' />
+              <List.Content>Kantor_Polisi</List.Content>
+            </List.Item>
+            <List.Item>
+              <List.Content floated='right'>
+              <Icon name='sidebar' />
+              </List.Content>
+              <Icon name='eye slash' />
+              <List.Content>Banjir_September_2016</List.Content>
+            </List.Item>
+            <List.Item>
+              <List.Content floated='right'>
+              <Icon name='sidebar' />
+              </List.Content>
+              <Icon name='eye slash' />
+              <List.Content>Banjir_September_2017</List.Content>
+            </List.Item>
+          </List>
+          </Segment>
+          </Placeholder>
           {/* <Segment style={{overflow: 'auto', maxHeight: 200 }}>
             <Table >
               <Table.Header>
@@ -245,14 +328,6 @@ class App extends Component {
             }}
           />
          
-          {/* <Geocoder
-            mapRef={this.mapRef}
-            onResult={this.handleOnResult}
-            onViewportChange={this.handleGeocoderViewportChange}
-            mapboxApiAccessToken={MAPBOX_TOKEN}
-            position="top-left"
-          />
-          <DeckGL {...viewport} layers={[searchResultLayer]} /> */}
         </MapGL>  
         <div>
         <Menu fluid widths={7} borderless>
