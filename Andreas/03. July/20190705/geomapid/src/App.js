@@ -1,3 +1,4 @@
+//IMPORT
 import "./App.css"; //CSS page
 import * as turf from "@turf/turf"; //Tools bantuan untuk hitung distance dll
 import "mapbox-gl/dist/mapbox-gl.css"; //CSS mapbox
@@ -21,6 +22,8 @@ import MapGL, {
   Source
 } from "@urbica/react-map-gl"; //Mapbox Urbica
 import Geocoder from "react-mapbox-gl-geocoder";
+
+//DATA LAYER
 const databanjir1 = {
   red: {
     type: "Feature",
@@ -171,6 +174,74 @@ const databanjir2 = {
     }
   }
 };
+var police;
+var arr = [
+  [106.8544, -6.1994],
+  [106.8732, -6.2041],
+  [106.8468, -6.181],
+  [106.8392, -6.1796],
+  [106.8518, -6.1789],
+  [106.8495, -6.1835],
+  [106.8614, -6.1733],
+  [106.8552, -6.1597],
+  [106.847, -6.1569],
+  [106.839, -6.1705],
+  [106.8075, -6.1661],
+  [106.8118, -6.181],
+  [106.7981, -6.195],
+  [106.803, -6.1949],
+  [106.7292, -6.1461],
+  [106.7384, -6.153],
+  [106.7189, -6.0956],
+  [106.7736, -6.1089],
+  [106.7903, -6.1032],
+  [106.8006, -6.1246],
+  [106.8226, -6.1331],
+  [106.87, -6.1347],
+  [106.8802, -6.1151],
+  [106.8821, -6.1135],
+  [106.882, -6.1075],
+  [106.8983, -6.1301],
+  [106.9167, -6.1201],
+  [106.9144, -6.1219],
+  [106.9144, -6.1214],
+  [106.8939, -6.1168],
+  [106.7893, -6.174],
+  [106.7996, -6.1675],
+  [106.7698, -6.2171],
+  [106.7649, -6.1989],
+  [106.8714, -6.2466],
+  [106.8654, -6.3051],
+  [106.891, -6.2105],
+  [106.8099, -6.2004],
+  [106.802, -6.1526],
+  [106.8609, -6.19],
+  [106.8517, -6.2315],
+  [106.8386, -6.2676],
+  [106.8386, -6.2686],
+  [106.8224, -6.2717],
+  [106.7933, -6.2829],
+  [106.7932, -6.2832],
+  [106.7936, -6.2691],
+  [106.7823, -6.2734],
+  [106.7688, -6.2876],
+  [106.7986, -6.2534],
+  [106.8016, -6.2406],
+  [106.7896, -6.2416],
+  [106.8034, -6.2389],
+  [106.8014, -6.2388],
+  [106.8124, -6.2227],
+  [106.8266, -6.2406],
+  [106.855, -6.2438],
+  [106.8557, -6.2447],
+  [106.8259, -6.2113],
+  [106.8684, -6.2438],
+  [106.8633, -6.2146],
+  [106.9175, -6.2476],
+  [106.9346, -6.2217],
+  [106.9406, -6.1843]
+];
+var showpolice;
 
 class App extends Component {
   // INISIALISASI UTAMA
@@ -220,7 +291,10 @@ class App extends Component {
       after: {
         red2: "",
         pink2: ""
-      }
+      },
+      arrPolice: [],
+      arrshowPolice: [],
+      tablepolice: "none"
     };
 
     //DEKLARASI FUNCTION ATAU PROCEDURE
@@ -228,6 +302,8 @@ class App extends Component {
     this._onClick = this._onClick.bind(this);
     this._sum = this._sum.bind(this);
     this._converter = this._converter.bind(this);
+    this._addPolice = this._addPolice.bind(this);
+    this._showPolice = this._showPolice.bind(this);
   }
 
   // FUNCTION BAWAAN
@@ -237,6 +313,35 @@ class App extends Component {
   }
 
   // FUNCTION
+  _addPolice() {
+    police = [];
+    var i;
+    for (i = 0; i < arr.length; i++) {
+      police.push(
+        <Marker longitude={arr[i][0]} latitude={arr[i][1]}>
+          <Icon name="user secret" />
+        </Marker>
+      );
+    }
+    this.setState({ arrPolice: police });
+  }
+  _showPolice() {
+    if (this.state.details === "inline-block") {
+      this.setState({ tablepolice: "block" });
+      showpolice = [];
+      var i;
+      for (i = 0; i < arr.length; i++) {
+        showpolice.push(
+          <Table.Row>
+            <Table.Cell>{i + 1}</Table.Cell>
+            <Table.Cell>{arr[i][0]}</Table.Cell>
+            <Table.Cell>{arr[i][1]}</Table.Cell>
+          </Table.Row>
+        );
+      }
+    }
+    this.setState({ arrshowPolice: showpolice });
+  }
   _onClick(e) {
     //procedure untuk hover get coordinate
     //menghilangkan koma yang banyak di belakang angka
@@ -366,66 +471,7 @@ class App extends Component {
           <GeolocateControl position="top-right" />
 
           {/* POLICE */}
-          <Marker longitude={106.8544} latitude={-6.1994}>
-            <Icon name="user secret" style={{ display: this.state.police }} />
-          </Marker>
-          <Marker longitude={106.8732} latitude={-6.2041}>
-            <Icon name="user secret" style={{ display: this.state.police }} />
-          </Marker>
-          <Marker longitude={106.8258} latitude={-6.2347}>
-            <Icon name="user secret" style={{ display: this.state.police }} />
-          </Marker>
-          <Marker longitude={106.7767} latitude={-6.2785}>
-            <Icon name="user secret" style={{ display: this.state.police }} />
-          </Marker>
-          {/* <Marker longitude={106.7767} latitude={-6.2785}>
-            <Icon name="user secret" style={{ display: this.state.police }} />
-          </Marker>
-          <Marker longitude={106.7767} latitude={-6.2785}>
-            <Icon name="user secret" style={{ display: this.state.police }} />
-          </Marker>
-          <Marker longitude={106.7767} latitude={-6.2785}>
-            <Icon name="user secret" style={{ display: this.state.police }} />
-          </Marker>
-          <Marker longitude={106.7767} latitude={-6.2785}>
-            <Icon name="user secret" style={{ display: this.state.police }} />
-          </Marker>
-          <Marker longitude={106.7767} latitude={-6.2785}>
-            <Icon name="user secret" style={{ display: this.state.police }} />
-          </Marker>
-          <Marker longitude={106.7767} latitude={-6.2785}>
-            <Icon name="user secret" style={{ display: this.state.police }} />
-          </Marker>
-          <Marker longitude={106.7767} latitude={-6.2785}>
-            <Icon name="user secret" style={{ display: this.state.police }} />
-          </Marker>
-          <Marker longitude={106.7767} latitude={-6.2785}>
-            <Icon name="user secret" style={{ display: this.state.police }} />
-          </Marker>
-          <Marker longitude={106.7767} latitude={-6.2785}>
-            <Icon name="user secret" style={{ display: this.state.police }} />
-          </Marker>
-          <Marker longitude={106.7767} latitude={-6.2785}>
-            <Icon name="user secret" style={{ display: this.state.police }} />
-          </Marker>
-          <Marker longitude={106.7767} latitude={-6.2785}>
-            <Icon name="user secret" style={{ display: this.state.police }} />
-          </Marker>
-          <Marker longitude={106.7767} latitude={-6.2785}>
-            <Icon name="user secret" style={{ display: this.state.police }} />
-          </Marker>
-          <Marker longitude={106.7767} latitude={-6.2785}>
-            <Icon name="user secret" style={{ display: this.state.police }} />
-          </Marker>
-          <Marker longitude={106.7767} latitude={-6.2785}>
-            <Icon name="user secret" style={{ display: this.state.police }} />
-          </Marker>
-          <Marker longitude={106.7767} latitude={-6.2785}>
-            <Icon name="user secret" style={{ display: this.state.police }} />
-          </Marker>
-          <Marker longitude={106.7767} latitude={-6.2785}>
-            <Icon name="user secret" style={{ display: this.state.police }} />
-          </Marker> */}
+          {this.state.arrPolice}
 
           {/* CCTV */}
           <Marker longitude={115.1244} latitude={-8.6543}>
@@ -473,7 +519,7 @@ class App extends Component {
               />
             </Popup>
           </Marker>
-          <Marker longitude={112.7010} latitude={-7.2873}>
+          <Marker longitude={112.701} latitude={-7.2873}>
             <Popup
               on="click"
               pinned
@@ -534,13 +580,16 @@ class App extends Component {
             polygonControl={false}
             trashControl={false}
           />
+
+          {/* SEARCH */}
           <div
             style={{
               position: "fixed",
               top: "15px",
               right: "50px",
               maxWidth: "150px",
-              boxShadow: "0 0 10px 2px rgba(0,0,0,.1)"
+              boxShadow: "0 0 10px 2px rgba(0,0,0,.1)",
+              borderRadius: "4px"
             }}
           >
             <Geocoder
@@ -788,11 +837,33 @@ class App extends Component {
             position: "fixed",
             backgroundColor: " rgba(113, 124, 124, 0.7)",
             bottom: "40px",
-            height: "200px",
+            height: "155px",
             width: "100%",
-            display: this.state.details
+            display: this.state.details,
+            overflowY: "scroll"
           }}
         >
+          <Table
+            collapsing
+            size="mini"
+            style={{ display: this.state.tablepolice }}
+          >
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell>
+                  <center>No</center>
+                </Table.HeaderCell>
+                <Table.HeaderCell>
+                  <center>Longtitude</center>
+                </Table.HeaderCell>
+                <Table.HeaderCell>
+                  <center>Latitude</center>
+                </Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>{this.state.arrshowPolice}</Table.Body>
+          </Table>
+         
           {/* CLOSE BUTTON */}
           <Button
             compact
@@ -800,7 +871,9 @@ class App extends Component {
             size="small"
             onClick={() =>
               this.setState({
-                details: "none"
+                details: "none",
+                arrshowPolice: [],
+                tablepolice:"none"
               })
             }
             style={{
@@ -876,8 +949,8 @@ class App extends Component {
           <h3>Select layer to inspect.</h3>
           <h3>
             When this feature is active, you can click at the selected layer on
-            the map to audit property data. Don't forget to activate layer and
-            set icon first.
+            the map to audit property data. Don'console.log(this.arrPolice)
+            forget to activate layer and set icon first.
           </h3>
           <Form size="mini">
             <Form.Field>
@@ -1053,18 +1126,17 @@ class App extends Component {
               <Table.Cell collapsing>
                 <Form.Field>
                   <Button.Group compact size="mini">
+                    <Button onClick={() => this._addPolice()} icon="eye" />
                     <Button
-                      onClick={() => this.setState({ police: "block" })}
-                      icon="eye"
-                    />
-                    <Button
-                      onClick={() => this.setState({ police: "none" })}
+                      onClick={() => this.setState({ arrPolice: [] })}
                       icon="eye slash"
                     />
                   </Button.Group>
                 </Form.Field>
               </Table.Cell>
-              <Table.Cell>Kantor Polisi</Table.Cell>
+              <Table.Cell onClick={() => this._showPolice()}>
+                Kantor Polisi
+              </Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell collapsing>
@@ -1164,7 +1236,7 @@ class App extends Component {
           {">>"}
         </Button>
       </div>
-    ); 
+    );
   }
 }
 export default App;
