@@ -5,7 +5,8 @@ import mapid from './mapid-icon.png';
 import './App.css';
 import MapGL, {
   NavigationControl,
-  GeolocateControl
+  GeolocateControl,
+  Marker
 } from '@urbica/react-map-gl';
 import Draw from '@urbica/react-map-gl-draw';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -25,9 +26,13 @@ import {
 import { center, distance, feature, area } from '@turf/turf';
 import { point, polygon, round } from '@turf/helpers';
 import DrawControl from "react-mapbox-gl-draw";
-
+import { polices } from './polices.js';
+import { cctv } from './cctv.js';
 
 var coordinates = [];
+var policestat = [];
+var cctvmarker = [];
+
 const MAPBOX_TOKEN = 'pk.eyJ1IjoiY2h5cHJpY2lsaWEiLCJhIjoiY2p2dXpnODFkM3F6OTQzcGJjYWgyYmIydCJ9.h_AlGKNQW-TtUVF-856lSA';
 
 class App extends Component {
@@ -49,13 +54,65 @@ class App extends Component {
       coordinates: [],
       area: 0,
       dataGeo: null,
-      bColor: ''
+      bColor: '',
+      icon: 'eye slash',
+      layerMenu: [
+        {
+          id: 0,
+          name: 'NowMapidStory',
+          icon: 'eye slash'
+        },
+        {
+          id: 1,
+          name: 'Cctv',
+          icon: 'eye slash'
+        },
+        {
+          id: 2,
+          name: 'Reklamasi_Teluk_Jakarta',
+          icon: 'eye slash'
+        },
+        {
+          id: 3,
+          name: 'Titik_Banjir_Jakarta_2014',
+          icon: 'eye slash'
+        },
+        {
+          id: 4,
+          name: 'Tanjung_Duren',
+          icon: 'eye slash'
+        },
+        {
+          id: 5,
+          name: 'Survey_Tanjung_Duren',
+          icon: 'eye slash'
+        },
+        {
+          id: 6,
+          name: 'Kantor_Polisi',
+          icon: 'eye slash'
+        },
+        {
+          id: 7,
+          name: 'Banjir_September_2016',
+          icon: 'eye slash'
+        },
+        {
+          id: 8,
+          name: 'Banjir_September_2017',
+          icon: 'eye slash'
+        }
+      ],
+      showpolice: [],
+      showcctv: []
     };
     this.updateDimensions = this.updateDimensions.bind(this); // <-- Contoh deklarasi functions/methods
     this.mapStyleChange = this.mapStyleChange.bind(this);
     this.setOnChange = this.setOnChange.bind(this);
     this.setInitialProperties = this.setInitialProperties.bind(this);
     this.clearTable = this.clearTable.bind(this);
+    this.onSelectIconViews = this.onSelectIconViews.bind(this);
+    this.renderListLayer = this.renderListLayer.bind(this);
   }
   
   componentWillMount() {
@@ -85,6 +142,58 @@ class App extends Component {
   setOnChange(data) {
     this.setState({data: data});
     console.log("tess"+this.state.data[0].coordinates);
+  }
+
+  renderListLayer() {
+    return this.state.layerMenu.map(el =>
+      <List.Item key={ el.id }>
+        <Icon name={ el.isSelected ? 'eye' : el.icon }
+              onClick={ this.onSelectIconViews.bind(this, el.id) } />
+        <List.Content>{ el.name }</List.Content>
+      </List.Item>
+    );
+  }
+
+  onSelectIconViews(index) {
+    console.log("Selected index: ", index);
+    let temp = this.state.layerMenu;
+    temp[index].isSelected = temp[index].isSelected ? false : true;
+    console.log(temp[index].name);
+
+    if(temp[index].name == 'Kantor_Polisi') {
+      if(temp[index].isSelected) {
+        policestat = [];
+        var i;
+        for (i=0; i<polices.length; i++) {
+          policestat.push(
+            <Marker longitude={polices[i][0]} latitude={polices[i][1]}>
+              <Icon name="building" />
+            </Marker>
+          );
+        }
+        this.setState({showpolice: policestat});
+      } else {
+        this.setState({showpolice: []});
+      }
+    } else if (temp[index].name == 'Cctv') {
+      if(temp[index].isSelected) {
+        cctvmarker = [];
+        var i;
+        for (i=0; i<cctv.length; i++) {
+          cctvmarker.push(
+            <Marker longitude={cctv[i][0]} latitude={cctv[i][1]}>
+              <Icon name="video" />
+            </Marker>
+          );
+        }
+        this.setState({showcctv: cctvmarker});
+      } else {
+        this.setState({showcctv: []});
+      }
+    }
+    this.setState({
+      layerMenu: temp
+    });
   }
 
   setInitialProperties(features) {
@@ -143,7 +252,6 @@ class App extends Component {
         </Table.Row>);
       }
       this.setState({coordinates: coordinates, area: a});
-
     }
   }
 
@@ -210,81 +318,12 @@ class App extends Component {
         
         <Placeholder>
         
-        <Segment style={{overflow: 'auto', maxHeight: 200, width: 260}}>
-          <List>
-            <List.Item>
-              <List.Content floated='right'>
-              <Icon name='sidebar' />
-              </List.Content>
-              <Icon name='eye slash' />
-              <List.Content>NowMapidStory</List.Content>
-            </List.Item>
-            <List.Item>
-              <List.Content floated='right'>
-              <Icon name='sidebar' />
-              </List.Content>
-              <Icon name='eye slash' />
-              <List.Content>Cctv</List.Content>
-            </List.Item>
-            <List.Item>
-              <List.Content floated='right'>
-              <Icon name='sidebar' />
-              </List.Content>
-              <Icon name='eye slash' />
-              <List.Content>Bendungan_Indonesia</List.Content>
-            </List.Item>
-            <List.Item>
-              <List.Content floated='right'>
-              <Icon name='sidebar' />
-              </List.Content>
-              <Icon name='eye slash' />
-              <List.Content>Reklamasi_Teluk_Jakarta</List.Content>
-            </List.Item>
-            <List.Item>
-              <List.Content floated='right'>
-              <Icon name='sidebar' />
-              </List.Content>
-              <Icon name='eye slash' />
-              <List.Content>Titik_Banjir_Jakarta_2014</List.Content>
-            </List.Item>
-            <List.Item>
-              <List.Content floated='right'>
-              <Icon name='sidebar' />
-              </List.Content>
-              <Icon name='eye slash' />
-              <List.Content>Tanjung_Duren</List.Content>
-            </List.Item>
-            <List.Item>
-              <List.Content floated='right'>
-              <Icon name='sidebar' />
-              </List.Content>
-              <Icon name='eye slash' />
-              <List.Content>Survey_Tanjung_Duren</List.Content>
-            </List.Item>
-            <List.Item>
-              <List.Content floated='right'>
-              <Icon name='sidebar' />
-              </List.Content>
-              <Icon name='eye slash' />
-              <List.Content>Kantor_Polisi</List.Content>
-            </List.Item>
-            <List.Item>
-              <List.Content floated='right'>
-              <Icon name='sidebar' />
-              </List.Content>
-              <Icon name='eye slash' />
-              <List.Content>Banjir_September_2016</List.Content>
-            </List.Item>
-            <List.Item>
-              <List.Content floated='right'>
-              <Icon name='sidebar' />
-              </List.Content>
-              <Icon name='eye slash' />
-              <List.Content>Banjir_September_2017</List.Content>
-            </List.Item>
-          </List>
+          <Segment style={{overflow: 'auto', maxHeight: 200, width: 260}}>
+            <List >
+              { this.renderListLayer() }
+            </List>
           </Segment>
-          </Placeholder>
+        </Placeholder>
           {/* <Segment style={{overflow: 'auto', maxHeight: 200 }}>
             <Table >
               <Table.Header>
@@ -318,10 +357,12 @@ class App extends Component {
           zoom = {this.state.viewport.zoom}
           onViewportChange={viewport => this.setState({ viewport })}
         >
+          {this.state.showpolice}
+          {this.state.showcctv}
           
           <GeolocateControl position='top-right' />
           <NavigationControl showCompass showZoom position='top-right' />
-
+          
           <Draw
             onDrawCreate={({ features }) => {
               this.setInitialProperties(features );
