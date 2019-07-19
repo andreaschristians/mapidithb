@@ -43,7 +43,7 @@ const databanjir1 = {
           [106.72718612208746, -6.154339766596152]
         ]
       ]
-    }
+    },
   },
   pink: {
     type: "Feature",
@@ -174,8 +174,7 @@ const databanjir2 = {
     }
   }
 };
-var police;
-var arr = [
+var dataPolice = [
   [106.8544, -6.1994],
   [106.8732, -6.2041],
   [106.8468, -6.181],
@@ -241,7 +240,81 @@ var arr = [
   [106.9346, -6.2217],
   [106.9406, -6.1843]
 ];
-var showpolice;
+var dataCCTV = [
+  [
+    107.5736,
+    -6.9717,
+    "http://103.10.61.82:5119/zm/cgi-bin/nph-zms?mode=jpeg&monitor=3&scale=100&maxfps=30&buffer=1000&user=dishub&pass=bidang"
+  ],
+  [
+    107.5866,
+    -7.0479,
+    "http://103.10.61.82:5119/zm/cgi-bin/nph-zms?mode=jpeg&monitor=6&scale=100&maxfps=30&buffer=1000&user=dishub&pass=bidang"
+  ],
+  [
+    107.5287,
+    -7.0201,
+    "http://103.10.61.82:5119/zm/cgi-bin/nph-zms?mode=jpeg&monitor=7&scale=100&maxfps=30&buffer=1000&user=dishub&pass=bidang"
+  ],
+  [
+    107.5304,
+    -7.0242,
+    "http://103.10.61.82:5119/zm/cgi-bin/nph-zms?mode=jpeg&monitor=8&scale=100&maxfps=30&buffer=1000&user=dishub&pass=bidang"
+  ],
+  [
+    107.5405,
+    -7.0202,
+    "http://103.10.61.82:5119/zm/cgi-bin/nph-zms?mode=jpeg&monitor=9&scale=100&maxfps=30&buffer=1000&user=dishub&pass=bidang"
+  ],
+  [
+    107.5538,
+    -6.999,
+    "http://103.10.61.82:5119/zm/cgi-bin/nph-zms?mode=jpeg&monitor=10&scale=100&maxfps=30&buffer=1000&user=dishub&pass=bidang"
+  ],
+  [
+    107.5286,
+    -7.0298,
+    "http://103.10.61.82:5119/zm/cgi-bin/nph-zms?mode=jpeg&monitor=11&scale=100&maxfps=30&buffer=1000&user=dishub&pass=bidang"
+  ],
+  [
+    107.7566,
+    -6.9379,
+    "http://103.10.61.82:5119/zm/cgi-bin/nph-zms?mode=jpeg&monitor=5&scale=100&maxfps=30&buffer=1000&user=dishub&pass=bidang"
+  ],
+  [
+    107.8926,
+    -7.0213,
+    "http://103.10.61.82:5119/zm/cgi-bin/nph-zms?mode=jpeg&monitor=4&scale=100&maxfps=30&buffer=1000&user=dishub&pass=bidang"
+  ],
+  [
+    107.6263,
+    -6.9915,
+    "http://103.10.61.82:5119/zm/cgi-bin/nph-zms?mode=jpeg&monitor=2&scale=100&maxfps=30&buffer=1000&user=dishub&pass=bidang"
+  ],
+  [
+    107.6362,
+    -6.9728,
+    "http://103.10.61.82:5119/zm/cgi-bin/nph-zms?mode=jpeg&monitor=1&scale=100&maxfps=30&buffer=1000&user=dishub&pass=bidang"
+  ],
+  [106.9587, -6.258, "http://203.77.210.41:2000/mjpg/video.mjpg"],
+  [115.1686, -8.7183, "http://203.142.72.42/mjpg/video.mjpg"],
+  [107.5728, -6.8901, "http://210.23.68.3:81/mjpg/video.mjpg"],
+  [112.701, -7.2873, "http://116.68.252.222:89/mjpg/video.mjpg"],
+  [107.505, -6.8432, "http://210.23.68.3:84/mjpg/video.mjpg"],
+  [110.4521, -6.9566, "http://119.2.50.114:86/mjpg/video.mjpg"],
+  [112.7106, -7.3441, "http://116.68.252.222:83/mjpg/video.mjpg"],
+  [106.8246, -6.224, "http://202.74.79.122:8000/mjpg/video.mjpg"],
+  [107.7492, -6.9446, "http://210.23.68.3:86/mjpg/video.mjpg"],
+  [108.4833, -6.6991, "http://202.159.10.82:88/mjpg/video.mjpg"],
+  [115.1244, -8.6543, "http://202.58.207.176:8090/mjpg/video.mjpg"],
+  [110.3687, -7.7961, "https://www.youtube.com/embed/dNWNU1UiFPI"],
+  [107.4258, -6.5654, "http://210.23.68.3:88/mjpg/video.mjpg"],
+  [
+    106.8952,
+    -6.3665,
+    "http://jasamargalive.com/webjm3/mjm/index.php?r=site/getarea&a=3&b=547#"
+  ]
+];
 
 class App extends Component {
   // INISIALISASI UTAMA
@@ -255,24 +328,23 @@ class App extends Component {
         longitude: 107.6093,
         zoom: 5.5
       },
+
+      //MAPBOX
+      mapstyle: "mapbox://styles/mapbox/streets-v11",
+
+      //TOOLBOX
       data: {
         type: "FeatureCollection",
         features: []
       },
-      mapstyle: "mapbox://styles/mapbox/streets-v11",
-      arrTbl: [],
-      label: [],
-      layer: "0.5em",
       display: "none",
-      close: "inline-block",
-      police: "none",
-      cctv: "none",
-      open: "none",
       table: "none",
       conver: "none",
       details: "none",
       inspect: "none",
       navigation: "none",
+
+      //CONVERTER
       inputarea: 1,
       inputarea_: 1,
       inputlength: 1,
@@ -281,6 +353,13 @@ class App extends Component {
       outputarea_: 1,
       outputlength: 1,
       outputlength_: 1,
+
+      //LAYER MANAGER
+      layer: "0.5em",
+      close: "inline-block",
+      open: "none",
+      arrTbl: [],
+      label: [],
       banjir1: 0,
       banjir2: 0,
       before: {
@@ -292,9 +371,14 @@ class App extends Component {
         red2: "",
         pink2: ""
       },
+      police: "none",
+      cctv: "none",
       arrPolice: [],
+      arrCCTV: [],
       arrshowPolice: [],
-      tablepolice: "none"
+      arrshowCCTV: [],
+      tablepolice: "none",
+      tableCCTV: "none"
     };
 
     //DEKLARASI FUNCTION ATAU PROCEDURE
@@ -303,7 +387,9 @@ class App extends Component {
     this._sum = this._sum.bind(this);
     this._converter = this._converter.bind(this);
     this._addPolice = this._addPolice.bind(this);
+    this._addCCTV = this._addCCTV.bind(this);
     this._showPolice = this._showPolice.bind(this);
+    this._showCCTV = this._showCCTV.bind(this);
   }
 
   // FUNCTION BAWAAN
@@ -314,33 +400,73 @@ class App extends Component {
 
   // FUNCTION
   _addPolice() {
-    police = [];
+    var police = [];
     var i;
-    for (i = 0; i < arr.length; i++) {
+    for (i = 0; i < dataPolice.length; i++) {
       police.push(
-        <Marker longitude={arr[i][0]} latitude={arr[i][1]}>
+        <Marker longitude={dataPolice[i][0]} latitude={dataPolice[i][1]}>
           <Icon name="user secret" />
         </Marker>
       );
     }
     this.setState({ arrPolice: police });
   }
+  _addCCTV() {
+    var CCTV = [];
+    var i;
+    for (i = 0; i < dataCCTV.length; i++) {
+      CCTV.push(
+        <Marker longitude={dataCCTV[i][0]} latitude={dataCCTV[i][1]}>
+          <Popup on="click" pinned trigger={<Icon name="video" />}>
+            <img src={dataCCTV[i][2]} width="320" alt="" />
+          </Popup>
+        </Marker>
+      );
+    }
+    this.setState({ arrCCTV: CCTV });
+  }
   _showPolice() {
     if (this.state.details === "inline-block") {
-      this.setState({ tablepolice: "block" });
-      showpolice = [];
+      this.setState({
+        tablepolice: "block",
+        arrshowCCTV: [],
+        tableCCTV: "none"
+      });
+      var showpolice = [];
       var i;
-      for (i = 0; i < arr.length; i++) {
+      for (i = 0; i < dataPolice.length; i++) {
         showpolice.push(
           <Table.Row>
             <Table.Cell>{i + 1}</Table.Cell>
-            <Table.Cell>{arr[i][0]}</Table.Cell>
-            <Table.Cell>{arr[i][1]}</Table.Cell>
+            <Table.Cell>{dataPolice[i][0]}</Table.Cell>
+            <Table.Cell>{dataPolice[i][1]}</Table.Cell>
           </Table.Row>
         );
       }
     }
     this.setState({ arrshowPolice: showpolice });
+  }
+  _showCCTV() {
+    if (this.state.details === "inline-block") {
+      this.setState({
+        tableCCTV: "block",
+        arrshowPolice: [],
+        tablepolice: "none"
+      });
+      var showCCTV = [];
+      var i;
+      for (i = 0; i < dataCCTV.length; i++) {
+        showCCTV.push(
+          <Table.Row>
+            <Table.Cell>{i + 1}</Table.Cell>
+            <Table.Cell>{dataCCTV[i][2]}</Table.Cell>
+            <Table.Cell>{dataCCTV[i][0]}</Table.Cell>
+            <Table.Cell>{dataCCTV[i][1]}</Table.Cell>
+          </Table.Row>
+        );
+      }
+    }
+    this.setState({ arrshowCCTV: showCCTV });
   }
   _onClick(e) {
     //procedure untuk hover get coordinate
@@ -474,66 +600,7 @@ class App extends Component {
           {this.state.arrPolice}
 
           {/* CCTV */}
-          <Marker longitude={115.1244} latitude={-8.6543}>
-            <Popup
-              on="click"
-              pinned
-              trigger={
-                <Icon name="video" style={{ display: this.state.cctv }} />
-              }
-            >
-              <img
-                src="http://202.58.207.176:8090/mjpg/video.mjpg"
-                width="320"
-                alt=""
-              />
-            </Popup>
-          </Marker>
-          <Marker longitude={107.505} latitude={-6.8432}>
-            <Popup
-              on="click"
-              pinned
-              trigger={
-                <Icon name="video" style={{ display: this.state.cctv }} />
-              }
-            >
-              <img
-                src="http://210.23.68.3:84/mjpg/video.mjpg"
-                width="320"
-                alt=""
-              />
-            </Popup>
-          </Marker>
-          <Marker longitude={106.9587} latitude={-6.258}>
-            <Popup
-              on="click"
-              pinned
-              trigger={
-                <Icon name="video" style={{ display: this.state.cctv }} />
-              }
-            >
-              <img
-                src="http://203.77.210.41:2000/mjpg/video.mjpg"
-                width="320"
-                alt=""
-              />
-            </Popup>
-          </Marker>
-          <Marker longitude={112.701} latitude={-7.2873}>
-            <Popup
-              on="click"
-              pinned
-              trigger={
-                <Icon name="video" style={{ display: this.state.cctv }} />
-              }
-            >
-              <img
-                src="http://116.68.252.222:89/mjpg/video.mjpg"
-                width="320"
-                alt=""
-              />
-            </Popup>
-          </Marker>
+          {this.state.arrCCTV}
 
           {/* BANJIR1 */}
           {Object.entries(this.state.before).map(([layerId]) => (
@@ -843,6 +910,7 @@ class App extends Component {
             overflowY: "scroll"
           }}
         >
+          {/* POLICE DETAILS */}
           <Table
             collapsing
             size="mini"
@@ -863,7 +931,32 @@ class App extends Component {
             </Table.Header>
             <Table.Body>{this.state.arrshowPolice}</Table.Body>
           </Table>
-         
+
+          {/* CCTV DETAILS */}
+          <Table
+            collapsing
+            size="mini"
+            style={{ display: this.state.tableCCTV }}
+          >
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell>
+                  <center>No</center>
+                </Table.HeaderCell>
+                <Table.HeaderCell>
+                  <center>Source</center>
+                </Table.HeaderCell>
+                <Table.HeaderCell>
+                  <center>Longtitude</center>
+                </Table.HeaderCell>
+                <Table.HeaderCell>
+                  <center>Latitude</center>
+                </Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>{this.state.arrshowCCTV}</Table.Body>
+          </Table>
+
           {/* CLOSE BUTTON */}
           <Button
             compact
@@ -873,7 +966,9 @@ class App extends Component {
               this.setState({
                 details: "none",
                 arrshowPolice: [],
-                tablepolice:"none"
+                tablepolice: "none",
+                arrshowCCTV: [],
+                tableCCTV: "none"
               })
             }
             style={{
@@ -1141,21 +1236,14 @@ class App extends Component {
             <Table.Row>
               <Table.Cell collapsing>
                 <Button.Group compact size="mini">
-                  <Button
-                    icon="eye"
-                    onClick={() =>
-                      this.setState({
-                        cctv: "block"
-                      })
-                    }
-                  />
+                  <Button icon="eye" onClick={() => this._addCCTV()} />
                   <Button
                     icon="eye slash"
-                    onClick={() => this.setState({ cctv: "none" })}
+                    onClick={() => this.setState({ arrCCTV: [] })}
                   />
                 </Button.Group>
               </Table.Cell>
-              <Table.Cell>CCTV</Table.Cell>
+              <Table.Cell onClick={() => this._showCCTV()}>CCTV</Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell collapsing>
