@@ -21,7 +21,8 @@ import {
   List,
   Rail,
   Placeholder,
-  Segment
+  Segment,
+  Sidebar
 } from 'semantic-ui-react';
 import { center, distance, feature, area } from '@turf/turf';
 import { point, polygon, round } from '@turf/helpers';
@@ -104,7 +105,8 @@ class App extends Component {
         }
       ],
       showpolice: [],
-      showcctv: []
+      showcctv: [],
+      visible: false
     };
     this.updateDimensions = this.updateDimensions.bind(this); // <-- Contoh deklarasi functions/methods
     this.mapStyleChange = this.mapStyleChange.bind(this);
@@ -271,6 +273,9 @@ class App extends Component {
     });
   }
   
+  handleHideClick = () => this.setState({ visible: false })
+  handleShowClick = () => this.setState({ visible: true })
+  handleSidebarHide = () => this.setState({ visible: false })
   render() {
     const changeStyle = {
       zIndex: 999,
@@ -286,45 +291,53 @@ class App extends Component {
       background: '#e0e1e2'
     };
 
+    const tableStyles = {
+      zIndex: 999,
+      position: "absolute",
+      top: "250px",
+      background: '#e0e1e2',
+    };
+
+    const { visible } = this.state
+
     return ( 
       <div class = "map-container" style={{ height: this.state.height }}>
         <div id ='menu' style={changeStyle} >
-        <Button.Group>
-          <Button 
-            value='mapbox://styles/mapbox/streets-v11' 
-            onClick={ this.mapStyleChange }>Streets
-          </Button>
-          <Button 
-            value='mapbox://styles/mapbox/light-v10' 
-            onClick={ this.mapStyleChange }>Light
-          </Button>
-          <Button 
-            value='mapbox://styles/mapbox/dark-v10' 
-            onClick={ this.mapStyleChange }>Dark
-          </Button>
-          <Button 
-            value='mapbox://styles/mapbox/outdoors-v11' 
-            onClick={ this.mapStyleChange }>Outdoors
-          </Button>
-          <Button 
-            value='mapbox://styles/mapbox/satellite-v9' 
-            onClick={ this.mapStyleChange }>Satellite
-          </Button>
-        </Button.Group>
-
+          <Button.Group>
+            <Button 
+              value='mapbox://styles/mapbox/streets-v11' 
+              onClick={ this.mapStyleChange }>Streets
+            </Button>
+            <Button 
+              value='mapbox://styles/mapbox/light-v10' 
+              onClick={ this.mapStyleChange }>Light
+            </Button>
+            <Button 
+              value='mapbox://styles/mapbox/dark-v10' 
+              onClick={ this.mapStyleChange }>Dark
+            </Button>
+            <Button 
+              value='mapbox://styles/mapbox/outdoors-v11' 
+              onClick={ this.mapStyleChange }>Outdoors
+            </Button>
+            <Button 
+              value='mapbox://styles/mapbox/satellite-v9' 
+              onClick={ this.mapStyleChange }>Satellite
+            </Button>
+          </Button.Group>
         </div>
 
         <div style={tableStyle}>
-        
-        <Placeholder>
-        
           <Segment style={{overflow: 'auto', maxHeight: 200, width: 260}}>
             <List >
               { this.renderListLayer() }
             </List>
           </Segment>
-        </Placeholder>
-          {/* <Segment style={{overflow: 'auto', maxHeight: 200 }}>
+        </div>
+
+        <div style={tableStyles}>
+        
+          <Segment style={{overflow: 'auto', maxHeight: 200 }}>
             <Table >
               <Table.Header>
                 <Table.Row>
@@ -344,9 +357,8 @@ class App extends Component {
           <Segment> 
           <Button onClick={ this.clearTable }>Clear</Button>
           </Segment>
-           */}
-
         </div>
+
 
         <MapGL
           style = {{ width: '100%', height: '91.5%' }}
@@ -379,7 +391,7 @@ class App extends Component {
             <img src={ geo } height='60%' width='60%'/> 
             <img src={ mapid } height='60%' width='60%'/> 
           </Menu.Item>
-          <Menu.Item name='Toolbox'  onClick={this.handleItemClick} />
+          <Menu.Item name='Toolbox'  onClick={this.handleShowClick}/>
           <Menu.Item name='Details'  onClick={this.handleItemClick} />
           <Menu.Item name='Inspect'  onClick={this.handleItemClick} />
           <Menu.Item name='Navigate'  onClick={this.handleItemClick} />
