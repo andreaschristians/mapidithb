@@ -380,7 +380,15 @@ class App extends Component {
       arrshowPolice: [],
       arrshowCCTV: [],
       tablepolice: "none",
-      tableCCTV: "none"
+      tableCCTV: "none",
+      onPolice: "block",
+      offPolice: "none",
+      onBanjir1: "block",
+      offBanjir1: "none",
+      onBanjir2: "block",
+      offBanjir2: "none",
+      onCCTV: "block",
+      offCCTV: "none"
     };
 
     //DEKLARASI FUNCTION ATAU PROCEDURE
@@ -411,7 +419,7 @@ class App extends Component {
         </Marker>
       );
     }
-    this.setState({ arrPolice: police });
+    this.setState({ arrPolice: police, onPolice: "none", offPolice: "block" });
   }
   _addCCTV() {
     var CCTV = [];
@@ -425,7 +433,7 @@ class App extends Component {
         </Marker>
       );
     }
-    this.setState({ arrCCTV: CCTV });
+    this.setState({ arrCCTV: CCTV, onCCTV: "none", offCCTV: "block" });
   }
   _showPolice() {
     if (this.state.details === "inline-block") {
@@ -683,11 +691,17 @@ class App extends Component {
 
         {/* TOOLBOXS */}
         <div
-          id="tools"
           style={{
             display: this.state.display,
             overflowY: "scroll",
-            float: "left"
+            float: "left",
+            position: "fixed",
+            bottom: "47px",
+            backgroundColor: "rgba(113, 124, 124, 0.7)",
+            width: "285px",
+            height: "250px",
+            left: "0.5em",
+            padding: "5px"
           }}
         >
           {/* CLOSE BUTTON */}
@@ -1215,127 +1229,197 @@ class App extends Component {
         </div>
 
         {/* TABLE LAYER */}
-        <Table
-          collapsing
-          id="tbl"
+        <div
           style={{
-            left: this.state.layer
+            display: "block",
+            left: this.state.layer,
+            position: "absolute",
+            top: 0,
+            zIndex: 999,
+            overflowX: "scroll",
+            maxHeight: "200px",
+            marginTop: "0.5em"
           }}
         >
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell colSpan="3">
-                <center>Layer Manager</center>
-              </Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            <Table.Row>
-              <Table.Cell collapsing>
-                <Form.Field>
-                  <Button.Group compact size="mini">
-                    <Button onClick={() => this._addPolice()} icon="eye" />
-                    <Button
-                      onClick={() => this.setState({ arrPolice: [] })}
-                      icon="eye slash"
-                    />
-                  </Button.Group>
-                </Form.Field>
-              </Table.Cell>
-              <Table.Cell onClick={() => this._showPolice()}>
-                Kantor Polisi
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing>
-                <Button.Group compact size="mini">
-                  <Button icon="eye" onClick={() => this._addCCTV()} />
+          <Table
+            size="small"
+            collapsing
+            style={{
+              backgroundcolor: "rgba(113, 124, 124, 0.7)",
+              width: "245px"
+            }}
+          >
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell colspan="2">
+                  <center>Layer Manager</center>
+                </Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              <Table.Row>
+                <Table.Cell collapsing>
                   <Button
-                    icon="eye slash"
-                    onClick={() => this.setState({ arrCCTV: [] })}
+                    compact
+                    size="mini"
+                    style={{ display: this.state.onPolice, float: "left" }}
+                    onClick={() => this._addPolice()}
+                    icon="eye"
                   />
-                </Button.Group>
-              </Table.Cell>
-              <Table.Cell onClick={() => this._showCCTV()}>CCTV</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing>
-                <Button.Group compact size="mini">
+                  <Button
+                    compact
+                    size="mini"
+                    style={{ display: this.state.offPolice, float: "left" }}
+                    onClick={() =>
+                      this.setState({
+                        arrPolice: [],
+                        onPolice: "block",
+                        offPolice: "none"
+                      })
+                    }
+                    icon="eye slash"
+                  />
+                </Table.Cell>
+                <Table.Cell onClick={() => this._showPolice()}>
+                  Kantor Polisi
+                </Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell collapsing>
+                  <Button
+                    compact
+                    size="mini"
+                    style={{ display: this.state.onCCTV, float: "left" }}
+                    icon="eye"
+                    onClick={() => this._addCCTV()}
+                  />
+                  <Button
+                    compact
+                    size="mini"
+                    style={{ display: this.state.offCCTV, float: "left" }}
+                    icon="eye slash"
+                    onClick={() =>
+                      this.setState({
+                        arrCCTV: [],
+                        onCCTV: "block",
+                        offCCTV: "none"
+                      })
+                    }
+                  />
+                </Table.Cell>
+                <Table.Cell onClick={() => this._showCCTV()}>CCTV</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell collapsing>
                   <Button
                     icon="eye"
-                    onClick={() => this.setState({ banjir1: 0.5 })}
+                    compact
+                    style={{ display: this.state.onBanjir1, float: "left" }}
+                    size="mini"
+                    onClick={() =>
+                      this.setState({
+                        banjir1: 0.5,
+                        onBanjir1: "none",
+                        offBanjir1: "block"
+                      })
+                    }
                   />
                   <Button
                     icon="eye slash"
-                    onClick={() => this.setState({ banjir1: 0 })}
+                    compact
+                    style={{ display: this.state.offBanjir1, float: "left" }}
+                    size="mini"
+                    onClick={() =>
+                      this.setState({
+                        banjir1: 0,
+                        onBanjir1: "block",
+                        offBanjir1: "none"
+                      })
+                    }
                   />
-                </Button.Group>
-              </Table.Cell>
-              <Table.Cell>Banjir 1990</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing>
-                <Button.Group compact size="mini">
+                </Table.Cell>
+                <Table.Cell>Banjir 1990</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell collapsing>
                   <Button
                     icon="eye"
-                    onClick={() => this.setState({ banjir2: 0.5 })}
+                    compact
+                    style={{ display: this.state.onBanjir2, float: "left" }}
+                    size="mini"
+                    onClick={() =>
+                      this.setState({
+                        banjir2: 0.5,
+                        onBanjir2: "none",
+                        offBanjir2: "block"
+                      })
+                    }
                   />
                   <Button
                     icon="eye slash"
-                    onClick={() => this.setState({ banjir2: 0 })}
+                    compact
+                    style={{ display: this.state.offBanjir2, float: "left" }}
+                    size="mini"
+                    onClick={() =>
+                      this.setState({
+                        banjir2: 0,
+                        onBanjir2: "block",
+                        offBanjir2: "none"
+                      })
+                    }
                   />
-                </Button.Group>
-              </Table.Cell>
-              <Table.Cell>Banjir 2000</Table.Cell>
-            </Table.Row>
-          </Table.Body>
-        </Table>
+                </Table.Cell>
+                <Table.Cell>Banjir 2000</Table.Cell>
+              </Table.Row>
+            </Table.Body>
+          </Table>
 
-        {/* HIDE TABLE LAYER */}
-        <Button
-          compact
-          color="blue"
-          size="small"
-          onClick={() =>
-            this.setState({
-              layer: "-265px",
-              close: "none",
-              open: "inline-block"
-            })
-          }
-          style={{
-            position: "fixed",
-            left: "261px",
-            top: "8px",
-            display: this.state.close,
-            opacity: "0.7"
-          }}
-        >
-          {"<<"}
-        </Button>
+          {/* HIDE TABLE LAYER */}
+          <Button
+            compact
+            color="blue"
+            size="small"
+            onClick={() =>
+              this.setState({
+                layer: "-265px",
+                close: "none",
+                open: "inline-block"
+              })
+            }
+            style={{
+              position: "fixed",
+              left: "261px",
+              top: "8px",
+              display: this.state.close,
+              opacity: "0.7"
+            }}
+          >
+            {"<<"}
+          </Button>
 
-        {/* SHOW TABLE LAYER */}
-        <Button
-          compact
-          color="blue"
-          size="small"
-          onClick={() =>
-            this.setState({
-              layer: "0.5em",
-              close: "inline-block",
-              open: "none"
-            })
-          }
-          style={{
-            position: "fixed",
-            left: "-10px",
-            top: "8px",
-            display: this.state.open,
-            opacity: "0.7"
-          }}
-        >
-          {">>"}
-        </Button>
+          {/* SHOW TABLE LAYER */}
+          <Button
+            compact
+            color="blue"
+            size="small"
+            onClick={() =>
+              this.setState({
+                layer: "0.5em",
+                close: "inline-block",
+                open: "none"
+              })
+            }
+            style={{
+              position: "fixed",
+              left: "-10px",
+              top: "8px",
+              display: this.state.open,
+              opacity: "0.7"
+            }}
+          >
+            {">>"}
+          </Button>
+        </div>
       </div>
     );
   }
