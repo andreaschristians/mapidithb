@@ -20,13 +20,3 @@
   height: "10px";
   width: 265px;
 }
-#tools {
-  position: fixed;
-  bottom:47px;
-  background-color: rgba(113, 124, 124, 0.7);
-  width: 285px;
-  height: 250px;
-  left: 0.5em;
-  padding: 5px;
-}
-
