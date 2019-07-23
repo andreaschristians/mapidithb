@@ -43,7 +43,7 @@ const databanjir1 = {
           [106.72718612208746, -6.154339766596152]
         ]
       ]
-    },
+    }
   },
   pink: {
     type: "Feature",
@@ -112,6 +112,8 @@ const databanjir1 = {
           [106.73630137135103, -6.1650064746011],
           [106.73730453091935, -6.164356023315008],
           [106.73704283711066, -6.163445390181607],
+          [106.73516736488699, -6.163228572525398],
+          [106.73516736488699, -6.163228572525398],
           [106.73516736488699, -6.163228572525398],
           [106.73490567109553, -6.160930300036668],
           [106.73717368402362, -6.16014975240526],
@@ -436,7 +438,17 @@ class App extends Component {
       var i;
       for (i = 0; i < dataPolice.length; i++) {
         showpolice.push(
-          <Table.Row>
+          <Table.Row
+          // onClick={() =>
+          //   this.setState({
+          //     viewport: {
+          //       longitude: dataPolice[i][0],
+          //       latitude: dataPolice[i][1],
+          //       zoom: 20
+          //     }
+          //   })
+          // }
+          >
             <Table.Cell>{i + 1}</Table.Cell>
             <Table.Cell>{dataPolice[i][0]}</Table.Cell>
             <Table.Cell>{dataPolice[i][1]}</Table.Cell>
@@ -656,7 +668,8 @@ class App extends Component {
               right: "50px",
               maxWidth: "150px",
               boxShadow: "0 0 10px 2px rgba(0,0,0,.1)",
-              borderRadius: "4px"
+              borderRadius: "4px",
+              backgroundColor: "white"
             }}
           >
             <Geocoder
@@ -913,7 +926,7 @@ class App extends Component {
           {/* POLICE DETAILS */}
           <Table
             collapsing
-            size="mini"
+            size="small"
             style={{ display: this.state.tablepolice }}
           >
             <Table.Header>
@@ -935,7 +948,7 @@ class App extends Component {
           {/* CCTV DETAILS */}
           <Table
             collapsing
-            size="mini"
+            size="small"
             style={{ display: this.state.tableCCTV }}
           >
             <Table.Header>
