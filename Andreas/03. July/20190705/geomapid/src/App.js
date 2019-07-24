@@ -455,6 +455,7 @@ class App extends Component {
           //       zoom: 20
           //     }
           //   })
+          // console.log({this.state.latitude});
           // }
           >
             <Table.Cell>{i + 1}</Table.Cell>
