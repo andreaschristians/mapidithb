@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import logo from './mapid-logo.png';
 import geo from './geo-icon.png';
 import mapid from './mapid-icon.png';
+import elevation from './elevation.png';
+import converter from './converter.png';
+import distances from './distance.png';
+import areas from './area.png';
+import bufferpoint from './bufferpoint.png';
+import bufferline from './bufferline.png';
+import layer from './layer.png';
 import './App.css';
 import MapGL, {
   NavigationControl,
@@ -22,7 +29,8 @@ import {
   Rail,
   Placeholder,
   Segment,
-  Sidebar
+  Sidebar,
+  Tab
 } from 'semantic-ui-react';
 import { center, distance, feature, area } from '@turf/turf';
 import { point, polygon, round } from '@turf/helpers';
@@ -33,7 +41,14 @@ import { cctv } from './cctv.js';
 var coordinates = [];
 var policestat = [];
 var cctvmarker = [];
+var tabElv = [];
+var tabConv = [];
 
+const panes = [
+  { menuItem: <img src={elevation} />, render: () => <Tab.Pane attached={false}>Tab 1 Content</Tab.Pane> },
+  { menuItem: <img src={elevation} />, render: () => <Tab.Pane attached={false}>Tab 2 Content</Tab.Pane> },
+  { menuItem: 'Tab 3', render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane> },
+];
 const MAPBOX_TOKEN = 'pk.eyJ1IjoiY2h5cHJpY2lsaWEiLCJhIjoiY2p2dXpnODFkM3F6OTQzcGJjYWgyYmIydCJ9.h_AlGKNQW-TtUVF-856lSA';
 
 class App extends Component {
@@ -106,7 +121,9 @@ class App extends Component {
       ],
       showpolice: [],
       showcctv: [],
-      visible: false
+      visible: false,
+      tabElv: [],
+      tabConv: []
     };
     this.updateDimensions = this.updateDimensions.bind(this); // <-- Contoh deklarasi functions/methods
     this.mapStyleChange = this.mapStyleChange.bind(this);
@@ -115,6 +132,8 @@ class App extends Component {
     this.clearTable = this.clearTable.bind(this);
     this.onSelectIconViews = this.onSelectIconViews.bind(this);
     this.renderListLayer = this.renderListLayer.bind(this);
+    this.tabElevation = this.tabElevation.bind(this);
+    this.tabConverter = this.tabConverter.bind(this);
   }
   
   componentWillMount() {
@@ -144,6 +163,57 @@ class App extends Component {
   setOnChange(data) {
     this.setState({data: data});
     console.log("tess"+this.state.data[0].coordinates);
+  }
+
+  tabConverter() {
+    tabConv.push(
+      <form>
+      <input
+        type='text'
+        name='username'
+      />
+      <select >
+        <option value="Ford">Ford</option>
+        <option value="Volvo">Volvo</option>
+        <option value="Fiat">Fiat</option>
+      </select>
+    </form>
+    );
+    this.setState({tabConv: tabConv, tabElv: []});
+  }
+
+  tabElevation() {
+    tabElv.push(
+      <Table celled selectable style={{overflow: 'auto', maxHeight: 260}}>
+      <Table.Header>
+        <Table.Row>
+          <Table.HeaderCell>Elevation</Table.HeaderCell>
+          <Table.HeaderCell>Longtitude</Table.HeaderCell>
+          <Table.HeaderCell>Latitude</Table.HeaderCell>
+        </Table.Row>
+      </Table.Header>
+
+      <Table.Body>
+        <Table.Row>
+          <Table.Cell>John</Table.Cell>
+          <Table.Cell>Approved</Table.Cell>
+          <Table.Cell textAlign='right'>None</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>Jamie</Table.Cell>
+          <Table.Cell>Approved</Table.Cell>
+          <Table.Cell textAlign='right'>Requires call</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>Jill</Table.Cell>
+          <Table.Cell>Denied</Table.Cell>
+          <Table.Cell textAlign='right'>None</Table.Cell>
+        </Table.Row>
+      </Table.Body>
+    </Table>
+    );
+
+    this.setState({tabElv: tabElv, tabConv: []});
   }
 
   renderListLayer() {
@@ -295,11 +365,15 @@ class App extends Component {
       zIndex: 999,
       position: "absolute",
       top: "250px",
-      background: '#e0e1e2',
+      width: "260px",
+      height: "300px",
+      background:"#d8d8d8" 
     };
 
     const { visible } = this.state
 
+    
+    
     return ( 
       <div class = "map-container" style={{ height: this.state.height }}>
         <div id ='menu' style={changeStyle} >
@@ -336,8 +410,9 @@ class App extends Component {
         </div>
 
         <div style={tableStyles}>
-        
-          <Segment style={{overflow: 'auto', maxHeight: 200 }}>
+          
+
+          {/* <Segment style={{overflow: 'auto', maxHeight: 200 }}>
             <Table >
               <Table.Header>
                 <Table.Row>
@@ -356,7 +431,7 @@ class App extends Component {
           <Segment>Area: { this.state.area } KM<sup>2</sup></Segment>
           <Segment> 
           <Button onClick={ this.clearTable }>Clear</Button>
-          </Segment>
+          </Segment> */}
         </div>
 
 
@@ -380,8 +455,8 @@ class App extends Component {
               this.setInitialProperties(features );
             }}
           />
-         
-        </MapGL>  
+        </MapGL> 
+
         <div>
         <Menu fluid widths={7} borderless>
           <Menu.Item>
