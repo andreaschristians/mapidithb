@@ -30,7 +30,10 @@ import {
   Placeholder,
   Segment,
   Sidebar,
-  Tab
+  Tab,
+  Popup,
+  Card,
+  Form
 } from 'semantic-ui-react';
 import { center, distance, feature, area } from '@turf/turf';
 import { point, polygon, round } from '@turf/helpers';
@@ -43,12 +46,6 @@ var policestat = [];
 var cctvmarker = [];
 var tabElv = [];
 var tabConv = [];
-
-const panes = [
-  { menuItem: <img src={elevation} />, render: () => <Tab.Pane attached={false}>Tab 1 Content</Tab.Pane> },
-  { menuItem: <img src={elevation} />, render: () => <Tab.Pane attached={false}>Tab 2 Content</Tab.Pane> },
-  { menuItem: 'Tab 3', render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane> },
-];
 const MAPBOX_TOKEN = 'pk.eyJ1IjoiY2h5cHJpY2lsaWEiLCJhIjoiY2p2dXpnODFkM3F6OTQzcGJjYWgyYmIydCJ9.h_AlGKNQW-TtUVF-856lSA';
 
 class App extends Component {
@@ -122,8 +119,10 @@ class App extends Component {
       showpolice: [],
       showcctv: [],
       visible: false,
-      tabElv: [],
-      tabConv: []
+      visibility: false,
+      current: 0,
+      activeItem: '',
+      mode: 'simple_select'
     };
     this.updateDimensions = this.updateDimensions.bind(this); // <-- Contoh deklarasi functions/methods
     this.mapStyleChange = this.mapStyleChange.bind(this);
@@ -132,8 +131,7 @@ class App extends Component {
     this.clearTable = this.clearTable.bind(this);
     this.onSelectIconViews = this.onSelectIconViews.bind(this);
     this.renderListLayer = this.renderListLayer.bind(this);
-    this.tabElevation = this.tabElevation.bind(this);
-    this.tabConverter = this.tabConverter.bind(this);
+    
   }
   
   componentWillMount() {
@@ -163,57 +161,6 @@ class App extends Component {
   setOnChange(data) {
     this.setState({data: data});
     console.log("tess"+this.state.data[0].coordinates);
-  }
-
-  tabConverter() {
-    tabConv.push(
-      <form>
-      <input
-        type='text'
-        name='username'
-      />
-      <select >
-        <option value="Ford">Ford</option>
-        <option value="Volvo">Volvo</option>
-        <option value="Fiat">Fiat</option>
-      </select>
-    </form>
-    );
-    this.setState({tabConv: tabConv, tabElv: []});
-  }
-
-  tabElevation() {
-    tabElv.push(
-      <Table celled selectable style={{overflow: 'auto', maxHeight: 260}}>
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell>Elevation</Table.HeaderCell>
-          <Table.HeaderCell>Longtitude</Table.HeaderCell>
-          <Table.HeaderCell>Latitude</Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
-
-      <Table.Body>
-        <Table.Row>
-          <Table.Cell>John</Table.Cell>
-          <Table.Cell>Approved</Table.Cell>
-          <Table.Cell textAlign='right'>None</Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell>Jamie</Table.Cell>
-          <Table.Cell>Approved</Table.Cell>
-          <Table.Cell textAlign='right'>Requires call</Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell>Jill</Table.Cell>
-          <Table.Cell>Denied</Table.Cell>
-          <Table.Cell textAlign='right'>None</Table.Cell>
-        </Table.Row>
-      </Table.Body>
-    </Table>
-    );
-
-    this.setState({tabElv: tabElv, tabConv: []});
   }
 
   renderListLayer() {
@@ -343,9 +290,17 @@ class App extends Component {
     });
   }
   
-  handleHideClick = () => this.setState({ visible: false })
-  handleShowClick = () => this.setState({ visible: true })
-  handleSidebarHide = () => this.setState({ visible: false })
+  currentShowToolbox(index, name, mode)  {
+    console.log(index);
+    console.log(name);
+    this.setState({
+      current: index,
+      activeItem: name,
+      mode: mode
+    })
+  }
+
+
   render() {
     const changeStyle = {
       zIndex: 999,
@@ -372,7 +327,7 @@ class App extends Component {
 
     const { visible } = this.state
 
-    
+    const { activeItem } = this.state
     
     return ( 
       <div class = "map-container" style={{ height: this.state.height }}>
@@ -410,7 +365,209 @@ class App extends Component {
         </div>
 
         <div style={tableStyles}>
-          
+          <Menu borderless style={{overflow: 'auto', width: 260}}>
+            <Popup
+              trigger={
+                <Menu.Item 
+                  name='elevation' 
+                  active={activeItem === 'elevation'} 
+                  onClick={ this.currentShowToolbox.bind(this, 1, 'elevation', 'draw_point') }> 
+                  <Image src={ elevation } size='mini' />
+                </Menu.Item>
+              }
+              size='mini'
+              position='top center'
+            >
+              <Popup.Content>
+                Elevation
+              </Popup.Content>
+            </Popup>
+            <Popup
+              trigger={
+                <Menu.Item 
+                  name='conversion' 
+                  active={activeItem === 'conversion'} 
+                  onClick={ this.currentShowToolbox.bind(this, 2, 'conversion')}> 
+                  <Image src={ converter } size='mini' />
+                </Menu.Item>
+              }
+              size='mini'
+              position='top center'
+            >
+              <Popup.Content>
+                Conversion
+              </Popup.Content>
+            </Popup>
+            <Popup
+              trigger={
+                <Menu.Item 
+                  name='distance' 
+                  active={activeItem === 'distance'} 
+                  onClick={ this.currentShowToolbox.bind(this, 3, 'distance', 'draw_line_string')}> 
+                  <Image src={ distances } size='mini' />
+                </Menu.Item>
+              }
+              size='mini'
+              position='top center'
+            >
+              <Popup.Content>
+                Distance
+              </Popup.Content>
+            </Popup>
+            <Popup
+              trigger={
+                <Menu.Item 
+                  name='area' 
+                  active={activeItem === 'area'} 
+                  onClick={ this.currentShowToolbox.bind(this, 4, 'area', 'draw_polygon')}> 
+                  <Image src={ areas } size='mini' />
+                </Menu.Item>
+              }
+              size='mini'
+              position='top center'
+            >
+              <Popup.Content>
+                Area
+              </Popup.Content>
+            </Popup>
+            <Popup
+              trigger={
+                <Menu.Item 
+                  name='bufferpoint' 
+                  active={activeItem === 'bufferpoint'} 
+                  onClick={ this.currentShowToolbox.bind(this, 5, 'bufferpoint', 'draw_point')}> 
+                  <Image src={ bufferpoint } size='mini' />
+                </Menu.Item>
+              }
+              size='mini'
+              position='top center'
+            >
+              <Popup.Content>
+                Buffer Point
+              </Popup.Content>
+            </Popup>
+            <Popup
+              trigger={
+                <Menu.Item 
+                  name='bufferline' 
+                  active={activeItem === 'bufferline'} 
+                  onClick={ this.handleChange }> 
+                  <Image src={ bufferline } size='mini' />
+                </Menu.Item>
+              }
+              size='mini'
+              position='top center'
+            >
+              <Popup.Content>
+                Buffer Line
+              </Popup.Content>
+            </Popup>
+            <Popup
+              trigger={
+                <Menu.Item 
+                  name='layer' 
+                  active={activeItem === 'layer'} 
+                  > 
+                  <Image src={ layer } size='mini' />
+                </Menu.Item>
+              }
+              size='mini'
+              position='top center'
+            >
+              <Popup.Content>
+                Layer
+              </Popup.Content>
+            </Popup>
+            
+        </Menu>
+
+        <div style={{display: this.state.current === 1 ? 'block' : 'none'}}>
+        <Table stackable>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Elevation</Table.HeaderCell>
+              <Table.HeaderCell>Longtitude</Table.HeaderCell>
+              <Table.HeaderCell>Latitude</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+
+          {/* <Table.Body>
+            <Table.Row>
+              <Table.Cell>John</Table.Cell>
+              <Table.Cell>Approved</Table.Cell>
+              <Table.Cell textAlign='right'>None</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>Jamie</Table.Cell>
+              <Table.Cell>Approved</Table.Cell>
+              <Table.Cell textAlign='right'>Requires call</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>Jill</Table.Cell>
+              <Table.Cell>Denied</Table.Cell>
+              <Table.Cell textAlign='right'>None</Table.Cell>
+            </Table.Row>
+          </Table.Body> */}
+        </Table> 
+        </div>
+         
+        <div style={{display: this.state.current === 2 ? 'block' : 'none'}}>
+          <Form size='mini'>
+            Convert Area
+            <Form.Group widths='equal'>
+              <Form.Field label='' control='input' placeholder='1' />
+              <Form.Field label='' control='input' placeholder='' />
+            </Form.Group>
+          </Form>   
+          <Form size='mini'>
+            Convert Length
+            <Form.Group widths='equal'>
+              <Form.Field label='' control='input' placeholder='1' />
+              <Form.Field label='' control='input' placeholder='' />
+            </Form.Group>
+          </Form>   
+        </div>
+
+        <div style={{display: this.state.current === 3 ? 'block' : 'none'}}>
+          <Table stackable>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell>Longtitude</Table.HeaderCell>
+                <Table.HeaderCell>Latitude</Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+          </Table>  
+        </div>
+
+        <div style={{display: this.state.current === 4 ? 'block' : 'none'}}>
+          <Table stackable>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell>Longtitude</Table.HeaderCell>
+                <Table.HeaderCell>Latitude</Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+          </Table>  
+        </div>
+
+        <div style={{display: this.state.current === 5 ? 'block' : 'none'}}>
+          <Table stackable>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell>Longtitude</Table.HeaderCell>
+                <Table.HeaderCell>Latitude</Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+          </Table>  
+
+          <Form size='mini'>
+            <Form.Group widths='equal'>
+              <Form.Field label='Radius' control='input' placeholder='1' />
+              <Form.Field label='Buffer Unit' control='input' placeholder='' />
+            </Form.Group>
+          </Form>  
+        </div>
+
 
           {/* <Segment style={{overflow: 'auto', maxHeight: 200 }}>
             <Table >
@@ -454,6 +611,8 @@ class App extends Component {
             onDrawCreate={({ features }) => {
               this.setInitialProperties(features );
             }}
+            mode={this.state.mode}
+            onDrawModeChange={({ mode }) => this.setState({ mode })}
           />
         </MapGL> 
 
