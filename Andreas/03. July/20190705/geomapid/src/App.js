@@ -724,7 +724,13 @@ class App extends Component {
       onBanjir2: "block",
       offBanjir2: "none",
       onCCTV: "block",
-      offCCTV: "none"
+      offCCTV: "none",
+      arrinspectPolice: [],
+      arrinspectCCTV: [],
+      arrinspectBanjir1: [],
+      arrinspectBanjir2: [],
+      dataLLBanjir2: [],
+      closeinspect: "none"
     };
 
     //DEKLARASI FUNCTION ATAU PROCEDURE
@@ -738,12 +744,16 @@ class App extends Component {
     this._showCCTV = this._showCCTV.bind(this);
     this._onclickPolice = this._onclickPolice.bind(this);
     this._onclickCCTV = this._onclickCCTV.bind(this);
+    this._inspectPolice = this._inspectPolice.bind(this);
+    this._inspectCCTV = this._inspectCCTV.bind(this);
+    this._inspectBanjir1 = this._inspectBanjir1.bind(this);
+    this._Inspect = this._Inspect.bind(this);
   }
 
   // FUNCTION BAWAAN
   componentDidMount() {
     document.getElementById("isilang").innerHTML =
-      "Long : 107.6093 Lat : -6.9184";
+      "Long : 107.6093, Lat : -6.9184";
   }
 
   // FUNCTION
@@ -772,6 +782,167 @@ class App extends Component {
       );
     }
     this.setState({ arrCCTV: CCTV, onCCTV: "none", offCCTV: "block" });
+  }
+  _inspectPolice() {
+    var inspectPolice = [];
+    var i;
+    for (i = 0; i < dataPolice.length; i++) {
+      inspectPolice.push(
+        <Marker longitude={dataPolice[i][0]} latitude={dataPolice[i][1]}>
+          <Popup on="click" pinned trigger={<Icon name="user secret" />}>
+            <Table size="small" collapsing>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell colSpan="2">
+                    <center>Inspect</center>
+                  </Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                <Table.Row>
+                  <Table.Cell>Longtitude</Table.Cell>
+                  <Table.Cell>{dataPolice[i][0]}</Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell>Latitude</Table.Cell>
+                  <Table.Cell>{dataPolice[i][1]}</Table.Cell>
+                </Table.Row>
+              </Table.Body>
+            </Table>
+          </Popup>
+        </Marker>
+      );
+    }
+    this.setState({
+      arrinspectPolice: inspectPolice
+    });
+  }
+  _inspectBanjir1() {
+    var inspectBanjir1 = [];
+    var i;
+    for (i = 0; i < databanjir1.red.features.length; i++) {
+      var arr = turf.centroid(
+        turf.polygon(databanjir1.red.features[i].geometry.coordinates)
+      ).geometry.coordinates;
+      inspectBanjir1.push(
+        <Marker longitude={arr[0]} latitude={arr[1]}>
+          <Popup on="click" pinned trigger={<Icon name="camera" />}>
+            <Table size="small" collapsing>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell colSpan="2">
+                    <center>Inspect</center>
+                  </Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                <Table.Row>
+                  <Table.Cell>Longtitude</Table.Cell>
+                  <Table.Cell>{arr[0]}</Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell>Latitude</Table.Cell>
+                  <Table.Cell>{arr[1]}</Table.Cell>
+                </Table.Row>
+              </Table.Body>
+            </Table>
+          </Popup>
+        </Marker>
+      );
+    }
+    this.setState({
+      arrinspectBanjir1: inspectBanjir1
+    });
+  }
+  _inspectBanjir2() {
+    var inspectBanjir2 = [];
+    var i, j;
+
+    for (i = 0; i < databanjir2.blue.features.length; i++) {
+      var dataBanjir2 = [];
+      for (
+        j = 0;
+        j < databanjir2.blue.features[i].geometry.coordinates[0].length;
+        j++
+      ) {
+        dataBanjir2.push(
+          <Table.Row>
+            <Table.Cell>{j + 1}</Table.Cell>
+            <Table.Cell>
+              {databanjir2.blue.features[i].geometry.coordinates[0][j][0]}
+            </Table.Cell>
+            <Table.Cell>
+              {databanjir2.blue.features[i].geometry.coordinates[0][j][1]}
+            </Table.Cell>
+          </Table.Row>
+        );
+        this.setState({ dataLLBanjir2: dataBanjir2 });
+        console.log(databanjir2.blue.features[1].geometry.coordinates[0]);
+      }
+      var arr = turf.centroid(
+        turf.polygon(databanjir2.blue.features[i].geometry.coordinates)
+      ).geometry.coordinates;
+      inspectBanjir2.push(
+        <Marker longitude={arr[0]} latitude={arr[1]}>
+          <Popup on="click" pinned trigger={<Icon name="camera" />}>
+            <Table size="small" collapsing>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell colSpan="3">
+                    <center>Inspect</center>
+                  </Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                <Table.Row>
+                  <Table.Cell>No</Table.Cell>
+                  <Table.Cell>Longtitude</Table.Cell>
+                  <Table.Cell>Latitude</Table.Cell>
+                </Table.Row>
+                {this.state.dataLLBanjir2}
+              </Table.Body>
+            </Table>
+          </Popup>
+        </Marker>
+      );
+    }
+    this.setState({
+      arrinspectBanjir2: inspectBanjir2
+    });
+  }
+  _inspectCCTV() {
+    var inspectCCTV = [];
+    var i;
+    for (i = 0; i < dataCCTV.length; i++) {
+      inspectCCTV.push(
+        <Marker longitude={dataCCTV[i][0]} latitude={dataCCTV[i][1]}>
+          <Popup on="click" pinned trigger={<Icon name="video" />}>
+            <Table size="small" collapsing>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell colSpan="2">
+                    <center>Inspect</center>
+                  </Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                <Table.Row>
+                  <Table.Cell>Longtitude</Table.Cell>
+                  <Table.Cell>{dataCCTV[i][0]}</Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell>Latitude</Table.Cell>
+                  <Table.Cell>{dataCCTV[i][1]}</Table.Cell>
+                </Table.Row>
+              </Table.Body>
+            </Table>
+          </Popup>
+        </Marker>
+      );
+    }
+    this.setState({
+      arrinspectCCTV: inspectCCTV
+    });
   }
   _showPolice() {
     if (this.state.details === "inline-block") {
@@ -918,7 +1089,6 @@ class App extends Component {
           <Table.Cell>{b}</Table.Cell>
         </Table.Row>
       );
-      console.log(arr);
     }
     this.setState({ arrTbl: array, mode: "simple_select" });
   }
@@ -950,6 +1120,49 @@ class App extends Component {
       this.setState({ outputlength_: value });
     }
   }
+  _Inspect(e, { name, value }) {
+    var banding, hasil;
+    if ([name][0] === "datainspect") {
+      if (value === 1) {
+        this._inspectBanjir1();
+        this._inspectBanjir2();
+        this._inspectPolice();
+        this._inspectCCTV();
+      } else if (value === 2) {
+        this._inspectCCTV();
+        this.setState({
+          arrinspectBanjir1: [],
+          arrinspectBanjir2: [],
+          arrinspectPolice: []
+        });
+      } else if (value === 3) {
+        this._inspectPolice();
+        this.setState({
+          arrinspectBanjir1: [],
+          arrinspectBanjir2: [],
+          arrinspectCCTV: []
+        });
+      } else if (value === 4) {
+        this._inspectBanjir1();
+        this.setState({
+          arrinspectBanjir2: [],
+          arrinspectCCTV: [],
+          arrinspectPolice: []
+        });
+      } else if (value === 5) {
+        this._inspectBanjir2();
+        this.setState({
+          arrinspectBanjir1: [],
+          arrinspectCCTV: [],
+          arrinspectPolice: []
+        });
+      }
+      this.setState({
+        inspect: "none",
+        closeinspect: "block"
+      });
+    }
+  }
   onSelected = (viewport, item) => {
     this.setState({ viewport });
     console.log("Selected: ", item);
@@ -976,6 +1189,12 @@ class App extends Component {
         >
           {/* MY LOCATION */}
           <GeolocateControl position="top-right" />
+
+          {/* PLACE INSPERCT */}
+          {this.state.arrinspectBanjir1}
+          {this.state.arrinspectBanjir2}
+          {this.state.arrinspectPolice}
+          {this.state.arrinspectCCTV}
 
           {/* POLICE */}
           {this.state.arrPolice}
@@ -1417,6 +1636,27 @@ class App extends Component {
         </div>
 
         {/* INSPECT */}
+        <Button
+          size="mini"
+          color="red"
+          style={{
+            display: this.state.closeinspect,
+            position: "fixed",
+            bottom: "40px",
+            left: "650px"
+          }}
+          onClick={() =>
+            this.setState({
+              arrinspectBanjir1: [],
+              arrinspectBanjir2: [],
+              arrinspectCCTV: [],
+              arrinspectPolice: [],
+              closeinspect: "none"
+            })
+          }
+        >
+          X
+        </Button>
         <div
           style={{
             position: "fixed",
@@ -1439,16 +1679,16 @@ class App extends Component {
             <Form.Field>
               <Form.Group>
                 <Form.Field
-                  label="Layer Name: "
-                  width={3}
-                  placeholder="All"
+                  placeholder="km"
                   control={Select}
+                  name="datainspect"
+                  onChange={this._Inspect}
                   options={[
-                    { key: "a", text: "All", value: 1 },
-                    { key: "b", text: "Police", value: 2 },
-                    { key: "c", text: "CCTV", value: 3 },
-                    { key: "d", text: "Banjir 1990", value: 4 },
-                    { key: "e", text: "Banjir 2000", value: 5 }
+                    { text: "All", value: 1 },
+                    { text: "CCTV", value: 2 },
+                    { text: "Police", value: 3 },
+                    { text: "Banjir 1990", value: 4 },
+                    { text: "Banjir 2000", value: 5 }
                   ]}
                 />
               </Form.Group>
@@ -1456,7 +1696,7 @@ class App extends Component {
           </Form>
           <Button.Group
             size="mini"
-            style={{ position: "fixed", bottom: "170px", left: "720px" }}
+            style={{ position: "fixed", bottom: "170px", left: "750px" }}
           >
             <Button
               onClick={() =>
@@ -1466,16 +1706,6 @@ class App extends Component {
               }
             >
               CANCEL
-            </Button>
-            <Button
-              onClick={() =>
-                this.setState({
-                  inspect: "none"
-                })
-              }
-              color="blue"
-            >
-              OK
             </Button>
           </Button.Group>
         </div>
