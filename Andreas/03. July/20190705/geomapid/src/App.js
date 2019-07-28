@@ -729,7 +729,6 @@ class App extends Component {
       arrinspectCCTV: [],
       arrinspectBanjir1: [],
       arrinspectBanjir2: [],
-      dataLLBanjir2: [],
       closeinspect: "none"
     };
 
@@ -790,25 +789,27 @@ class App extends Component {
       inspectPolice.push(
         <Marker longitude={dataPolice[i][0]} latitude={dataPolice[i][1]}>
           <Popup on="click" pinned trigger={<Icon name="user secret" />}>
-            <Table size="small" collapsing>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell colSpan="2">
-                    <center>Inspect</center>
-                  </Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                <Table.Row>
-                  <Table.Cell>Longtitude</Table.Cell>
-                  <Table.Cell>{dataPolice[i][0]}</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>Latitude</Table.Cell>
-                  <Table.Cell>{dataPolice[i][1]}</Table.Cell>
-                </Table.Row>
-              </Table.Body>
-            </Table>
+            <div style={{ height: "200px", overflowY: "scroll" }}>
+              <Table size="small" collapsing>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell colSpan="2">
+                      <center>Inspect</center>
+                    </Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                  <Table.Row>
+                    <Table.Cell>Longtitude</Table.Cell>
+                    <Table.Cell>{dataPolice[i][0]}</Table.Cell>
+                  </Table.Row>
+                  <Table.Row>
+                    <Table.Cell>Latitude</Table.Cell>
+                    <Table.Cell>{dataPolice[i][1]}</Table.Cell>
+                  </Table.Row>
+                </Table.Body>
+              </Table>
+            </div>
           </Popup>
         </Marker>
       );
@@ -819,33 +820,51 @@ class App extends Component {
   }
   _inspectBanjir1() {
     var inspectBanjir1 = [];
-    var i;
+    var i, j;
     for (i = 0; i < databanjir1.red.features.length; i++) {
+      var dataBanjir1 = [];
+      for (
+        j = 0;
+        j < databanjir1.red.features[i].geometry.coordinates[0].length;
+        j++
+      ) {
+        dataBanjir1.push(
+          <Table.Row>
+            <Table.Cell>{j + 1}</Table.Cell>
+            <Table.Cell>
+              {databanjir1.red.features[i].geometry.coordinates[0][j][0]}
+            </Table.Cell>
+            <Table.Cell>
+              {databanjir1.red.features[i].geometry.coordinates[0][j][1]}
+            </Table.Cell>
+          </Table.Row>
+        );
+      }
       var arr = turf.centroid(
         turf.polygon(databanjir1.red.features[i].geometry.coordinates)
       ).geometry.coordinates;
       inspectBanjir1.push(
         <Marker longitude={arr[0]} latitude={arr[1]}>
-          <Popup on="click" pinned trigger={<Icon name="camera" />}>
-            <Table size="small" collapsing>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell colSpan="2">
-                    <center>Inspect</center>
-                  </Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                <Table.Row>
-                  <Table.Cell>Longtitude</Table.Cell>
-                  <Table.Cell>{arr[0]}</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>Latitude</Table.Cell>
-                  <Table.Cell>{arr[1]}</Table.Cell>
-                </Table.Row>
-              </Table.Body>
-            </Table>
+          <Popup on="click" pinned trigger={<Icon name="info" color="red" />}>
+            <div style={{ height: "200px", overflowY: "scroll" }}>
+              <Table size="small" collapsing>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell colSpan="3">
+                      <center>Inspect</center>
+                    </Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                  <Table.Row>
+                    <Table.Cell>No</Table.Cell>
+                    <Table.Cell>Longtitude</Table.Cell>
+                    <Table.Cell>Latitude</Table.Cell>
+                  </Table.Row>
+                  {dataBanjir1}
+                </Table.Body>
+              </Table>
+            </div>
           </Popup>
         </Marker>
       );
@@ -876,32 +895,32 @@ class App extends Component {
             </Table.Cell>
           </Table.Row>
         );
-        this.setState({ dataLLBanjir2: dataBanjir2 });
-        console.log(databanjir2.blue.features[1].geometry.coordinates[0]);
       }
       var arr = turf.centroid(
         turf.polygon(databanjir2.blue.features[i].geometry.coordinates)
       ).geometry.coordinates;
       inspectBanjir2.push(
         <Marker longitude={arr[0]} latitude={arr[1]}>
-          <Popup on="click" pinned trigger={<Icon name="camera" />}>
-            <Table size="small" collapsing>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell colSpan="3">
-                    <center>Inspect</center>
-                  </Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                <Table.Row>
-                  <Table.Cell>No</Table.Cell>
-                  <Table.Cell>Longtitude</Table.Cell>
-                  <Table.Cell>Latitude</Table.Cell>
-                </Table.Row>
-                {this.state.dataLLBanjir2}
-              </Table.Body>
-            </Table>
+          <Popup on="click" pinned trigger={<Icon name="info" color="red" />}>
+            <div style={{ height: "200px", overflowY: "scroll" }}>
+              <Table size="small" collapsing>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell colSpan="3">
+                      <center>Inspect</center>
+                    </Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                  <Table.Row>
+                    <Table.Cell>No</Table.Cell>
+                    <Table.Cell>Longtitude</Table.Cell>
+                    <Table.Cell>Latitude</Table.Cell>
+                  </Table.Row>
+                  {dataBanjir2}
+                </Table.Body>
+              </Table>
+            </div>
           </Popup>
         </Marker>
       );
@@ -917,25 +936,27 @@ class App extends Component {
       inspectCCTV.push(
         <Marker longitude={dataCCTV[i][0]} latitude={dataCCTV[i][1]}>
           <Popup on="click" pinned trigger={<Icon name="video" />}>
-            <Table size="small" collapsing>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell colSpan="2">
-                    <center>Inspect</center>
-                  </Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                <Table.Row>
-                  <Table.Cell>Longtitude</Table.Cell>
-                  <Table.Cell>{dataCCTV[i][0]}</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>Latitude</Table.Cell>
-                  <Table.Cell>{dataCCTV[i][1]}</Table.Cell>
-                </Table.Row>
-              </Table.Body>
-            </Table>
+            <div style={{ height: "200px", overflowY: "scroll" }}>
+              <Table size="small" collapsing>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell colSpan="2">
+                      <center>Inspect</center>
+                    </Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                  <Table.Row>
+                    <Table.Cell>Longtitude</Table.Cell>
+                    <Table.Cell>{dataCCTV[i][0]}</Table.Cell>
+                  </Table.Row>
+                  <Table.Row>
+                    <Table.Cell>Latitude</Table.Cell>
+                    <Table.Cell>{dataCCTV[i][1]}</Table.Cell>
+                  </Table.Row>
+                </Table.Body>
+              </Table>
+            </div>
           </Popup>
         </Marker>
       );
@@ -1121,7 +1142,6 @@ class App extends Component {
     }
   }
   _Inspect(e, { name, value }) {
-    var banding, hasil;
     if ([name][0] === "datainspect") {
       if (value === 1) {
         this._inspectBanjir1();
@@ -1679,7 +1699,7 @@ class App extends Component {
             <Form.Field>
               <Form.Group>
                 <Form.Field
-                  placeholder="km"
+                  placeholder="All"
                   control={Select}
                   name="datainspect"
                   onChange={this._Inspect}
