@@ -729,7 +729,9 @@ class App extends Component {
       arrinspectCCTV: [],
       arrinspectBanjir1: [],
       arrinspectBanjir2: [],
-      closeinspect: "none"
+      closeinspect: "none",
+      cctvbutton: 0,
+      kantorbutton: 0
     };
 
     //DEKLARASI FUNCTION ATAU PROCEDURE
@@ -1148,19 +1150,37 @@ class App extends Component {
         this._inspectBanjir2();
         this._inspectPolice();
         this._inspectCCTV();
+        this.setState({
+          cctvbutton: 1,
+          kantorbutton: 1,
+          arrPolice: [],
+          onPolice: "block",
+          offPolice: "none",
+          arrCCTV: [],
+          onCCTV: "block",
+          offCCTV: "none"
+        });
       } else if (value === 2) {
         this._inspectCCTV();
         this.setState({
           arrinspectBanjir1: [],
           arrinspectBanjir2: [],
-          arrinspectPolice: []
+          arrinspectPolice: [],
+          cctvbutton: 1,
+          arrCCTV: [],
+          onCCTV: "block",
+          offCCTV: "none"
         });
       } else if (value === 3) {
         this._inspectPolice();
         this.setState({
           arrinspectBanjir1: [],
           arrinspectBanjir2: [],
-          arrinspectCCTV: []
+          arrinspectCCTV: [],
+          kantorbutton: 1,
+          arrPolice: [],
+          onPolice: "block",
+          offPolice: "none"
         });
       } else if (value === 4) {
         this._inspectBanjir1();
@@ -1671,7 +1691,9 @@ class App extends Component {
               arrinspectBanjir2: [],
               arrinspectCCTV: [],
               arrinspectPolice: [],
-              closeinspect: "none"
+              closeinspect: "none",
+              cctvbutton: 0,
+              kantorbutton: 0
             })
           }
         >
@@ -1900,6 +1922,7 @@ class App extends Component {
                     style={{ display: this.state.onPolice, float: "left" }}
                     onClick={() => this._addPolice()}
                     icon="eye"
+                    disabled={this.state.kantorbutton}
                   />
                   <Button
                     compact
@@ -1913,6 +1936,7 @@ class App extends Component {
                       })
                     }
                     icon="eye slash"
+                    disabled={this.state.kantorbutton}
                   />
                 </Table.Cell>
                 <Table.Cell onClick={() => this._showPolice()}>
@@ -1927,6 +1951,7 @@ class App extends Component {
                     style={{ display: this.state.onCCTV, float: "left" }}
                     icon="eye"
                     onClick={() => this._addCCTV()}
+                    disabled={this.state.cctvbutton}
                   />
                   <Button
                     compact
@@ -1940,6 +1965,7 @@ class App extends Component {
                         offCCTV: "none"
                       })
                     }
+                    disabled={this.state.cctvbutton}
                   />
                 </Table.Cell>
                 <Table.Cell onClick={() => this._showCCTV()}>CCTV</Table.Cell>
@@ -2059,4 +2085,5 @@ class App extends Component {
     );
   }
 }
+
 export default App;
