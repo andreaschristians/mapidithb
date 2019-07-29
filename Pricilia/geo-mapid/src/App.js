@@ -33,7 +33,8 @@ import {
   Tab,
   Popup,
   Card,
-  Form
+  Form,
+  Dropdown
 } from 'semantic-ui-react';
 import { center, distance, feature, area } from '@turf/turf';
 import { point, polygon, round } from '@turf/helpers';
@@ -46,6 +47,8 @@ var policestat = [];
 var cctvmarker = [];
 var tabElv = [];
 var tabConv = [];
+var polycoords = [];
+var linecoords = [];
 const MAPBOX_TOKEN = 'pk.eyJ1IjoiY2h5cHJpY2lsaWEiLCJhIjoiY2p2dXpnODFkM3F6OTQzcGJjYWgyYmIydCJ9.h_AlGKNQW-TtUVF-856lSA';
 
 class App extends Component {
@@ -122,13 +125,14 @@ class App extends Component {
       visibility: false,
       current: 0,
       activeItem: '',
-      mode: 'simple_select'
+      mode: 'simple_select',
+      polycoords: [],
+      linecoords: []
     };
     this.updateDimensions = this.updateDimensions.bind(this); // <-- Contoh deklarasi functions/methods
     this.mapStyleChange = this.mapStyleChange.bind(this);
     this.setOnChange = this.setOnChange.bind(this);
     this.setInitialProperties = this.setInitialProperties.bind(this);
-    this.clearTable = this.clearTable.bind(this);
     this.onSelectIconViews = this.onSelectIconViews.bind(this);
     this.renderListLayer = this.renderListLayer.bind(this);
     
@@ -239,48 +243,42 @@ class App extends Component {
       });
       
       if (l <= 2) {
+        console.log(features[0].geometry.coordinates[0]);
+        console.log(features[0].geometry.coordinates[1]);
         var p1 = point(features[0].geometry.coordinates[0]);
         var p2 = point(features[0].geometry.coordinates[1])
         var result = round(distance(p1, p2, { units: 'kilometers' }));
         this.setState({ distance: result });
         for (i = 0; i < l; i++) {
-          coordinates.push(<Table.Row>
+          linecoords.push(<Table.Row>
             <Table.Cell>{ features[0].geometry.coordinates[i][0] }</Table.Cell>
             <Table.Cell>{ features[0].geometry.coordinates[i][1] }</Table.Cell>
           </Table.Row>);
         }
-        this.setState({coordinates: coordinates});
+        this.setState({linecoords: linecoords});
       } else {
         for (i = 0; i < l; i++) {
-          coordinates.push(<Table.Row>
+          linecoords.push(<Table.Row>
             <Table.Cell>{ features[0].geometry.coordinates[i][0] }</Table.Cell>
             <Table.Cell>{ features[0].geometry.coordinates[i][1] }</Table.Cell>
           </Table.Row>);
         }
-        this.setState({coordinates: coordinates});
+        this.setState({linecoords: linecoords});
       }
     } else if (features[0].geometry.type == "Polygon") {
+      
       var x = features[0].geometry.coordinates[0].length;
       console.log(features[0].geometry.coordinates[0][0][0]);
       var p = polygon(features[0].geometry.coordinates);
       var a = round(area(p));
       for (i = 0; i < x; i++) {
-        coordinates.push(<Table.Row>
+        polycoords.push(<Table.Row>
           <Table.Cell>{ features[0].geometry.coordinates[0][i][0] }</Table.Cell>
           <Table.Cell>{ features[0].geometry.coordinates[0][i][1] }</Table.Cell>
         </Table.Row>);
       }
-      this.setState({coordinates: coordinates, area: a});
+      this.setState({polycoords: polycoords, area: a});
     }
-  }
-
-  clearTable(e) {
-    coordinates = [];
-    this.setState({ 
-      coordinates: [], 
-      distance: 0,
-      area: 0 
-    });
   }
 
   mapStyleChange(e) {
@@ -299,7 +297,6 @@ class App extends Component {
       mode: mode
     })
   }
-
 
   render() {
     const changeStyle = {
@@ -325,10 +322,14 @@ class App extends Component {
       background:"#d8d8d8" 
     };
 
-    const { visible } = this.state
-
     const { activeItem } = this.state
     
+    const unitOptions = [
+      { key: 'km', value: 'km', text: 'km' },
+      { key: 'feet', value: 'feet', text: 'feet' },
+      { key: 'm', value: 'm', text: 'm' },
+    ]
+
     return ( 
       <div class = "map-container" style={{ height: this.state.height }}>
         <div id ='menu' style={changeStyle} >
@@ -485,29 +486,13 @@ class App extends Component {
         <Table stackable>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>Elevation</Table.HeaderCell>
               <Table.HeaderCell>Longtitude</Table.HeaderCell>
               <Table.HeaderCell>Latitude</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
-
-          {/* <Table.Body>
-            <Table.Row>
-              <Table.Cell>John</Table.Cell>
-              <Table.Cell>Approved</Table.Cell>
-              <Table.Cell textAlign='right'>None</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell>Jamie</Table.Cell>
-              <Table.Cell>Approved</Table.Cell>
-              <Table.Cell textAlign='right'>Requires call</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell>Jill</Table.Cell>
-              <Table.Cell>Denied</Table.Cell>
-              <Table.Cell textAlign='right'>None</Table.Cell>
-            </Table.Row>
-          </Table.Body> */}
+          <Table.Body>
+            { this.state.coordinates }
+          </Table.Body>
         </Table> 
         </div>
          
@@ -528,26 +513,55 @@ class App extends Component {
           </Form>   
         </div>
 
-        <div style={{display: this.state.current === 3 ? 'block' : 'none'}}>
-          <Table stackable>
+        <div style={{display: this.state.current === 3 ? 'block' : 'none', }}>
+        <Segment style={{overflow: 'auto', maxHeight: 100, width: 260 }}>
+          <Table >
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell>Longtitude</Table.HeaderCell>
                 <Table.HeaderCell>Latitude</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
+            <Table.Body>
+              { this.state.linecoords }
+            </Table.Body>
           </Table>  
+          </Segment>
+          Unit:
+          <Dropdown
+            placeholder='Unit'
+            fluid
+            search
+            selection
+            options={unitOptions}
+          />
+          Calculated:  { this.state.distance }
         </div>
 
         <div style={{display: this.state.current === 4 ? 'block' : 'none'}}>
-          <Table stackable>
+          <Segment style={{overflow: 'auto', maxHeight: 100, width: 260 }}>
+          <Table stackable >
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell>Longtitude</Table.HeaderCell>
                 <Table.HeaderCell>Latitude</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
+            <Table.Body>
+              { this.state.polycoords }
+            </Table.Body>
           </Table>  
+          </Segment >
+          Unit:
+          <Dropdown
+            placeholder='Unit'
+            fluid
+            search
+            selection
+            options={unitOptions}
+          />
+          Calculated: { this.state.area } 
+
         </div>
 
         <div style={{display: this.state.current === 5 ? 'block' : 'none'}}>
@@ -609,10 +623,11 @@ class App extends Component {
           
           <Draw
             onDrawCreate={({ features }) => {
-              this.setInitialProperties(features );
+              this.setInitialProperties(features);
             }}
             mode={this.state.mode}
             onDrawModeChange={({ mode }) => this.setState({ mode })}
+            
           />
         </MapGL> 
 
