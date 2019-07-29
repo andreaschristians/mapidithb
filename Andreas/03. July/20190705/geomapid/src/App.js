@@ -22,6 +22,7 @@ import MapGL, {
   Source
 } from "@urbica/react-map-gl"; //Mapbox Urbica
 import Geocoder from "react-mapbox-gl-geocoder";
+import axios from "axios";
 
 //DATA LAYER
 const databanjir1 = {
@@ -656,6 +657,7 @@ var dataCCTV = [
     "http://jasamargalive.com/webjm3/mjm/index.php?r=site/getarea&a=3&b=547#"
   ]
 ];
+var rows;
 
 class App extends Component {
   // INISIALISASI UTAMA
@@ -731,7 +733,9 @@ class App extends Component {
       arrinspectBanjir2: [],
       closeinspect: "none",
       cctvbutton: 0,
-      kantorbutton: 0
+      kantorbutton: 0,
+
+      layerlists: []
     };
 
     //DEKLARASI FUNCTION ATAU PROCEDURE
@@ -755,6 +759,7 @@ class App extends Component {
   componentDidMount() {
     document.getElementById("isilang").innerHTML =
       "Long : 107.6093, Lat : -6.9184";
+    this.getLayersByUsername();
   }
 
   // FUNCTION
@@ -790,13 +795,17 @@ class App extends Component {
     for (i = 0; i < dataPolice.length; i++) {
       inspectPolice.push(
         <Marker longitude={dataPolice[i][0]} latitude={dataPolice[i][1]}>
-          <Popup on="click" pinned trigger={<Icon name="user secret" />}>
+          <Popup
+            on="click"
+            pinned
+            trigger={<Icon name="user secret" color="red" />}
+          >
             <div style={{ height: "200px", overflowY: "scroll" }}>
               <Table size="small" collapsing>
                 <Table.Header>
                   <Table.Row>
                     <Table.HeaderCell colSpan="2">
-                      <center>Inspect</center>
+                      <center>Inspect Police</center>
                     </Table.HeaderCell>
                   </Table.Row>
                 </Table.Header>
@@ -853,7 +862,7 @@ class App extends Component {
                 <Table.Header>
                   <Table.Row>
                     <Table.HeaderCell colSpan="3">
-                      <center>Inspect</center>
+                      <center>Inspect Banjir 1990</center>
                     </Table.HeaderCell>
                   </Table.Row>
                 </Table.Header>
@@ -909,7 +918,7 @@ class App extends Component {
                 <Table.Header>
                   <Table.Row>
                     <Table.HeaderCell colSpan="3">
-                      <center>Inspect</center>
+                      <center>Inspect Banjir 2000</center>
                     </Table.HeaderCell>
                   </Table.Row>
                 </Table.Header>
@@ -937,13 +946,13 @@ class App extends Component {
     for (i = 0; i < dataCCTV.length; i++) {
       inspectCCTV.push(
         <Marker longitude={dataCCTV[i][0]} latitude={dataCCTV[i][1]}>
-          <Popup on="click" pinned trigger={<Icon name="video" />}>
+          <Popup on="click" pinned trigger={<Icon name="video" color="red" />}>
             <div style={{ height: "200px", overflowY: "scroll" }}>
               <Table size="small" collapsing>
                 <Table.Header>
                   <Table.Row>
                     <Table.HeaderCell colSpan="2">
-                      <center>Inspect</center>
+                      <center>Inspect CCTV</center>
                     </Table.HeaderCell>
                   </Table.Row>
                 </Table.Header>
@@ -1207,6 +1216,50 @@ class App extends Component {
     this.setState({ viewport });
     console.log("Selected: ", item);
   };
+  getLayersByUsername() {
+    rows = [];
+    this.setState({ mapDimmerActive: true });
+    axios
+      .get(
+        "https://hnjp62bwxh.execute-api.us-west-2.amazonaws.com/GeoDev/getlayerbyusername",
+        {
+          params: {
+            username: "yacob89"
+          }
+        }
+      )
+      .then(response => {
+        // handle success
+        const layerList = response.data;
+
+        var i;
+        for (i = 0; i < layerList.length; i++) {
+          rows.push({
+            _id: layerList[i]._id,
+            name: layerList[i].name,
+            username: layerList[i].username,
+            createdAt: layerList[i].createdAt,
+            description: layerList[i].description,
+            layerType: layerList[i].layer_type,
+            subscriber: layerList[i].subscriber,
+            geojson: layerList[i].geojson,
+            arrayindex: i,
+            opacity: 0.5,
+            visibility: "visible"
+          });
+        }
+        this.setState({
+          layerlists: rows,
+          // results: rows
+        });
+        console.log(this.state.layerlists[0].geojson);
+        // this.setState({ mapDimmerActive: false });
+      })
+      // .catch(error => {
+      //   console.log("Axios error: ", error);
+      //   this.setState({ mapDimmerActive: false });
+      // });
+  }
 
   // TAMPILAN UI
   render() {
@@ -1287,6 +1340,21 @@ class App extends Component {
             polygonControl={false}
             trashControl={false}
           />
+          {/* <Source
+            id="states"
+            type="geojson"
+            data={this.state.layerlists[0].geojson}
+
+          />
+          <Layer
+            id="state-fills"
+            type="fill"
+            source="states"
+            paint={{
+              "fill-color": "#627BC1",
+              "fill-opacity": 0.5
+            }}
+          /> */}
 
           {/* SEARCH */}
           <div
@@ -1721,7 +1789,7 @@ class App extends Component {
             <Form.Field>
               <Form.Group>
                 <Form.Field
-                  placeholder="All"
+                  placeholder="-Select-"
                   control={Select}
                   name="datainspect"
                   onChange={this._Inspect}
