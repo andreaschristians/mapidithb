@@ -516,6 +516,12 @@ const databanjir2 = {
     ]
   }
 };
+var layer = {
+  yellow: {
+    type: "FeatureCollection",
+    features: []
+  }
+};
 var dataPolice = [
   [106.8544, -6.1994],
   [106.8732, -6.2041],
@@ -735,7 +741,12 @@ class App extends Component {
       cctvbutton: 0,
       kantorbutton: 0,
 
-      layerlists: []
+      //LAYER JSON
+      layerlists: [],
+      datajson: [],
+      showjson: {
+        yellow: ""
+      }
     };
 
     //DEKLARASI FUNCTION ATAU PROCEDURE
@@ -1231,8 +1242,8 @@ class App extends Component {
       .then(response => {
         // handle success
         const layerList = response.data;
-
-        var i;
+        var inputdata = [];
+        var i, j, k;
         for (i = 0; i < layerList.length; i++) {
           rows.push({
             _id: layerList[i]._id,
@@ -1249,16 +1260,29 @@ class App extends Component {
           });
         }
         this.setState({
-          layerlists: rows,
+          layerlists: rows
           // results: rows
         });
-        console.log(this.state.layerlists[0].geojson);
+
+        //INPUT DATA
+        for (j = 0; j < rows.length; j++) {
+          for (k = 0; k < rows[j].geojson.features.length; k++) {
+            inputdata.push(rows[j].geojson.features[k]);
+          }
+        }
+        this.setState({ datajson: inputdata });
+        layer = {
+          yellow: {
+            type: "FeatureCollection",
+            features: inputdata
+          }
+        };
         // this.setState({ mapDimmerActive: false });
-      })
-      // .catch(error => {
-      //   console.log("Axios error: ", error);
-      //   this.setState({ mapDimmerActive: false });
-      // });
+      });
+    // .catch(error => {
+    //   console.log("Axios error: ", error);
+    //   this.setState({ mapDimmerActive: false });
+    // });
   }
 
   // TAMPILAN UI
@@ -1340,21 +1364,33 @@ class App extends Component {
             polygonControl={false}
             trashControl={false}
           />
-          {/* <Source
-            id="states"
-            type="geojson"
-            data={this.state.layerlists[0].geojson}
 
-          />
-          <Layer
-            id="state-fills"
-            type="fill"
-            source="states"
-            paint={{
-              "fill-color": "#627BC1",
-              "fill-opacity": 0.5
-            }}
-          /> */}
+          {/* LAYER JSON */}
+          {Object.entries(this.state.showjson).map(([layerId]) => (
+            <React.Fragment key={layerId}>
+              <Source id={layerId} type="geojson" data={layer[layerId]} />
+              <Layer
+                id={layerId}
+                type="fill"
+                source={layerId}
+                paint={{
+                  "fill-color": ["get","color"],
+                  "fill-opacity": ["case",["boolean",["feature-state","hover"],false],1,0.8]
+                }}
+                filter={["==", "$type", "Polygon"]}
+              />
+              <Layer
+                id="point"
+                type="circle"
+                source={layerId}
+                paint={{
+                  "circle-radius": 2,
+                  "circle-color": "#B42222"
+                }}
+                filter={["==", "$type", "Point"]}
+              />
+            </React.Fragment>
+          ))}
 
           {/* SEARCH */}
           <div
@@ -1782,7 +1818,7 @@ class App extends Component {
           <h3>Select layer to inspect.</h3>
           <h3>
             When this feature is active, you can click at the selected layer on
-            the map to audit property data. Don'console.log(this.arrPolice)
+            the map to audit property data. Don't
             forget to activate layer and set icon first.
           </h3>
           <Form size="mini">
