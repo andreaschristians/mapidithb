@@ -22,31 +22,22 @@ import {
   Button,
   Table,
   Menu,
-  Header,
   Image,
   Icon,
   List,
-  Rail,
-  Placeholder,
   Segment,
-  Sidebar,
-  Tab,
-  Popup,
-  Card,
   Form,
-  Dropdown
+  Dropdown,
+  Label
 } from 'semantic-ui-react';
 import { center, distance, feature, area } from '@turf/turf';
 import { point, polygon, round } from '@turf/helpers';
-import DrawControl from "react-mapbox-gl-draw";
 import { polices } from './polices.js';
 import { cctv } from './cctv.js';
 
 var coordinates = [];
 var policestat = [];
 var cctvmarker = [];
-var tabElv = [];
-var tabConv = [];
 var polycoords = [];
 var linecoords = [];
 const MAPBOX_TOKEN = 'pk.eyJ1IjoiY2h5cHJpY2lsaWEiLCJhIjoiY2p2dXpnODFkM3F6OTQzcGJjYWgyYmIydCJ9.h_AlGKNQW-TtUVF-856lSA';
@@ -127,7 +118,8 @@ class App extends Component {
       activeItem: '',
       mode: 'simple_select',
       polycoords: [],
-      linecoords: []
+      linecoords: [],
+      selectedUnit: 'kilometers'
     };
     this.updateDimensions = this.updateDimensions.bind(this); // <-- Contoh deklarasi functions/methods
     this.mapStyleChange = this.mapStyleChange.bind(this);
@@ -135,7 +127,7 @@ class App extends Component {
     this.setInitialProperties = this.setInitialProperties.bind(this);
     this.onSelectIconViews = this.onSelectIconViews.bind(this);
     this.renderListLayer = this.renderListLayer.bind(this);
-    
+    this.convertUnit = this.convertUnit.bind(this); 
   }
   
   componentWillMount() {
@@ -182,11 +174,10 @@ class App extends Component {
     let temp = this.state.layerMenu;
     temp[index].isSelected = temp[index].isSelected ? false : true;
     console.log(temp[index].name);
-
-    if(temp[index].name == 'Kantor_Polisi') {
+    var i;
+    if(temp[index].name === 'Kantor_Polisi') {
       if(temp[index].isSelected) {
         policestat = [];
-        var i;
         for (i=0; i<polices.length; i++) {
           policestat.push(
             <Marker longitude={polices[i][0]} latitude={polices[i][1]}>
@@ -198,10 +189,9 @@ class App extends Component {
       } else {
         this.setState({showpolice: []});
       }
-    } else if (temp[index].name == 'Cctv') {
+    } else if (temp[index].name === 'Cctv') {
       if(temp[index].isSelected) {
         cctvmarker = [];
-        var i;
         for (i=0; i<cctv.length; i++) {
           cctvmarker.push(
             <Marker longitude={cctv[i][0]} latitude={cctv[i][1]}>
@@ -221,63 +211,57 @@ class App extends Component {
 
   setInitialProperties(features) {
     var i;
-    var l = features[0].geometry.coordinates.length;
-    if (features[0].geometry.type == "Point") {
-      this.setState({
-        data: {
-          features: [...this.state.data.features, {features}]
-        }
-      });
-      
+    this.state.data.features.push(features[0]);
+    console.log(features[0].geometry.coordinates.length);
+    var count = this.state.data.features.length - 1;
+    var temp = this.state.data.features[count].geometry.coordinates;
+    var result = 0;
+    
+    if (features[0].geometry.type === "Point") {
       coordinates.push(<Table.Row>
         <Table.Cell>{ features[0].geometry.coordinates[0] }</Table.Cell>
         <Table.Cell>{ features[0].geometry.coordinates[1] }</Table.Cell>
       </Table.Row>);
       this.setState({coordinates: coordinates});
 
-    } else if (features[0].geometry.type == "LineString") {
-      this.setState({
-        data: {
-          features: features
-        }
-      });
-      
-      if (l <= 2) {
-        console.log(features[0].geometry.coordinates[0]);
-        console.log(features[0].geometry.coordinates[1]);
-        var p1 = point(features[0].geometry.coordinates[0]);
-        var p2 = point(features[0].geometry.coordinates[1])
-        var result = round(distance(p1, p2, { units: 'kilometers' }));
-        this.setState({ distance: result });
-        for (i = 0; i < l; i++) {
-          linecoords.push(<Table.Row>
-            <Table.Cell>{ features[0].geometry.coordinates[i][0] }</Table.Cell>
-            <Table.Cell>{ features[0].geometry.coordinates[i][1] }</Table.Cell>
-          </Table.Row>);
-        }
-        this.setState({linecoords: linecoords});
-      } else {
-        for (i = 0; i < l; i++) {
-          linecoords.push(<Table.Row>
-            <Table.Cell>{ features[0].geometry.coordinates[i][0] }</Table.Cell>
-            <Table.Cell>{ features[0].geometry.coordinates[i][1] }</Table.Cell>
-          </Table.Row>);
-        }
-        this.setState({linecoords: linecoords});
+    } else if (features[0].geometry.type === "LineString") {
+     
+      for(i=1; i< temp.length; i++) {
+        var p1 = point([temp[i -1][0], temp[i-1][1]]);
+        var p2 = point([temp[i][0], temp[i][1]]);
+        result += round(distance(p1, p2, { units: 'kilometers' }));
       }
-    } else if (features[0].geometry.type == "Polygon") {
+      this.setState({ distance: result });
+
+      for (i = 0; i < temp.length; i++) {
+        linecoords.push(<Table.Row>
+          <Table.Cell>{ features[0].geometry.coordinates[i][0] }</Table.Cell>
+          <Table.Cell>{ features[0].geometry.coordinates[i][1] }</Table.Cell>
+        </Table.Row>);
+      }
+      this.setState({linecoords: linecoords});
       
-      var x = features[0].geometry.coordinates[0].length;
-      console.log(features[0].geometry.coordinates[0][0][0]);
-      var p = polygon(features[0].geometry.coordinates);
+    } else if (features[0].geometry.type === "Polygon") {
+      var p = polygon(temp);
       var a = round(area(p));
-      for (i = 0; i < x; i++) {
+      for (i = 0; i < temp[0].length; i++) {
         polycoords.push(<Table.Row>
           <Table.Cell>{ features[0].geometry.coordinates[0][i][0] }</Table.Cell>
           <Table.Cell>{ features[0].geometry.coordinates[0][i][1] }</Table.Cell>
         </Table.Row>);
       }
       this.setState({polycoords: polycoords, area: a});
+    }
+  }
+
+  convertUnit(e, data) {
+    console.log(data.value);
+    var temp = this.state.distance; 
+    if(temp !== 0) {
+      if(data.value === 'feet') {
+        temp = temp * 3280.84;
+        this.setState({distance: temp, selectedUnit: 'feet'});
+      }
     }
   }
 
@@ -299,23 +283,23 @@ class App extends Component {
   }
 
   render() {
-    const changeStyle = {
+    const changeMapStyle = {
       zIndex: 999,
       position: "absolute",
       top: "10px",
       right: "60px"
     };
 
-    const tableStyle = {
+    const layerManagement = {
       zIndex: 999,
       position: "absolute",
       top: "10px",
       background: '#e0e1e2'
     };
 
-    const tableStyles = {
+    const toolBoxTab = {
       zIndex: 999,
-      position: "absolute",
+      position: "fixed",
       top: "250px",
       width: "260px",
       height: "300px",
@@ -332,7 +316,7 @@ class App extends Component {
 
     return ( 
       <div class = "map-container" style={{ height: this.state.height }}>
-        <div id ='menu' style={changeStyle} >
+        <div id ='menu' style={changeMapStyle} >
           <Button.Group>
             <Button 
               value='mapbox://styles/mapbox/streets-v11' 
@@ -357,253 +341,167 @@ class App extends Component {
           </Button.Group>
         </div>
 
-        <div style={tableStyle}>
+        <div style={layerManagement}>
+          Layer Management
           <Segment style={{overflow: 'auto', maxHeight: 200, width: 260}}>
+           
             <List >
               { this.renderListLayer() }
             </List>
           </Segment>
         </div>
 
-        <div style={tableStyles}>
+        <div style={toolBoxTab}>
           <Menu borderless style={{overflow: 'auto', width: 260}}>
-            <Popup
-              trigger={
-                <Menu.Item 
-                  name='elevation' 
-                  active={activeItem === 'elevation'} 
-                  onClick={ this.currentShowToolbox.bind(this, 1, 'elevation', 'draw_point') }> 
-                  <Image src={ elevation } size='mini' />
-                </Menu.Item>
-              }
-              size='mini'
-              position='top center'
-            >
-              <Popup.Content>
-                Elevation
-              </Popup.Content>
-            </Popup>
-            <Popup
-              trigger={
-                <Menu.Item 
-                  name='conversion' 
-                  active={activeItem === 'conversion'} 
-                  onClick={ this.currentShowToolbox.bind(this, 2, 'conversion')}> 
-                  <Image src={ converter } size='mini' />
-                </Menu.Item>
-              }
-              size='mini'
-              position='top center'
-            >
-              <Popup.Content>
-                Conversion
-              </Popup.Content>
-            </Popup>
-            <Popup
-              trigger={
-                <Menu.Item 
-                  name='distance' 
-                  active={activeItem === 'distance'} 
-                  onClick={ this.currentShowToolbox.bind(this, 3, 'distance', 'draw_line_string')}> 
-                  <Image src={ distances } size='mini' />
-                </Menu.Item>
-              }
-              size='mini'
-              position='top center'
-            >
-              <Popup.Content>
-                Distance
-              </Popup.Content>
-            </Popup>
-            <Popup
-              trigger={
-                <Menu.Item 
-                  name='area' 
-                  active={activeItem === 'area'} 
-                  onClick={ this.currentShowToolbox.bind(this, 4, 'area', 'draw_polygon')}> 
-                  <Image src={ areas } size='mini' />
-                </Menu.Item>
-              }
-              size='mini'
-              position='top center'
-            >
-              <Popup.Content>
-                Area
-              </Popup.Content>
-            </Popup>
-            <Popup
-              trigger={
-                <Menu.Item 
-                  name='bufferpoint' 
-                  active={activeItem === 'bufferpoint'} 
-                  onClick={ this.currentShowToolbox.bind(this, 5, 'bufferpoint', 'draw_point')}> 
-                  <Image src={ bufferpoint } size='mini' />
-                </Menu.Item>
-              }
-              size='mini'
-              position='top center'
-            >
-              <Popup.Content>
-                Buffer Point
-              </Popup.Content>
-            </Popup>
-            <Popup
-              trigger={
-                <Menu.Item 
-                  name='bufferline' 
-                  active={activeItem === 'bufferline'} 
-                  onClick={ this.handleChange }> 
-                  <Image src={ bufferline } size='mini' />
-                </Menu.Item>
-              }
-              size='mini'
-              position='top center'
-            >
-              <Popup.Content>
-                Buffer Line
-              </Popup.Content>
-            </Popup>
-            <Popup
-              trigger={
-                <Menu.Item 
-                  name='layer' 
-                  active={activeItem === 'layer'} 
-                  > 
-                  <Image src={ layer } size='mini' />
-                </Menu.Item>
-              }
-              size='mini'
-              position='top center'
-            >
-              <Popup.Content>
-                Layer
-              </Popup.Content>
-            </Popup>
-            
-        </Menu>
+          
+            <Menu.Item 
+              name='elevation' 
+              active={activeItem === 'elevation'} 
+              onClick={ this.currentShowToolbox.bind(this, 1, 'elevation', 'draw_point') }> 
+              <Image src={ elevation } size='mini' />
+            </Menu.Item>
+            <Menu.Item 
+              name='conversion' 
+              active={activeItem === 'conversion'} 
+              onClick={ this.currentShowToolbox.bind(this, 2, 'conversion', 'simple_select')}> 
+              <Image src={ converter } size='mini' />
+            </Menu.Item>
+            <Menu.Item 
+              name='distance' 
+              active={activeItem === 'distance'} 
+              onClick={ this.currentShowToolbox.bind(this, 3, 'distance', 'draw_line_string')}> 
+              <Image src={ distances } size='mini' />
+            </Menu.Item>
+            <Menu.Item 
+              name='area' 
+              active={activeItem === 'area'} 
+              onClick={ this.currentShowToolbox.bind(this, 4, 'area', 'draw_polygon')}> 
+              <Image src={ areas } size='mini' />
+            </Menu.Item>
+            <Menu.Item 
+              name='bufferpoint' 
+              active={activeItem === 'bufferpoint'} 
+              onClick={ this.currentShowToolbox.bind(this, 5, 'bufferpoint', 'draw_point')}> 
+              <Image src={ bufferpoint } size='mini' />
+            </Menu.Item>
+            <Menu.Item 
+              name='bufferline' 
+              active={activeItem === 'bufferline'} 
+              onClick={ this.handleChange }> 
+              <Image src={ bufferline } size='mini' />
+            </Menu.Item>
+            <Menu.Item 
+              name='layer' 
+              active={activeItem === 'layer'} 
+              > 
+              <Image src={ layer } size='mini' />
+            </Menu.Item>
+          </Menu>
 
-        <div style={{display: this.state.current === 1 ? 'block' : 'none'}}>
-        <Table stackable>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Longtitude</Table.HeaderCell>
-              <Table.HeaderCell>Latitude</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            { this.state.coordinates }
-          </Table.Body>
-        </Table> 
-        </div>
-         
-        <div style={{display: this.state.current === 2 ? 'block' : 'none'}}>
-          <Form size='mini'>
-            Convert Area
-            <Form.Group widths='equal'>
-              <Form.Field label='' control='input' placeholder='1' />
-              <Form.Field label='' control='input' placeholder='' />
-            </Form.Group>
-          </Form>   
-          <Form size='mini'>
-            Convert Length
-            <Form.Group widths='equal'>
-              <Form.Field label='' control='input' placeholder='1' />
-              <Form.Field label='' control='input' placeholder='' />
-            </Form.Group>
-          </Form>   
-        </div>
-
-        <div style={{display: this.state.current === 3 ? 'block' : 'none', }}>
-        <Segment style={{overflow: 'auto', maxHeight: 100, width: 260 }}>
-          <Table >
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell>Longtitude</Table.HeaderCell>
-                <Table.HeaderCell>Latitude</Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              { this.state.linecoords }
-            </Table.Body>
-          </Table>  
-          </Segment>
-          Unit:
-          <Dropdown
-            placeholder='Unit'
-            fluid
-            search
-            selection
-            options={unitOptions}
-          />
-          Calculated:  { this.state.distance }
-        </div>
-
-        <div style={{display: this.state.current === 4 ? 'block' : 'none'}}>
+          <div style={{display: this.state.current === 1 ? 'block' : 'none'}}>
           <Segment style={{overflow: 'auto', maxHeight: 100, width: 260 }}>
-          <Table stackable >
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell>Longtitude</Table.HeaderCell>
-                <Table.HeaderCell>Latitude</Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              { this.state.polycoords }
-            </Table.Body>
-          </Table>  
-          </Segment >
-          Unit:
-          <Dropdown
-            placeholder='Unit'
-            fluid
-            search
-            selection
-            options={unitOptions}
-          />
-          Calculated: { this.state.area } 
-
-        </div>
-
-        <div style={{display: this.state.current === 5 ? 'block' : 'none'}}>
-          <Table stackable>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell>Longtitude</Table.HeaderCell>
-                <Table.HeaderCell>Latitude</Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-          </Table>  
-
-          <Form size='mini'>
-            <Form.Group widths='equal'>
-              <Form.Field label='Radius' control='input' placeholder='1' />
-              <Form.Field label='Buffer Unit' control='input' placeholder='' />
-            </Form.Group>
-          </Form>  
-        </div>
-
-
-          {/* <Segment style={{overflow: 'auto', maxHeight: 200 }}>
-            <Table >
+            <Table stackable>
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell>Longtitude</Table.HeaderCell>
                   <Table.HeaderCell>Latitude</Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
-
               <Table.Body>
                 { this.state.coordinates }
               </Table.Body>
             </Table>
-          </Segment>
-          
-          <Segment>Distance: { this.state.distance } KM</Segment>
-          <Segment>Area: { this.state.area } KM<sup>2</sup></Segment>
-          <Segment> 
-          <Button onClick={ this.clearTable }>Clear</Button>
-          </Segment> */}
-        </div>
+          </Segment> 
+          </div>
+         
+          <div style={{display: this.state.current === 2 ? 'block' : 'none'}}>
+            <Form size='mini'>
+              Convert Area
+              <Form.Group widths='equal'>
+                <Form.Field label='' control='input' placeholder='1' />
+                <Form.Field label='' control='input' placeholder='' />
+              </Form.Group>
+            </Form>   
+            <Form size='mini'>
+              Convert Length
+              <Form.Group widths='equal'>
+                <Form.Field label='' control='input' placeholder='1' />
+                <Form.Field label='' control='input' placeholder='' />
+              </Form.Group>
+            </Form>   
+          </div>
+
+          <div style={{display: this.state.current === 3 ? 'block' : 'none', }}>
+            <Segment style={{overflow: 'auto', maxHeight: 100, width: 260 }}>
+              <Table >
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell>Longtitude</Table.HeaderCell>
+                    <Table.HeaderCell>Latitude</Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                  { this.state.linecoords }
+                </Table.Body>
+              </Table>  
+            </Segment>
+              Unit:
+            <Dropdown
+              placeholder='Unit'
+              fluid
+              search
+              selection
+              defaultValue='km'
+              options={unitOptions}
+              onChange={this.convertUnit}
+            />
+            Calculated:  { this.state.distance } { this.state.selectedUnit }
+          </div>
+
+          <div style={{display: this.state.current === 4 ? 'block' : 'none'}}>
+            <Segment style={{overflow: 'auto', maxHeight: 100, width: 260 }}>
+              <Table stackable >
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell>Longtitude</Table.HeaderCell>
+                    <Table.HeaderCell>Latitude</Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                  { this.state.polycoords }
+                </Table.Body>
+              </Table>  
+            </Segment >
+            Unit:
+            <Dropdown
+              placeholder='Unit'
+              fluid
+              search
+              selection
+              options={unitOptions}
+            />
+            Calculated: { this.state.area } 
+          </div>
+
+          <div style={{display: this.state.current === 5 ? 'block' : 'none'}}>
+            <Segment style={{overflow: 'auto', maxHeight: 100, width: 260 }}>
+              <Table stackable>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell>Longtitude</Table.HeaderCell>
+                    <Table.HeaderCell>Latitude</Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+              </Table>  
+            </Segment>
+            <Form size='mini'>
+              <Form.Group widths='equal'>
+                <Form.Field label='Radius' control='input' placeholder='1' />
+                <Form.Field label='Buffer Unit' control='input' placeholder='' />
+              </Form.Group>
+            </Form>  
+          </div>
+      </div>
 
 
         <MapGL
@@ -632,13 +530,13 @@ class App extends Component {
         </MapGL> 
 
         <div>
-        <Menu fluid widths={7} borderless>
+        <Menu fluid widths={7} borderless stackable>
           <Menu.Item>
-            <img src={ logo } />
+            <Image src={ logo } width='15%'/>
           </Menu.Item>
           <Menu.Item>
-            <img src={ geo } height='60%' width='60%'/> 
-            <img src={ mapid } height='60%' width='60%'/> 
+            <Image src={ geo }  width='55%'/> 
+            <Image src={ mapid }  width='60%'/> 
           </Menu.Item>
           <Menu.Item name='Toolbox'  onClick={this.handleShowClick}/>
           <Menu.Item name='Details'  onClick={this.handleItemClick} />
