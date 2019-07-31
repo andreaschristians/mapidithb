@@ -59,6 +59,8 @@ class App extends Component {
       },
       distance: 0,
       coordinates: [],
+      distancecoord: [],
+      areacoord: [],
       area: 0,
       dataGeo: null,
       bColor: '',
@@ -119,7 +121,8 @@ class App extends Component {
       mode: 'simple_select',
       polycoords: [],
       linecoords: [],
-      selectedUnit: 'kilometers'
+      selectedUnit: 'km',
+      selectedUnitArea: 'km'
     };
     this.updateDimensions = this.updateDimensions.bind(this); // <-- Contoh deklarasi functions/methods
     this.mapStyleChange = this.mapStyleChange.bind(this);
@@ -128,6 +131,8 @@ class App extends Component {
     this.onSelectIconViews = this.onSelectIconViews.bind(this);
     this.renderListLayer = this.renderListLayer.bind(this);
     this.convertUnit = this.convertUnit.bind(this); 
+    this.convertUnitArea = this.convertUnitArea.bind(this);
+    this.resetData = this.resetData.bind(this);
   }
   
   componentWillMount() {
@@ -159,6 +164,7 @@ class App extends Component {
     console.log("tess"+this.state.data[0].coordinates);
   }
 
+  
   renderListLayer() {
     return this.state.layerMenu.map(el =>
       <List.Item key={ el.id }>
@@ -216,7 +222,8 @@ class App extends Component {
     var count = this.state.data.features.length - 1;
     var temp = this.state.data.features[count].geometry.coordinates;
     var result = 0;
-    
+    var dist = [];
+    var arr = [];
     if (features[0].geometry.type === "Point") {
       coordinates.push(<Table.Row>
         <Table.Cell>{ features[0].geometry.coordinates[0] }</Table.Cell>
@@ -226,12 +233,16 @@ class App extends Component {
 
     } else if (features[0].geometry.type === "LineString") {
      
-      for(i=1; i< temp.length; i++) {
+      for(i=1; i<temp.length; i++) {
         var p1 = point([temp[i -1][0], temp[i-1][1]]);
         var p2 = point([temp[i][0], temp[i][1]]);
         result += round(distance(p1, p2, { units: 'kilometers' }));
       }
-      this.setState({ distance: result });
+      console.log(result);
+      dist.push(result);
+      dist.push(result * 3280.84);
+      dist.push(result * 1000);
+      this.setState({ distance: result, distancecoord: dist });
 
       for (i = 0; i < temp.length; i++) {
         linecoords.push(<Table.Row>
@@ -243,24 +254,44 @@ class App extends Component {
       
     } else if (features[0].geometry.type === "Polygon") {
       var p = polygon(temp);
-      var a = round(area(p));
+      var a = round(area(p)) / 1000;
+
       for (i = 0; i < temp[0].length; i++) {
         polycoords.push(<Table.Row>
           <Table.Cell>{ features[0].geometry.coordinates[0][i][0] }</Table.Cell>
           <Table.Cell>{ features[0].geometry.coordinates[0][i][1] }</Table.Cell>
         </Table.Row>);
       }
-      this.setState({polycoords: polycoords, area: a});
+      arr.push(a);
+      arr.push(a * 100);
+      console.log(arr[1]);
+      this.setState({polycoords: polycoords, area: a, areacoord: arr});
     }
   }
 
   convertUnit(e, data) {
     console.log(data.value);
     var temp = this.state.distance; 
-    if(temp !== 0) {
-      if(data.value === 'feet') {
-        temp = temp * 3280.84;
-        this.setState({distance: temp, selectedUnit: 'feet'});
+    if (temp !== 0) {
+      if (data.value === 'feet') {
+        this.setState({distance: this.state.distancecoord[1], selectedUnit: 'feet'});
+      } else if (data.value === 'm') {
+        this.setState({distance: this.state.distancecoord[2], selectedUnit: 'm'});
+      } else {
+        this.setState({distance: this.state.distancecoord[0], selectedUnit: 'km'});
+      }
+    }
+  }
+
+  convertUnitArea(e, data) {
+    console.log(data.value);
+    var temp = this.state.area; 
+    if (temp !== 0) {
+      if (data.value === 'ha') {
+        console.log("ha");
+        this.setState({area: this.state.areacoord[1], selectedUnitArea: 'ha'});
+      } else {
+        this.setState({area: this.state.areacoord[0], selectedUnitArea: 'km'});
       }
     }
   }
@@ -275,6 +306,7 @@ class App extends Component {
   currentShowToolbox(index, name, mode)  {
     console.log(index);
     console.log(name);
+    this.resetData();
     this.setState({
       current: index,
       activeItem: name,
@@ -282,6 +314,21 @@ class App extends Component {
     })
   }
 
+  resetData() {
+    this.setState({
+      coordinates: [], 
+      distance: 0,
+      area: 0,
+      distancecoord: [],
+      areacoord: [],
+      polycoords: [],
+      linecoords: [],
+      data: {
+        type: "FeatureCollection",
+        features: []
+      }});
+  }
+  
   render() {
     const changeMapStyle = {
       zIndex: 999,
@@ -314,6 +361,16 @@ class App extends Component {
       { key: 'm', value: 'm', text: 'm' },
     ]
 
+    const unitAreaOptions = [
+      { key: 'km', value: 'km', text: 'km' },
+      { key: 'ha', value: 'ha', text: 'ha' }
+    ]
+
+    const bufferAreaOptions = [
+      { key: 'km', value: 'km', text: 'km' },
+      { key: 'miles', value: 'miles', text: 'miles' },
+      { key: 'm', value: 'm', text: 'm' }
+    ]
     return ( 
       <div class = "map-container" style={{ height: this.state.height }}>
         <div id ='menu' style={changeMapStyle} >
@@ -432,6 +489,7 @@ class App extends Component {
           </div>
 
           <div style={{display: this.state.current === 3 ? 'block' : 'none', }}>
+            <div style={{height: 110}}>
             <Segment style={{overflow: 'auto', maxHeight: 100, width: 260 }}>
               <Table >
                 <Table.Header>
@@ -445,20 +503,21 @@ class App extends Component {
                 </Table.Body>
               </Table>  
             </Segment>
+            </div>
               Unit:
             <Dropdown
               placeholder='Unit'
               fluid
               search
               selection
-              defaultValue='km'
               options={unitOptions}
               onChange={this.convertUnit}
             />
-            Calculated:  { this.state.distance } { this.state.selectedUnit }
+            <div> Calculated:  { this.state.distance } { this.state.selectedUnit } </div>
           </div>
 
           <div style={{display: this.state.current === 4 ? 'block' : 'none'}}>
+            <div style={{height: 110}}>
             <Segment style={{overflow: 'auto', maxHeight: 100, width: 260 }}>
               <Table stackable >
                 <Table.Header>
@@ -472,32 +531,39 @@ class App extends Component {
                 </Table.Body>
               </Table>  
             </Segment >
+            </div>
             Unit:
             <Dropdown
               placeholder='Unit'
               fluid
               search
               selection
-              options={unitOptions}
+              options={unitAreaOptions}
+              onChange={this.convertUnitArea}
             />
-            Calculated: { this.state.area } 
+            <div> Calculated: { this.state.area } {this.state.selectedUnitArea}<sup style={{display: this.state.selectedUnitArea === 'km' ? 'inline' : 'none'}}>2</sup></div>
           </div>
 
-          <div style={{display: this.state.current === 5 ? 'block' : 'none'}}>
-            <Segment style={{overflow: 'auto', maxHeight: 100, width: 260 }}>
-              <Table stackable>
+          <div style={{display: this.state.current === 5 ? 'block' : 'none' }}>
+            <div style={{height: 125}}>
+            <Segment style={{overflow: 'auto', maxHeight: 120, maxwidth: 260 }}>
+              <Table stackable >
                 <Table.Header>
                   <Table.Row>
                     <Table.HeaderCell>Longtitude</Table.HeaderCell>
                     <Table.HeaderCell>Latitude</Table.HeaderCell>
                   </Table.Row>
                 </Table.Header>
+                <Table.Body>
+                  { this.state.coordinates }
+                </Table.Body>
               </Table>  
             </Segment>
-            <Form size='mini'>
-              <Form.Group widths='equal'>
+            </div>
+            <Form size='mini '>
+              <Form.Group >
                 <Form.Field label='Radius' control='input' placeholder='1' />
-                <Form.Field label='Buffer Unit' control='input' placeholder='' />
+                <Form.Select fluid label='Buffer Unit' options={bufferAreaOptions} placeholder='Unit' />
               </Form.Group>
             </Form>  
           </div>
