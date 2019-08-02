@@ -27,14 +27,14 @@ import {
   List,
   Segment,
   Form,
-  Dropdown,
-  Label
+  Dropdown
 } from 'semantic-ui-react';
-import { center, distance, feature, area } from '@turf/turf';
+import { center, distance, area } from '@turf/turf';
 import { point, polygon, round } from '@turf/helpers';
 import { polices } from './polices.js';
 import { cctv } from './cctv.js';
 
+/* Public variable */
 var coordinates = [];
 var policestat = [];
 var cctvmarker = [];
@@ -43,13 +43,13 @@ var linecoords = [];
 const MAPBOX_TOKEN = 'pk.eyJ1IjoiY2h5cHJpY2lsaWEiLCJhIjoiY2p2dXpnODFkM3F6OTQzcGJjYWgyYmIydCJ9.h_AlGKNQW-TtUVF-856lSA';
 
 class App extends Component {
-  
   constructor() {
     super() 
+    /* Deklarasi state */
     this.state = {
       viewport: {
-        latitude: 51.0486,
-        longitude: -114.0708,
+        latitude: -6.9184,
+        longitude: 107.6093,
         zoom: 11
       },
       mapColor: 'mapbox://styles/mapbox/streets-v11',
@@ -62,7 +62,6 @@ class App extends Component {
       distancecoord: [],
       areacoord: [],
       area: 0,
-      dataGeo: null,
       bColor: '',
       icon: 'eye slash',
       layerMenu: [
@@ -114,8 +113,6 @@ class App extends Component {
       ],
       showpolice: [],
       showcctv: [],
-      visible: false,
-      visibility: false,
       current: 0,
       activeItem: '',
       mode: 'simple_select',
@@ -124,15 +121,15 @@ class App extends Component {
       selectedUnit: 'km',
       selectedUnitArea: 'km'
     };
-    this.updateDimensions = this.updateDimensions.bind(this); // <-- Contoh deklarasi functions/methods
-    this.mapStyleChange = this.mapStyleChange.bind(this);
-    this.setOnChange = this.setOnChange.bind(this);
-    this.setInitialProperties = this.setInitialProperties.bind(this);
-    this.onSelectIconViews = this.onSelectIconViews.bind(this);
-    this.renderListLayer = this.renderListLayer.bind(this);
-    this.convertUnit = this.convertUnit.bind(this); 
-    this.convertUnitArea = this.convertUnitArea.bind(this);
-    this.resetData = this.resetData.bind(this);
+    /* Deklarasi method */
+    this.updateDimensions = this.updateDimensions.bind(this); // <-- Mengatur dimensi peta
+    this.mapStyleChange = this.mapStyleChange.bind(this); // <-- Ubah style map
+    this.setInitialProperties = this.setInitialProperties.bind(this); // <-- Mengambil feature utk menghitung total distance, besar area, menampilkan koordinat, 
+    this.onSelectIconViews = this.onSelectIconViews.bind(this); // <-- Ubah icon pada menu layer manegement
+    this.renderListLayer = this.renderListLayer.bind(this); // <-- Menampilkan layer tertentu
+    this.convertUnit = this.convertUnit.bind(this); // <-- Menampilkan total distance berdasarkan unit yg dipilih
+    this.convertUnitArea = this.convertUnitArea.bind(this); // <-- Menampilkan besar area berdasarkan unit yg dipilih
+    this.resetData = this.resetData.bind(this); // <-- Reset state
   }
   
   componentWillMount() {
@@ -158,14 +155,9 @@ class App extends Component {
       viewport: { ...this.state.viewport, ...viewport }
     });
   }
-
-  setOnChange(data) {
-    this.setState({data: data});
-    console.log("tess"+this.state.data[0].coordinates);
-  }
-
   
   renderListLayer() {
+    // <-- Function menampilkan list menu Layer Management
     return this.state.layerMenu.map(el =>
       <List.Item key={ el.id }>
         <Icon name={ el.isSelected ? 'eye' : el.icon }
@@ -176,6 +168,7 @@ class App extends Component {
   }
 
   onSelectIconViews(index) {
+    // <-- Function mengubah icon yang dipilih pada menu Layer Management
     console.log("Selected index: ", index);
     let temp = this.state.layerMenu;
     temp[index].isSelected = temp[index].isSelected ? false : true;
@@ -216,6 +209,8 @@ class App extends Component {
   }
 
   setInitialProperties(features) {
+    // <-- Function menampilkan koordinat, menghitung distance, menghitung total area
+    console.log("Features", features);
     var i;
     this.state.data.features.push(features[0]);
     console.log(features[0].geometry.coordinates.length);
@@ -230,15 +225,14 @@ class App extends Component {
         <Table.Cell>{ features[0].geometry.coordinates[1] }</Table.Cell>
       </Table.Row>);
       this.setState({coordinates: coordinates});
-
+      console.log("Coordinates: ", coordinates);
     } else if (features[0].geometry.type === "LineString") {
-     
       for(i=1; i<temp.length; i++) {
         var p1 = point([temp[i -1][0], temp[i-1][1]]);
         var p2 = point([temp[i][0], temp[i][1]]);
         result += round(distance(p1, p2, { units: 'kilometers' }));
       }
-      console.log(result);
+      console.log("Distances: ", result);
       dist.push(result);
       dist.push(result * 3280.84);
       dist.push(result * 1000);
@@ -270,7 +264,8 @@ class App extends Component {
   }
 
   convertUnit(e, data) {
-    console.log(data.value);
+    // <-- Function menampilkan total distance berdasarkan unit yg dipilih
+    console.log("Selected unit:", data.value);
     var temp = this.state.distance; 
     if (temp !== 0) {
       if (data.value === 'feet') {
@@ -284,7 +279,8 @@ class App extends Component {
   }
 
   convertUnitArea(e, data) {
-    console.log(data.value);
+    // <-- Function menampilkan besar area berdasarkan unit yg dipilih
+    console.log("Selected unit:", data.value);
     var temp = this.state.area; 
     if (temp !== 0) {
       if (data.value === 'ha') {
@@ -297,15 +293,16 @@ class App extends Component {
   }
 
   mapStyleChange(e) {
-    console.log(e.currentTarget.value);
+    // <-- Function mengubah style dari map
+    console.log("Selected style:", e.currentTarget.value);
     this.setState({
       mapColor: e.currentTarget.value
     });
   }
   
   currentShowToolbox(index, name, mode)  {
-    console.log(index);
-    console.log(name);
+    // <-- Function menampilkan toolbox yg dipilih
+    console.log("Selected toolbox:", index);
     this.resetData();
     this.setState({
       current: index,
@@ -315,6 +312,7 @@ class App extends Component {
   }
 
   resetData() {
+    // <-- Function reset state
     this.setState({
       coordinates: [], 
       distance: 0,
@@ -330,6 +328,7 @@ class App extends Component {
   }
   
   render() {
+    // <-- Style untuk menu ubah map
     const changeMapStyle = {
       zIndex: 999,
       position: "absolute",
@@ -337,6 +336,7 @@ class App extends Component {
       right: "60px"
     };
 
+    // <-- Style untuk menu layer management
     const layerManagement = {
       zIndex: 999,
       position: "absolute",
@@ -344,6 +344,7 @@ class App extends Component {
       background: '#e0e1e2'
     };
 
+    // <-- Style untuk menu toolbox
     const toolBoxTab = {
       zIndex: 999,
       position: "fixed",
@@ -353,14 +354,17 @@ class App extends Component {
       background:"#d8d8d8" 
     };
 
+    // <-- State untuk menu toolbox
     const { activeItem } = this.state
     
+    // <-- Options unit untuk distance
     const unitOptions = [
       { key: 'km', value: 'km', text: 'km' },
       { key: 'feet', value: 'feet', text: 'feet' },
       { key: 'm', value: 'm', text: 'm' },
     ]
 
+    // <-- Options unit untuk area
     const unitAreaOptions = [
       { key: 'km', value: 'km', text: 'km' },
       { key: 'ha', value: 'ha', text: 'ha' }
@@ -372,91 +376,120 @@ class App extends Component {
       { key: 'm', value: 'm', text: 'm' }
     ]
     return ( 
-      <div class = "map-container" style={{ height: this.state.height }}>
-        <div id ='menu' style={changeMapStyle} >
+    // <-- User interface
+      <div class="map-container" 
+        style={{ 
+          height: this.state.height }}>
+        
+        <div id='menu'
+          style={changeMapStyle}>
           <Button.Group>
             <Button 
               value='mapbox://styles/mapbox/streets-v11' 
-              onClick={ this.mapStyleChange }>Streets
+              onClick={this.mapStyleChange}>Streets
             </Button>
             <Button 
               value='mapbox://styles/mapbox/light-v10' 
-              onClick={ this.mapStyleChange }>Light
+              onClick={this.mapStyleChange}>Light
             </Button>
             <Button 
               value='mapbox://styles/mapbox/dark-v10' 
-              onClick={ this.mapStyleChange }>Dark
+              onClick={this.mapStyleChange}>Dark
             </Button>
             <Button 
               value='mapbox://styles/mapbox/outdoors-v11' 
-              onClick={ this.mapStyleChange }>Outdoors
+              onClick={this.mapStyleChange}>Outdoors
             </Button>
             <Button 
               value='mapbox://styles/mapbox/satellite-v9' 
-              onClick={ this.mapStyleChange }>Satellite
+              onClick={this.mapStyleChange}>Satellite
             </Button>
           </Button.Group>
         </div>
 
         <div style={layerManagement}>
           Layer Management
-          <Segment style={{overflow: 'auto', maxHeight: 200, width: 260}}>
+          <Segment 
+            style={{
+              overflow: 'auto', 
+              maxHeight: 200, 
+              width: 260}}>
            
             <List >
-              { this.renderListLayer() }
+              {this.renderListLayer()}
             </List>
           </Segment>
         </div>
 
         <div style={toolBoxTab}>
-          <Menu borderless style={{overflow: 'auto', width: 260}}>
-          
+          <Menu 
+            borderless 
+            style={{
+              overflow: 'auto', 
+              width: 260}}>
             <Menu.Item 
               name='elevation' 
               active={activeItem === 'elevation'} 
-              onClick={ this.currentShowToolbox.bind(this, 1, 'elevation', 'draw_point') }> 
-              <Image src={ elevation } size='mini' />
+              onClick={this.currentShowToolbox.bind(this, 1, 'elevation', 'draw_point')}> 
+              <Image 
+                src={elevation} 
+                size='mini'/>
             </Menu.Item>
             <Menu.Item 
               name='conversion' 
               active={activeItem === 'conversion'} 
-              onClick={ this.currentShowToolbox.bind(this, 2, 'conversion', 'simple_select')}> 
-              <Image src={ converter } size='mini' />
+              onClick={this.currentShowToolbox.bind(this, 2, 'conversion', 'simple_select')}> 
+              <Image 
+                src={converter} 
+                size='mini'/>
             </Menu.Item>
             <Menu.Item 
               name='distance' 
               active={activeItem === 'distance'} 
-              onClick={ this.currentShowToolbox.bind(this, 3, 'distance', 'draw_line_string')}> 
-              <Image src={ distances } size='mini' />
+              onClick={this.currentShowToolbox.bind(this, 3, 'distance', 'draw_line_string')}> 
+              <Image 
+                src={distances} 
+                size='mini'/>
             </Menu.Item>
             <Menu.Item 
               name='area' 
               active={activeItem === 'area'} 
-              onClick={ this.currentShowToolbox.bind(this, 4, 'area', 'draw_polygon')}> 
-              <Image src={ areas } size='mini' />
+              onClick={this.currentShowToolbox.bind(this, 4, 'area', 'draw_polygon')}> 
+              <Image 
+                src={areas} 
+                size='mini'/>
             </Menu.Item>
             <Menu.Item 
               name='bufferpoint' 
               active={activeItem === 'bufferpoint'} 
-              onClick={ this.currentShowToolbox.bind(this, 5, 'bufferpoint', 'draw_point')}> 
-              <Image src={ bufferpoint } size='mini' />
+              onClick={this.currentShowToolbox.bind(this, 5, 'bufferpoint', 'draw_point')}> 
+              <Image 
+                src={bufferpoint} 
+                size='mini'/>
             </Menu.Item>
             <Menu.Item 
               name='bufferline' 
               active={activeItem === 'bufferline'} 
-              onClick={ this.handleChange }> 
-              <Image src={ bufferline } size='mini' />
+              onClick={this.handleChange}> 
+              <Image 
+                src={bufferline} 
+                size='mini'/>
             </Menu.Item>
             <Menu.Item 
               name='layer' 
-              active={activeItem === 'layer'} 
-              > 
-              <Image src={ layer } size='mini' />
+              active={activeItem === 'layer'}> 
+              <Image 
+                src={layer} 
+                size='mini'/>
             </Menu.Item>
           </Menu>
 
           <div style={{display: this.state.current === 1 ? 'block' : 'none'}}>
-          <Segment style={{overflow: 'auto', maxHeight: 100, width: 260 }}>
+          <Segment 
+            style={{
+              overflow: 'auto', 
+              maxHeight: 100, 
+              width: 260 }}>
             <Table stackable>
               <Table.Header>
                 <Table.Row>
@@ -465,7 +498,7 @@ class App extends Component {
                 </Table.Row>
               </Table.Header>
               <Table.Body>
-                { this.state.coordinates }
+                {this.state.coordinates}
               </Table.Body>
             </Table>
           </Segment> 
@@ -490,7 +523,11 @@ class App extends Component {
 
           <div style={{display: this.state.current === 3 ? 'block' : 'none', }}>
             <div style={{height: 110}}>
-            <Segment style={{overflow: 'auto', maxHeight: 100, width: 260 }}>
+            <Segment 
+              style={{
+                overflow: 'auto', 
+                maxHeight: 100, 
+                width: 260 }}>
               <Table >
                 <Table.Header>
                   <Table.Row>
@@ -499,7 +536,7 @@ class App extends Component {
                   </Table.Row>
                 </Table.Header>
                 <Table.Body>
-                  { this.state.linecoords }
+                  {this.state.linecoords}
                 </Table.Body>
               </Table>  
             </Segment>
@@ -513,12 +550,16 @@ class App extends Component {
               options={unitOptions}
               onChange={this.convertUnit}
             />
-            <div> Calculated:  { this.state.distance } { this.state.selectedUnit } </div>
+            <div> Calculated:  {this.state.distance} {this.state.selectedUnit} </div>
           </div>
 
           <div style={{display: this.state.current === 4 ? 'block' : 'none'}}>
             <div style={{height: 110}}>
-            <Segment style={{overflow: 'auto', maxHeight: 100, width: 260 }}>
+            <Segment 
+              style={{
+                overflow: 'auto', 
+                maxHeight: 100, 
+                width: 260 }}>
               <Table stackable >
                 <Table.Header>
                   <Table.Row>
@@ -527,7 +568,7 @@ class App extends Component {
                   </Table.Row>
                 </Table.Header>
                 <Table.Body>
-                  { this.state.polycoords }
+                  {this.state.polycoords}
                 </Table.Body>
               </Table>  
             </Segment >
@@ -546,7 +587,11 @@ class App extends Component {
 
           <div style={{display: this.state.current === 5 ? 'block' : 'none' }}>
             <div style={{height: 125}}>
-            <Segment style={{overflow: 'auto', maxHeight: 120, maxwidth: 260 }}>
+            <Segment 
+              style={{
+                overflow: 'auto', 
+                maxHeight: 120, 
+                maxwidth: 260 }}>
               <Table stackable >
                 <Table.Header>
                   <Table.Row>
@@ -555,7 +600,7 @@ class App extends Component {
                   </Table.Row>
                 </Table.Header>
                 <Table.Body>
-                  { this.state.coordinates }
+                  {this.state.coordinates}
                 </Table.Body>
               </Table>  
             </Segment>
