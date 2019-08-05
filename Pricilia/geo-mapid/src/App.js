@@ -10,10 +10,12 @@ import bufferpoint from './bufferpoint.png';
 import bufferline from './bufferline.png';
 import layer from './layer.png';
 import './App.css';
+import './style.css';
 import MapGL, {
   NavigationControl,
   GeolocateControl,
-  Marker
+  Marker,
+  CustomLayer
 } from '@urbica/react-map-gl';
 import Draw from '@urbica/react-map-gl-draw';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -33,7 +35,9 @@ import { center, distance, area } from '@turf/turf';
 import { point, polygon, round } from '@turf/helpers';
 import { polices } from './polices.js';
 import { cctv } from './cctv.js';
-
+import Geocoder from "react-mapbox-gl-geocoder";
+import { MapboxLayer } from '@deck.gl/mapbox';
+import { ScatterplotLayer } from '@deck.gl/layers';
 /* Public variable */
 var coordinates = [];
 var policestat = [];
@@ -119,7 +123,8 @@ class App extends Component {
       polycoords: [],
       linecoords: [],
       selectedUnit: 'km',
-      selectedUnitArea: 'km'
+      selectedUnitArea: 'km',
+      searchResultLayer: null
     };
     /* Deklarasi method */
     this.updateDimensions = this.updateDimensions.bind(this); // <-- Mengatur dimensi peta
@@ -130,6 +135,7 @@ class App extends Component {
     this.convertUnit = this.convertUnit.bind(this); // <-- Menampilkan total distance berdasarkan unit yg dipilih
     this.convertUnitArea = this.convertUnitArea.bind(this); // <-- Menampilkan besar area berdasarkan unit yg dipilih
     this.resetData = this.resetData.bind(this); // <-- Reset state
+    this.onSelected = this.onSelected.bind(this);
   }
   
   componentWillMount() {
@@ -213,7 +219,7 @@ class App extends Component {
     console.log("Features", features);
     var i;
     this.state.data.features.push(features[0]);
-    console.log(features[0].geometry.coordinates.length);
+    console.log("Total coordinates: ", features[0].geometry.coordinates.length);
     var count = this.state.data.features.length - 1;
     var temp = this.state.data.features[count].geometry.coordinates;
     var result = 0;
@@ -308,7 +314,7 @@ class App extends Component {
       current: index,
       activeItem: name,
       mode: mode
-    })
+    });
   }
 
   resetData() {
@@ -327,6 +333,24 @@ class App extends Component {
       }});
   }
   
+  onSelected (viewport, item) {
+    this.setState({ viewport: viewport });
+    console.log("Selected: ", item);
+    console.log("Center: ", item.center);
+    console.log("Viewport: ", viewport);
+    console.log("L")
+    // this.setState({
+    //   searchResultLayer: new MapboxLayer({
+    //     id: "search-result",
+    //     type: ScatterplotLayer,
+    //     data: [{ position: item.center, size: 1000 }],
+    //     getPosition: d => d.position,
+    //     getRadius: d => d.size,
+    //     getColor: [255, 0, 0]
+    //   })
+    // });
+  };
+
   render() {
     // <-- Style untuk menu ubah map
     const changeMapStyle = {
@@ -355,33 +379,34 @@ class App extends Component {
     };
 
     // <-- State untuk menu toolbox
-    const { activeItem } = this.state
+    const { activeItem } = this.state;
     
     // <-- Options unit untuk distance
     const unitOptions = [
       { key: 'km', value: 'km', text: 'km' },
       { key: 'feet', value: 'feet', text: 'feet' },
       { key: 'm', value: 'm', text: 'm' },
-    ]
+    ];
 
     // <-- Options unit untuk area
     const unitAreaOptions = [
       { key: 'km', value: 'km', text: 'km' },
       { key: 'ha', value: 'ha', text: 'ha' }
-    ]
+    ];
 
     const bufferAreaOptions = [
       { key: 'km', value: 'km', text: 'km' },
       { key: 'miles', value: 'miles', text: 'miles' },
       { key: 'm', value: 'm', text: 'm' }
-    ]
+    ];
+
     return ( 
     // <-- User interface
       <div class="map-container" 
         style={{ 
           height: this.state.height }}>
         
-        <div id='menu'
+        {/* <div id='menu'
           style={changeMapStyle}>
           <Button.Group>
             <Button 
@@ -405,7 +430,7 @@ class App extends Component {
               onClick={this.mapStyleChange}>Satellite
             </Button>
           </Button.Group>
-        </div>
+        </div> */}
 
         <div style={layerManagement}>
           Layer Management
@@ -414,7 +439,6 @@ class App extends Component {
               overflow: 'auto', 
               maxHeight: 200, 
               width: 260}}>
-           
             <List >
               {this.renderListLayer()}
             </List>
@@ -582,7 +606,8 @@ class App extends Component {
               options={unitAreaOptions}
               onChange={this.convertUnitArea}
             />
-            <div> Calculated: { this.state.area } {this.state.selectedUnitArea}<sup style={{display: this.state.selectedUnitArea === 'km' ? 'inline' : 'none'}}>2</sup></div>
+            <div> Calculated: { this.state.area } {this.state.selectedUnitArea}<sup style={{display: this.state.selectedUnitArea === 'km' ? 'inline' : 'none'}}>2</sup>
+            </div>
           </div>
 
           <div style={{display: this.state.current === 5 ? 'block' : 'none' }}>
@@ -614,7 +639,6 @@ class App extends Component {
           </div>
       </div>
 
-
         <MapGL
           style = {{ width: '100%', height: '91.5%' }}
           mapStyle = {this.state.mapColor}
@@ -628,16 +652,26 @@ class App extends Component {
           {this.state.showcctv}
           
           <GeolocateControl position='top-right' />
-          <NavigationControl showCompass showZoom position='top-right' />
-          
+          {/* <NavigationControl showCompass showZoom position='top-right' />
+           */}
           <Draw
             onDrawCreate={({ features }) => {
               this.setInitialProperties(features);
             }}
             mode={this.state.mode}
             onDrawModeChange={({ mode }) => this.setState({ mode })}
-            
           />
+
+          <div style={{position: 'absolute',width: 300, top: 10, right: 50}}>
+            <Geocoder
+              mapboxApiAccessToken= {MAPBOX_TOKEN}
+              onSelected={this.onSelected}
+              viewport={this.state.viewport}
+              hideOnSelect={true}
+              transitionDuration={1000}
+            />
+            {/* <CustomLayer layer={this.state.searchResultLayer} /> */}
+          </div>
         </MapGL> 
 
         <div>
