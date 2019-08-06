@@ -15,7 +15,9 @@ import MapGL, {
   NavigationControl,
   GeolocateControl,
   Marker,
-  CustomLayer
+  CustomLayer,
+  Source,
+  Layer
 } from '@urbica/react-map-gl';
 import Draw from '@urbica/react-map-gl-draw';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -29,9 +31,11 @@ import {
   List,
   Segment,
   Form,
-  Dropdown
+  Dropdown,
+  Label,
+  Input
 } from 'semantic-ui-react';
-import { center, distance, area } from '@turf/turf';
+import { center, distance, area, buffer } from '@turf/turf';
 import { point, polygon, round } from '@turf/helpers';
 import { polices } from './polices.js';
 import { cctv } from './cctv.js';
@@ -44,6 +48,9 @@ var policestat = [];
 var cctvmarker = [];
 var polycoords = [];
 var linecoords = [];
+var bufferPoint = null;
+var buffcount = -1;
+var buffdatapoint = [];
 const MAPBOX_TOKEN = 'pk.eyJ1IjoiY2h5cHJpY2lsaWEiLCJhIjoiY2p2dXpnODFkM3F6OTQzcGJjYWgyYmIydCJ9.h_AlGKNQW-TtUVF-856lSA';
 
 class App extends Component {
@@ -124,7 +131,16 @@ class App extends Component {
       linecoords: [],
       selectedUnit: 'km',
       selectedUnitArea: 'km',
-      searchResultLayer: null
+      searchResultLayer: null,
+      bufferPoint: null,
+      buffpoint: {
+        type: "FeatureCollection",
+        features: []
+      },
+      defaultpoint: 1,
+      buffdatapoint: [],
+      currenbuffer: null,
+      currentbufferunit: 'kilometers'
     };
     /* Deklarasi method */
     this.updateDimensions = this.updateDimensions.bind(this); // <-- Mengatur dimensi peta
@@ -136,6 +152,8 @@ class App extends Component {
     this.convertUnitArea = this.convertUnitArea.bind(this); // <-- Menampilkan besar area berdasarkan unit yg dipilih
     this.resetData = this.resetData.bind(this); // <-- Reset state
     this.onSelected = this.onSelected.bind(this);
+    this.currentBufferPoint = this.currentBufferPoint.bind(this);
+    this.convertBufferPointUnit = this.convertBufferPointUnit.bind(this);
   }
   
   componentWillMount() {
@@ -166,7 +184,7 @@ class App extends Component {
     // <-- Function menampilkan list menu Layer Management
     return this.state.layerMenu.map(el =>
       <List.Item key={ el.id }>
-        <Icon name={ el.isSelected ? 'eye' : el.icon }
+        <Icon link name={ el.isSelected ? 'eye' : el.icon }
               onClick={ this.onSelectIconViews.bind(this, el.id) } />
         <List.Content>{ el.name }</List.Content>
       </List.Item>
@@ -231,6 +249,8 @@ class App extends Component {
         <Table.Cell>{ features[0].geometry.coordinates[1] }</Table.Cell>
       </Table.Row>);
       this.setState({coordinates: coordinates});
+      buffcount++;
+      this.currentBufferPoint(features, buffcount);
       console.log("Coordinates: ", coordinates);
     } else if (features[0].geometry.type === "LineString") {
       for(i=1; i<temp.length; i++) {
@@ -269,6 +289,34 @@ class App extends Component {
     }
   }
 
+  currentBufferPoint(features, count) {
+    const temp = buffer(features[0].geometry, 1, {units: this.state.currentbufferunit });
+    console.log("Buffer: ", temp);
+    console.log("Features: ", features[0].geometry);
+    console.log("Count: ", count);
+    this.state.buffpoint.features.push(features[0].geometry);
+    console.log("Buffer point features: ", this.state.buffpoint);
+    console.log("Current buffer: ", this.state.buffpoint.features[count]);
+
+    bufferPoint = (
+      <React.Fragment>
+        <Source id='points' type='geojson' data={temp} />
+        <Layer
+          id='points'
+          type='fill'
+          source='points'
+          paint={{
+            
+            'fill-color': '#1978c8',
+            'fill-opacity': 0.5
+          }}
+        />
+      </React.Fragment>
+    );
+    this.setState({bufferPoint: bufferPoint});
+   
+  }
+
   convertUnit(e, data) {
     // <-- Function menampilkan total distance berdasarkan unit yg dipilih
     console.log("Selected unit:", data.value);
@@ -298,6 +346,19 @@ class App extends Component {
     }
   }
 
+  convertBufferPointUnit(e, data) {
+    // <-- Function menampilkan besar area berdasarkan unit yg dipilih
+    console.log("Selected unit:", data.value);
+      if (data.value === 'km') {
+        this.setState({currentbufferunit: 'kilometers'});
+      } else if (data.value === 'miles') {
+        this.setState({currentbufferunit: 'miles'});
+      } else {
+        this.setState({currentbufferunit: 'm'});
+      }
+  }
+  
+
   mapStyleChange(e) {
     // <-- Function mengubah style dari map
     console.log("Selected style:", e.currentTarget.value);
@@ -305,7 +366,7 @@ class App extends Component {
       mapColor: e.currentTarget.value
     });
   }
-  
+
   currentShowToolbox(index, name, mode)  {
     // <-- Function menampilkan toolbox yg dipilih
     console.log("Selected toolbox:", index);
@@ -365,7 +426,7 @@ class App extends Component {
       zIndex: 999,
       position: "absolute",
       top: "10px",
-      background: '#e0e1e2'
+      background: '#dcddde'
     };
 
     // <-- Style untuk menu toolbox
@@ -400,6 +461,22 @@ class App extends Component {
       { key: 'm', value: 'm', text: 'm' }
     ];
 
+    const myDeckLayer = new MapboxLayer({
+      id: 'my-scatterplot',
+      type: ScatterplotLayer,
+      data: [{ position: [-74.5, 40], size: 100000 }],
+      getPosition: d => d.position,
+      getRadius: d => d.size,
+      getColor: [255, 0, 0]
+    });
+
+    const data = {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [107.51145301514077, -6.882612239477638]
+      }
+    };
     return ( 
     // <-- User interface
       <div class="map-container" 
@@ -433,8 +510,9 @@ class App extends Component {
         </div> */}
 
         <div style={layerManagement}>
+       
           Layer Management
-          <Segment 
+          <Segment tertiary basic
             style={{
               overflow: 'auto', 
               maxHeight: 200, 
@@ -630,12 +708,18 @@ class App extends Component {
               </Table>  
             </Segment>
             </div>
-            <Form size='mini '>
-              <Form.Group >
-                <Form.Field label='Radius' control='input' placeholder='1' />
-                <Form.Select fluid label='Buffer Unit' options={bufferAreaOptions} placeholder='Unit' />
-              </Form.Group>
-            </Form>  
+            <div>
+              Radius: <Input  placeholder='1' /> 
+              Buffer Unit: <Dropdown
+              placeholder='Unit'
+              fluid
+              search
+              selection
+              options={bufferAreaOptions}
+              onChange={this.convertBufferPointUnit}
+              size='mini'
+            />
+            </div>
           </div>
       </div>
 
@@ -670,8 +754,9 @@ class App extends Component {
               hideOnSelect={true}
               transitionDuration={1000}
             />
-            {/* <CustomLayer layer={this.state.searchResultLayer} /> */}
+            {this.state.bufferPoint }
           </div>
+          
         </MapGL> 
 
         <div>
