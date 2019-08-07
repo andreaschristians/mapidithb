@@ -33,24 +33,24 @@ import {
   Form,
   Dropdown,
   Label,
-  Input
+  Input,
+  Loader,
+  Container
 } from 'semantic-ui-react';
 import { center, distance, area, buffer } from '@turf/turf';
 import { point, polygon, round } from '@turf/helpers';
-import { polices } from './polices.js';
-import { cctv } from './cctv.js';
 import Geocoder from "react-mapbox-gl-geocoder";
-import { MapboxLayer } from '@deck.gl/mapbox';
-import { ScatterplotLayer } from '@deck.gl/layers';
+import axios from "axios";
+
 /* Public variable */
 var coordinates = [];
-var policestat = [];
-var cctvmarker = [];
+var reklamasi;
+var banjir;
 var polycoords = [];
 var linecoords = [];
 var bufferPoint = null;
 var buffcount = -1;
-var buffdatapoint = [];
+var rows;
 const MAPBOX_TOKEN = 'pk.eyJ1IjoiY2h5cHJpY2lsaWEiLCJhIjoiY2p2dXpnODFkM3F6OTQzcGJjYWgyYmIydCJ9.h_AlGKNQW-TtUVF-856lSA';
 
 class App extends Component {
@@ -58,6 +58,7 @@ class App extends Component {
     super() 
     /* Deklarasi state */
     this.state = {
+      isLoading: true,
       viewport: {
         latitude: -6.9184,
         longitude: 107.6093,
@@ -68,6 +69,8 @@ class App extends Component {
         type: "FeatureCollection",
         features: []
       },
+      showreklamasi: null,
+      showbanjir: null,
       distance: 0,
       coordinates: [],
       distancecoord: [],
@@ -75,53 +78,6 @@ class App extends Component {
       area: 0,
       bColor: '',
       icon: 'eye slash',
-      layerMenu: [
-        {
-          id: 0,
-          name: 'NowMapidStory',
-          icon: 'eye slash'
-        },
-        {
-          id: 1,
-          name: 'Cctv',
-          icon: 'eye slash'
-        },
-        {
-          id: 2,
-          name: 'Reklamasi_Teluk_Jakarta',
-          icon: 'eye slash'
-        },
-        {
-          id: 3,
-          name: 'Titik_Banjir_Jakarta_2014',
-          icon: 'eye slash'
-        },
-        {
-          id: 4,
-          name: 'Tanjung_Duren',
-          icon: 'eye slash'
-        },
-        {
-          id: 5,
-          name: 'Survey_Tanjung_Duren',
-          icon: 'eye slash'
-        },
-        {
-          id: 6,
-          name: 'Kantor_Polisi',
-          icon: 'eye slash'
-        },
-        {
-          id: 7,
-          name: 'Banjir_September_2016',
-          icon: 'eye slash'
-        },
-        {
-          id: 8,
-          name: 'Banjir_September_2017',
-          icon: 'eye slash'
-        }
-      ],
       showpolice: [],
       showcctv: [],
       current: 0,
@@ -140,7 +96,9 @@ class App extends Component {
       defaultpoint: 1,
       buffdatapoint: [],
       currenbuffer: null,
-      currentbufferunit: 'kilometers'
+      currentbufferunit: 'kilometers',
+      menulayer: [],
+      datajson: []
     };
     /* Deklarasi method */
     this.updateDimensions = this.updateDimensions.bind(this); // <-- Mengatur dimensi peta
@@ -154,23 +112,26 @@ class App extends Component {
     this.onSelected = this.onSelected.bind(this);
     this.currentBufferPoint = this.currentBufferPoint.bind(this);
     this.convertBufferPointUnit = this.convertBufferPointUnit.bind(this);
+    this.getLayersByUsername = this.getLayersByUsername.bind(this);
   }
   
   componentWillMount() {
     // <-- Event Method bawaan react
     this.updateDimensions();
+    
   }
 
   componentDidMount() {
     // <-- Event Method bawaan react
     window.addEventListener("resize", this.updateDimensions.bind(this));
+    this.getLayersByUsername();
   }
 
   componentWillUnmount() {
     // <-- Event Method bawaan react
     window.removeEventListener("resize", this.updateDimensions.bind(this));
   }
-
+  
   updateDimensions(viewport) {
     // <-- Function bikinan sendiri untuk mengatur tampilan dimensi peta
     const height = window.innerWidth >= 992 ? window.innerHeight : 650;
@@ -180,56 +141,128 @@ class App extends Component {
     });
   }
   
+  getLayersByUsername() {
+    rows = [];
+    axios
+      .get(
+        "https://hnjp62bwxh.execute-api.us-west-2.amazonaws.com/GeoDev/getlayerbyusername",
+        {
+          params: {
+            username: "andreas_ithb"
+          }
+        }
+      ).then(response => {
+        // handle success
+        console.log("Geo Data: ", response.data);
+        const list = response.data;
+        var input = [];
+        var i, j, k;
+        for(i=0; i<list.length; i++) {
+          rows.push({
+            _id: list[i]._id,
+            name: list[i].name,
+            username: list[i].username,
+            createdAt: list[i].createdAt,
+            description: list[i].description,
+            layer_type: list[i].layer_type,
+            subscriber: list[i].subscriber,
+            geojson: list[i].geojson,
+            arrayindex: i,
+            opacity: 0.5,
+            visibility: "visible"
+          });
+        }
+        this.setState({ menulayer: rows });
+        for(j=0; j<rows.length; j++) {
+          for(k=0; k<rows[j].geojson.features.length; k++) {
+            input.push(
+              rows[j].geojson.features[k]
+            );
+          }
+        }
+        this.setState({ datajson: input, isLoading: false });
+      }).catch(function (error) {
+        // handle error
+        console.log(error);
+    })
+    .finally(function () {
+        // always executed
+    });
+  }
+
   renderListLayer() {
     // <-- Function menampilkan list menu Layer Management
-    return this.state.layerMenu.map(el =>
-      <List.Item key={ el.id }>
-        <Icon link name={ el.isSelected ? 'eye' : el.icon }
-              onClick={ this.onSelectIconViews.bind(this, el.id) } />
-        <List.Content>{ el.name }</List.Content>
-      </List.Item>
-    );
+    console.log("Rows: ", this.state.menulayer);
+    console.log("Username: ", this.state.menulayer[0].username);
+    if(!this.state.isLoading) {
+      return this.state.menulayer.map(el =>
+        <List.Item key={ el.arrayindex }>
+          {/* <Icon link name='eye'/> */}
+          <Icon link name={ el.isSelected ? 'eye' : 'eye slash'}
+                onClick={ this.onSelectIconViews.bind(this, el.arrayindex) } />
+          <List.Content>{ el.name }</List.Content>
+        </List.Item>
+      );
+    } 
   }
 
   onSelectIconViews(index) {
     // <-- Function mengubah icon yang dipilih pada menu Layer Management
     console.log("Selected index: ", index);
-    let temp = this.state.layerMenu;
+    let temp = this.state.menulayer;
     temp[index].isSelected = temp[index].isSelected ? false : true;
-    console.log(temp[index].name);
-    var i;
-    if(temp[index].name === 'Kantor_Polisi') {
+   var i;
+
+    if (temp[index].arrayindex == 0) {
+      console.log(temp[index].name);
       if(temp[index].isSelected) {
-        policestat = [];
-        for (i=0; i<polices.length; i++) {
-          policestat.push(
-            <Marker longitude={polices[i][0]} latitude={polices[i][1]}>
-              <Icon name="building" />
-            </Marker>
-          );
-        }
-        this.setState({showpolice: policestat});
+        console.log(temp[index].geojson.features.properties); 
+
+        reklamasi = null; 
+        reklamasi = ( 
+          <React.Fragment>
+          <Source id='reklamasi' type='geojson' data={temp[index].geojson} />
+          <Layer
+            id='reklamasi'
+            type='fill'
+            source='reklamasi'
+            paint={{
+              'fill-color': "#627BC1",
+              'fill-opacity': 0.5
+            }}
+          />
+        </React.Fragment>
+      )
+        this.setState({showreklamasi: reklamasi });
       } else {
-        this.setState({showpolice: []});
-      }
-    } else if (temp[index].name === 'Cctv') {
-      if(temp[index].isSelected) {
-        cctvmarker = [];
-        for (i=0; i<cctv.length; i++) {
-          cctvmarker.push(
-            <Marker longitude={cctv[i][0]} latitude={cctv[i][1]}>
-              <Icon name="video" />
-            </Marker>
-          );
-        }
-        this.setState({showcctv: cctvmarker});
-      } else {
-        this.setState({showcctv: []});
+        this.setState({showreklamasi: null });
       }
     }
-    this.setState({
-      layerMenu: temp
-    });
+    
+    if (temp[index].arrayindex == 1) {
+      console.log(temp[index].name);
+      if(temp[index].isSelected) {
+        console.log(temp[index].geojson);
+        banjir = null;
+        
+        banjir = ( 
+          <React.Fragment>
+          <Source id='banjir' type='geojson' data={temp[index].geojson} />
+          <Layer
+            id='banjir'
+            type='circle'
+            source='banjir'
+            paint={{
+              'circle-color': "red"
+            }}
+          />
+        </React.Fragment>
+      )
+        this.setState({showbanjir: banjir });
+      } else {
+        this.setState({showbanjir: null });
+      }
+    }
   }
 
   setInitialProperties(features) {
@@ -314,7 +347,6 @@ class App extends Component {
       </React.Fragment>
     );
     this.setState({bufferPoint: bufferPoint});
-   
   }
 
   convertUnit(e, data) {
@@ -349,16 +381,15 @@ class App extends Component {
   convertBufferPointUnit(e, data) {
     // <-- Function menampilkan besar area berdasarkan unit yg dipilih
     console.log("Selected unit:", data.value);
-      if (data.value === 'km') {
-        this.setState({currentbufferunit: 'kilometers'});
-      } else if (data.value === 'miles') {
-        this.setState({currentbufferunit: 'miles'});
-      } else {
-        this.setState({currentbufferunit: 'm'});
-      }
+    if (data.value === 'km') {
+      this.setState({currentbufferunit: 'kilometers'});
+    } else if (data.value === 'miles') {
+      this.setState({currentbufferunit: 'miles'});
+    } else {
+      this.setState({currentbufferunit: 'm'});
+    }
   }
   
-
   mapStyleChange(e) {
     // <-- Function mengubah style dari map
     console.log("Selected style:", e.currentTarget.value);
@@ -395,30 +426,29 @@ class App extends Component {
   }
   
   onSelected (viewport, item) {
-    this.setState({ viewport: viewport });
     console.log("Selected: ", item);
-    console.log("Center: ", item.center);
     console.log("Viewport: ", viewport);
-    console.log("L")
-    // this.setState({
-    //   searchResultLayer: new MapboxLayer({
-    //     id: "search-result",
-    //     type: ScatterplotLayer,
-    //     data: [{ position: item.center, size: 1000 }],
-    //     getPosition: d => d.position,
-    //     getRadius: d => d.size,
-    //     getColor: [255, 0, 0]
-    //   })
-    // });
+    this.setState({ 
+      viewport: {
+        latitude: viewport.latitude,
+        longitude: viewport.longitude,
+        zoom: 4
+      }
+    });
   };
 
   render() {
     // <-- Style untuk menu ubah map
+    if (this.state.isLoading) {
+      return <Container>
+                <Loader size='massive' active inline='centered' /> 
+              </Container>
+    }
     const changeMapStyle = {
       zIndex: 999,
       position: "absolute",
       top: "10px",
-      right: "60px"
+      right: "200px"
     };
 
     // <-- Style untuk menu layer management
@@ -461,53 +491,34 @@ class App extends Component {
       { key: 'm', value: 'm', text: 'm' }
     ];
 
-    const myDeckLayer = new MapboxLayer({
-      id: 'my-scatterplot',
-      type: ScatterplotLayer,
-      data: [{ position: [-74.5, 40], size: 100000 }],
-      getPosition: d => d.position,
-      getRadius: d => d.size,
-      getColor: [255, 0, 0]
-    });
-
-    const data = {
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [107.51145301514077, -6.882612239477638]
-      }
-    };
     return ( 
     // <-- User interface
+      
       <div class="map-container" 
         style={{ 
           height: this.state.height }}>
-        
-        {/* <div id='menu'
+       
+        <div id='menu'
           style={changeMapStyle}>
-          <Button.Group>
+          <Button.Group size='mini'>
             <Button 
               value='mapbox://styles/mapbox/streets-v11' 
               onClick={this.mapStyleChange}>Streets
             </Button>
             <Button 
-              value='mapbox://styles/mapbox/light-v10' 
-              onClick={this.mapStyleChange}>Light
-            </Button>
-            <Button 
-              value='mapbox://styles/mapbox/dark-v10' 
-              onClick={this.mapStyleChange}>Dark
-            </Button>
-            <Button 
-              value='mapbox://styles/mapbox/outdoors-v11' 
-              onClick={this.mapStyleChange}>Outdoors
-            </Button>
-            <Button 
               value='mapbox://styles/mapbox/satellite-v9' 
               onClick={this.mapStyleChange}>Satellite
             </Button>
+            <Button 
+              value='mapbox://styles/mapbox/satellite-v9' 
+              onClick={this.mapStyleChange}>Hybrid
+            </Button>
+            <Button 
+              value='mapbox://styles/mapbox/outdoors-v11' 
+              onClick={this.mapStyleChange}>Terrain
+            </Button>
           </Button.Group>
-        </div> */}
+        </div>
 
         <div style={layerManagement}>
        
@@ -732,8 +743,8 @@ class App extends Component {
           zoom = {this.state.viewport.zoom}
           onViewportChange={viewport => this.setState({ viewport })}
         >
-          {this.state.showpolice}
-          {this.state.showcctv}
+          {this.state.showreklamasi}
+          {this.state.showbanjir}
           
           <GeolocateControl position='top-right' />
           {/* <NavigationControl showCompass showZoom position='top-right' />
@@ -746,7 +757,7 @@ class App extends Component {
             onDrawModeChange={({ mode }) => this.setState({ mode })}
           />
 
-          <div style={{position: 'absolute',width: 300, top: 10, right: 50}}>
+          <div style={{position: 'absolute', top: 10, right: 50}}>
             <Geocoder
               mapboxApiAccessToken= {MAPBOX_TOKEN}
               onSelected={this.onSelected}
