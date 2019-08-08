@@ -46,6 +46,8 @@ import axios from "axios";
 var coordinates = [];
 var reklamasi;
 var banjir;
+var tanjungduren;
+var jalanjkt;
 var polycoords = [];
 var linecoords = [];
 var bufferPoint = null;
@@ -69,8 +71,10 @@ class App extends Component {
         type: "FeatureCollection",
         features: []
       },
-      showreklamasi: null,
+      showreklamasi: [],
       showbanjir: null,
+      showtanjungduren: [],
+      showjlnjkt: null,
       distance: 0,
       coordinates: [],
       distancecoord: [],
@@ -98,7 +102,8 @@ class App extends Component {
       currenbuffer: null,
       currentbufferunit: 'kilometers',
       menulayer: [],
-      datajson: []
+      datajson: [],
+      tempcount: -1
     };
     /* Deklarasi method */
     this.updateDimensions = this.updateDimensions.bind(this); // <-- Mengatur dimensi peta
@@ -211,31 +216,34 @@ class App extends Component {
     console.log("Selected index: ", index);
     let temp = this.state.menulayer;
     temp[index].isSelected = temp[index].isSelected ? false : true;
-   var i;
+    var i;
 
     if (temp[index].arrayindex == 0) {
       console.log(temp[index].name);
       if(temp[index].isSelected) {
-        console.log(temp[index].geojson.features.properties); 
+        console.log(temp[index].geojson.features); 
 
-        reklamasi = null; 
-        reklamasi = ( 
-          <React.Fragment>
-          <Source id='reklamasi' type='geojson' data={temp[index].geojson} />
-          <Layer
-            id='reklamasi'
-            type='fill'
-            source='reklamasi'
-            paint={{
-              'fill-color': "#627BC1",
-              'fill-opacity': 0.5
-            }}
-          />
-        </React.Fragment>
-      )
+        reklamasi = []; 
+        {Object.keys(temp[index].geojson.features).map((keys) => (
+          reklamasi.push(<React.Fragment  key={temp[index].geojson.features[keys].properties.Kode}>
+            {console.log("Kode: ", temp[index].geojson.features[keys].properties.Kode)}
+            <Source id={temp[index].geojson.features[keys].properties.Kode} type='geojson' data={temp[index].geojson.features[keys]} />
+            <Layer
+            {...console.log("Color", temp[index].geojson.features[keys].properties.fill)}
+              id={temp[index].geojson.features[keys].properties.Kode}
+              type={temp[index].layer_type}
+              source={temp[index].geojson.features[keys].properties.Kode}
+              paint={{
+                'fill-color': temp[index].geojson.features[keys].properties.fill,
+                'fill-opacity': 0.5
+              }}
+            />
+          </React.Fragment>
+        )))
+        }
         this.setState({showreklamasi: reklamasi });
       } else {
-        this.setState({showreklamasi: null });
+        this.setState({showreklamasi: [] });
       }
     }
     
@@ -244,7 +252,6 @@ class App extends Component {
       if(temp[index].isSelected) {
         console.log(temp[index].geojson);
         banjir = null;
-        
         banjir = ( 
           <React.Fragment>
           <Source id='banjir' type='geojson' data={temp[index].geojson} />
@@ -253,7 +260,8 @@ class App extends Component {
             type='circle'
             source='banjir'
             paint={{
-              'circle-color': "red"
+              'circle-color': "red",
+              'circle-opacity' : 0.5
             }}
           />
         </React.Fragment>
@@ -263,6 +271,65 @@ class App extends Component {
         this.setState({showbanjir: null });
       }
     }
+
+    if (temp[index].arrayindex === 2) {
+      console.log(temp[index].name);
+      if (temp[index].isSelected) {
+        tanjungduren = [];
+        console.log(temp[index].geojson.features); 
+        {Object.keys(temp[index].geojson.features).map((keys) => (
+          tanjungduren.push(<React.Fragment  key={temp[index].geojson.features[keys].properties.ID_UNIK}>
+            {console.log("Kode: ", temp[index].geojson.features[keys].properties.ID_UNIK)}
+            <Source id={temp[index].geojson.features[keys].properties.ID_UNIK} type='geojson' data={temp[index].geojson.features[keys]} />
+            <Layer
+            {...console.log("Color", temp[index].geojson.features[keys].properties.fill)}
+              id={temp[index].geojson.features[keys].properties.ID_UNIK}
+              type={temp[index].layer_type}
+              source={temp[index].geojson.features[keys].properties.ID_UNIK}
+              paint={{
+                'fill-color': temp[index].geojson.features[keys].properties.fill,
+                'fill-opacity': 0.5
+              }}
+            />
+          </React.Fragment>
+        )))
+        }
+        this.setState({showtanjungduren: tanjungduren });
+      } else {
+        this.setState({showtanjungduren: [] });
+      }
+    }
+
+    if (temp[index].arrayindex === 4) {
+      console.log(temp[index].name);
+      if (temp[index].isSelected) {
+        jalanjkt = null;
+        console.log(temp[index].geojson.features); 
+        jalanjkt = ( 
+          <React.Fragment>
+          <Source id='jalan' type='geojson' data={temp[index].geojson} />
+          <Layer
+            id='jalan'
+            type={temp[index].layer_type}
+            source='jalan'
+            layout={{
+              'line-join': 'round',
+              'line-cap': 'round'
+            }}
+            paint={{
+              'line-color': '#003d99',
+              'line-width': 4,
+              'line-opacity': 0.5
+            }}
+          />
+        </React.Fragment>
+      )
+        this.setState({showjlnjkt: jalanjkt });
+      } else {
+        this.setState({showjlnjkt: [] });
+      }
+    }
+
   }
 
   setInitialProperties(features) {
@@ -282,8 +349,12 @@ class App extends Component {
         <Table.Cell>{ features[0].geometry.coordinates[1] }</Table.Cell>
       </Table.Row>);
       this.setState({coordinates: coordinates});
-      buffcount++;
-      this.currentBufferPoint(features, buffcount);
+      
+      if(this.state.current == 5) {
+        buffcount++;
+        this.currentBufferPoint(features, buffcount);
+      }
+      
       console.log("Coordinates: ", coordinates);
     } else if (features[0].geometry.type === "LineString") {
       for(i=1; i<temp.length; i++) {
@@ -450,13 +521,25 @@ class App extends Component {
       top: "10px",
       right: "200px"
     };
+    
+    const styleLayer = {
+     
+      borderRadius: '5px',
+      width: '300px',
+      
+    };
 
+    const listlayer = {
+      padding: '10px'
+    }
     // <-- Style untuk menu layer management
     const layerManagement = {
       zIndex: 999,
       position: "absolute",
       top: "10px",
-      background: '#dcddde'
+      background: '#dcddde',
+      padding: '10px',
+      width: '260px'
     };
 
     // <-- Style untuk menu toolbox
@@ -491,6 +574,7 @@ class App extends Component {
       { key: 'm', value: 'm', text: 'm' }
     ];
 
+    
     return ( 
     // <-- User interface
       
@@ -521,17 +605,19 @@ class App extends Component {
         </div>
 
         <div style={layerManagement}>
-       
-          Layer Management
-          <Segment tertiary basic
-            style={{
-              overflow: 'auto', 
-              maxHeight: 200, 
-              width: 260}}>
+        <div style={styleLayer}>
+          <div>
+            Layer Management
+          </div>
+          {/* <div> 
+            <Image src={layer} size='mini'/>
+          </div> */}
+        </div>
+          <div >
             <List >
               {this.renderListLayer()}
             </List>
-          </Segment>
+            </div>
         </div>
 
         <div style={toolBoxTab}>
@@ -601,9 +687,9 @@ class App extends Component {
           <Segment 
             style={{
               overflow: 'auto', 
-              maxHeight: 100, 
+              maxHeight: 200, 
               width: 260 }}>
-            <Table stackable>
+            <Table stackable size='small'>
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell>Longtitude</Table.HeaderCell>
@@ -641,7 +727,7 @@ class App extends Component {
                 overflow: 'auto', 
                 maxHeight: 100, 
                 width: 260 }}>
-              <Table >
+              <Table size='small'>
                 <Table.Header>
                   <Table.Row>
                     <Table.HeaderCell>Longtitude</Table.HeaderCell>
@@ -673,7 +759,7 @@ class App extends Component {
                 overflow: 'auto', 
                 maxHeight: 100, 
                 width: 260 }}>
-              <Table stackable >
+              <Table stackable size='small'>
                 <Table.Header>
                   <Table.Row>
                     <Table.HeaderCell>Longtitude</Table.HeaderCell>
@@ -706,7 +792,7 @@ class App extends Component {
                 overflow: 'auto', 
                 maxHeight: 120, 
                 maxwidth: 260 }}>
-              <Table stackable >
+              <Table stackable size='small'>
                 <Table.Header>
                   <Table.Row>
                     <Table.HeaderCell>Longtitude</Table.HeaderCell>
@@ -745,7 +831,9 @@ class App extends Component {
         >
           {this.state.showreklamasi}
           {this.state.showbanjir}
-          
+          {this.state.showtanjungduren}
+          {this.state.showjlnjkt}
+
           <GeolocateControl position='top-right' />
           {/* <NavigationControl showCompass showZoom position='top-right' />
            */}
@@ -767,11 +855,11 @@ class App extends Component {
             />
             {this.state.bufferPoint }
           </div>
-          
+         
         </MapGL> 
 
         <div>
-        <Menu fluid widths={7} borderless stackable>
+        <Menu fluid widths={7} borderless stackable color="grey" size='small' attached='bottom'>
           <Menu.Item>
             <Image src={ logo } width='15%'/>
           </Menu.Item>
