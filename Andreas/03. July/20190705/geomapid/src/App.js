@@ -663,7 +663,8 @@ var dataCCTV = [
     "http://jasamargalive.com/webjm3/mjm/index.php?r=site/getarea&a=3&b=547#"
   ]
 ];
-var rows;
+var rows = [],
+  inputdata;
 
 class App extends Component {
   // INISIALISASI UTAMA
@@ -723,6 +724,8 @@ class App extends Component {
       arrCCTV: [],
       arrshowPolice: [],
       arrshowCCTV: [],
+      arrshowRekla: [],
+      tableRekla: "none",
       tablepolice: "none",
       tableCCTV: "none",
       onPolice: "block",
@@ -733,6 +736,18 @@ class App extends Component {
       offBanjir2: "none",
       onCCTV: "block",
       offCCTV: "none",
+      onrekla: "block",
+      offrekla: "none",
+      ontitik: "block",
+      offtitik: "none",
+      onduren: "block",
+      offduren: "none",
+      onsurvei: "block",
+      offsurvei: "none",
+      onjalan: "block",
+      offjalan: "none",
+
+      // INSPECT
       arrinspectPolice: [],
       arrinspectCCTV: [],
       arrinspectBanjir1: [],
@@ -742,8 +757,6 @@ class App extends Component {
       kantorbutton: 0,
 
       //LAYER JSON
-      layerlists: [],
-      datajson: [],
       showjson: {
         yellow: ""
       }
@@ -757,13 +770,17 @@ class App extends Component {
     this._addPolice = this._addPolice.bind(this);
     this._addCCTV = this._addCCTV.bind(this);
     this._showPolice = this._showPolice.bind(this);
+    this._showRekla = this._showRekla.bind(this);
     this._showCCTV = this._showCCTV.bind(this);
     this._onclickPolice = this._onclickPolice.bind(this);
+    this._onclickrekla = this._onclickrekla.bind(this);
     this._onclickCCTV = this._onclickCCTV.bind(this);
     this._inspectPolice = this._inspectPolice.bind(this);
     this._inspectCCTV = this._inspectCCTV.bind(this);
     this._inspectBanjir1 = this._inspectBanjir1.bind(this);
     this._Inspect = this._Inspect.bind(this);
+    this._showdatajson = this._showdatajson.bind(this);
+    this._eliminasi = this._eliminasi.bind(this);
   }
 
   // FUNCTION BAWAAN
@@ -799,6 +816,108 @@ class App extends Component {
       );
     }
     this.setState({ arrCCTV: CCTV, onCCTV: "none", offCCTV: "block" });
+  }
+  _showPolice() {
+    if (this.state.details === "inline-block") {
+      this.setState({
+        tablepolice: "block",
+        arrshowCCTV: [],
+        tableRe: "none",
+        arrshowRekla: [],
+        tableRekla: "none"
+      });
+      var showpolice = [];
+      var i;
+      for (i = 0; i < dataPolice.length; i++) {
+        showpolice.push(
+          <Table.Row>
+            <Table.Cell id={i} onClick={this._onclickPolice}>
+              {i + 1}
+            </Table.Cell>
+            <Table.Cell id={i} onClick={this._onclickPolice}>
+              {dataPolice[i][0]}
+            </Table.Cell>
+            <Table.Cell id={i} onClick={this._onclickPolice}>
+              {dataPolice[i][1]}
+            </Table.Cell>
+          </Table.Row>
+        );
+      }
+    }
+    this.setState({ arrshowPolice: showpolice });
+  }
+  _showCCTV() {
+    if (this.state.details === "inline-block") {
+      this.setState({
+        tableCCTV: "block",
+        arrshowPolice: [],
+        tablepolice: "none",
+        arrshowRekla: [],
+        tableRekla: "none"
+      });
+      var showCCTV = [];
+      var i;
+      for (i = 0; i < dataCCTV.length; i++) {
+        showCCTV.push(
+          <Table.Row>
+            <Table.Cell id={i} onClick={this._onclickCCTV}>
+              {i + 1}
+            </Table.Cell>
+            <Table.Cell id={i} onClick={this._onclickCCTV}>
+              {dataCCTV[i][2]}
+            </Table.Cell>
+            <Table.Cell id={i} onClick={this._onclickCCTV}>
+              {dataCCTV[i][0]}
+            </Table.Cell>
+            <Table.Cell id={i} onClick={this._onclickCCTV}>
+              {dataCCTV[i][1]}
+            </Table.Cell>
+          </Table.Row>
+        );
+      }
+    }
+    this.setState({ arrshowCCTV: showCCTV });
+  }
+  _showRekla() {
+    if (this.state.details === "inline-block") {
+      this.setState({
+        tableRekla: "block",
+        arrshowPolice: [],
+        tablepolice: "none",
+        arrshowCCTV: [],
+        tableCCTV: "none"
+      });
+      var showRekla = [];
+      var i;
+      for (i = 0; i < rows[0].geojson.features.length; i++) {
+        showRekla.push(
+          <Table.Row>
+            <Table.Cell id={i} onClick={this._onclickrekla}>
+              {i + 1}
+            </Table.Cell>
+            <Table.Cell id={i} onClick={this._onclickrekla}>
+              {rows[0].geojson.features[i].properties.id}
+            </Table.Cell>
+            <Table.Cell id={i} onClick={this._onclickrekla}>
+              {rows[0].geojson.features[i].properties.Kode}
+            </Table.Cell>
+            <Table.Cell id={i} onClick={this._onclickrekla}>
+              {rows[0].geojson.features[i].properties.Pengembang}
+            </Table.Cell>
+            <Table.Cell id={i} onClick={this._onclickrekla}>
+              {rows[0].geojson.features[i].properties.Luasan}
+            </Table.Cell>
+            <Table.Cell id={i} onClick={this._onclickrekla}>
+              {rows[0].geojson.features[i].properties.Izin}
+            </Table.Cell>
+            <Table.Cell id={i} onClick={this._onclickrekla}>
+              {rows[0].geojson.features[i].properties["Nama Rencana"]}
+            </Table.Cell>
+          </Table.Row>
+        );
+      }
+    }
+    this.setState({ arrshowRekla: showRekla });
   }
   _inspectPolice() {
     var inspectPolice = [];
@@ -838,6 +957,42 @@ class App extends Component {
     }
     this.setState({
       arrinspectPolice: inspectPolice
+    });
+  }
+  _inspectCCTV() {
+    var inspectCCTV = [];
+    var i;
+    for (i = 0; i < dataCCTV.length; i++) {
+      inspectCCTV.push(
+        <Marker longitude={dataCCTV[i][0]} latitude={dataCCTV[i][1]}>
+          <Popup on="click" pinned trigger={<Icon name="video" color="red" />}>
+            <div style={{ height: "200px", overflowY: "scroll" }}>
+              <Table size="small" collapsing>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell colSpan="2">
+                      <center>Inspect CCTV</center>
+                    </Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                  <Table.Row>
+                    <Table.Cell>Longtitude</Table.Cell>
+                    <Table.Cell>{dataCCTV[i][0]}</Table.Cell>
+                  </Table.Row>
+                  <Table.Row>
+                    <Table.Cell>Latitude</Table.Cell>
+                    <Table.Cell>{dataCCTV[i][1]}</Table.Cell>
+                  </Table.Row>
+                </Table.Body>
+              </Table>
+            </div>
+          </Popup>
+        </Marker>
+      );
+    }
+    this.setState({
+      arrinspectCCTV: inspectCCTV
     });
   }
   _inspectBanjir1() {
@@ -951,99 +1106,6 @@ class App extends Component {
       arrinspectBanjir2: inspectBanjir2
     });
   }
-  _inspectCCTV() {
-    var inspectCCTV = [];
-    var i;
-    for (i = 0; i < dataCCTV.length; i++) {
-      inspectCCTV.push(
-        <Marker longitude={dataCCTV[i][0]} latitude={dataCCTV[i][1]}>
-          <Popup on="click" pinned trigger={<Icon name="video" color="red" />}>
-            <div style={{ height: "200px", overflowY: "scroll" }}>
-              <Table size="small" collapsing>
-                <Table.Header>
-                  <Table.Row>
-                    <Table.HeaderCell colSpan="2">
-                      <center>Inspect CCTV</center>
-                    </Table.HeaderCell>
-                  </Table.Row>
-                </Table.Header>
-                <Table.Body>
-                  <Table.Row>
-                    <Table.Cell>Longtitude</Table.Cell>
-                    <Table.Cell>{dataCCTV[i][0]}</Table.Cell>
-                  </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>Latitude</Table.Cell>
-                    <Table.Cell>{dataCCTV[i][1]}</Table.Cell>
-                  </Table.Row>
-                </Table.Body>
-              </Table>
-            </div>
-          </Popup>
-        </Marker>
-      );
-    }
-    this.setState({
-      arrinspectCCTV: inspectCCTV
-    });
-  }
-  _showPolice() {
-    if (this.state.details === "inline-block") {
-      this.setState({
-        tablepolice: "block",
-        arrshowCCTV: [],
-        tableCCTV: "none"
-      });
-      var showpolice = [];
-      var i;
-      for (i = 0; i < dataPolice.length; i++) {
-        showpolice.push(
-          <Table.Row>
-            <Table.Cell id={i} onClick={this._onclickPolice}>
-              {i + 1}
-            </Table.Cell>
-            <Table.Cell id={i} onClick={this._onclickPolice}>
-              {dataPolice[i][0]}
-            </Table.Cell>
-            <Table.Cell id={i} onClick={this._onclickPolice}>
-              {dataPolice[i][1]}
-            </Table.Cell>
-          </Table.Row>
-        );
-      }
-    }
-    this.setState({ arrshowPolice: showpolice });
-  }
-  _showCCTV() {
-    if (this.state.details === "inline-block") {
-      this.setState({
-        tableCCTV: "block",
-        arrshowPolice: [],
-        tablepolice: "none"
-      });
-      var showCCTV = [];
-      var i;
-      for (i = 0; i < dataCCTV.length; i++) {
-        showCCTV.push(
-          <Table.Row>
-            <Table.Cell id={i} onClick={this._onclickCCTV}>
-              {i + 1}
-            </Table.Cell>
-            <Table.Cell id={i} onClick={this._onclickCCTV}>
-              {dataCCTV[i][2]}
-            </Table.Cell>
-            <Table.Cell id={i} onClick={this._onclickCCTV}>
-              {dataCCTV[i][0]}
-            </Table.Cell>
-            <Table.Cell id={i} onClick={this._onclickCCTV}>
-              {dataCCTV[i][1]}
-            </Table.Cell>
-          </Table.Row>
-        );
-      }
-    }
-    this.setState({ arrshowCCTV: showCCTV });
-  }
   _onclickPolice(event) {
     this.setState({
       viewport: {
@@ -1059,6 +1121,21 @@ class App extends Component {
         longitude: dataCCTV[event.target.id][0],
         latitude: dataCCTV[event.target.id][1],
         zoom: 20
+      }
+    });
+  }
+  _onclickrekla(event) {
+    var arr = turf.centroid(
+      turf.polygon(
+        rows[0].geojson.features[event.target.id].geometry.coordinates
+      )
+    ).geometry.coordinates;
+    console.log(arr);
+    this.setState({
+      viewport: {
+        longitude: arr[0],
+        latitude: arr[1],
+        zoom: 12
       }
     });
   }
@@ -1163,6 +1240,104 @@ class App extends Component {
       this.setState({ outputlength_: value });
     }
   }
+  _eliminasi(e, { name, value }) {
+    var showRekla = [],
+      k,
+      n = 0;
+    if (value === "dicabut") {
+      this.setState({
+        tableRekla: "block",
+        arrshowPolice: [],
+        tablepolice: "none",
+        arrshowCCTV: [],
+        tableCCTV: "none"
+      });
+      inputdata = [];
+      this.setState({ arrshowRekla: [] });
+      for (k = 0; k < rows[0].geojson.features.length; k++) {
+        if (rows[0].geojson.features[k].properties.Izin === "dicabut") {
+          inputdata.push(rows[0].geojson.features[k]);
+          showRekla.push(
+            <Table.Row>
+              <Table.Cell id={k} onClick={this._onclickrekla}>
+                {n + 1}
+              </Table.Cell>
+              <Table.Cell id={k} onClick={this._onclickrekla}>
+                {rows[0].geojson.features[k].properties.id}
+              </Table.Cell>
+              <Table.Cell id={k} onClick={this._onclickrekla}>
+                {rows[0].geojson.features[k].properties.Kode}
+              </Table.Cell>
+              <Table.Cell id={k} onClick={this._onclickrekla}>
+                {rows[0].geojson.features[k].properties.Pengembang}
+              </Table.Cell>
+              <Table.Cell id={k} onClick={this._onclickrekla}>
+                {rows[0].geojson.features[k].properties.Luasan}
+              </Table.Cell>
+              <Table.Cell id={k} onClick={this._onclickrekla}>
+                {rows[0].geojson.features[k].properties.Izin}
+              </Table.Cell>
+              <Table.Cell id={k} onClick={this._onclickrekla}>
+                {rows[0].geojson.features[k].properties["Nama Rencana"]}
+              </Table.Cell>
+            </Table.Row>
+          );
+          n++;
+        }
+      }
+      this.setState({ arrshowRekla: showRekla });
+    } else if (value === "dilanjutkan") {
+      this.setState({
+        tableRekla: "block",
+        arrshowPolice: [],
+        tablepolice: "none",
+        arrshowCCTV: [],
+        tableCCTV: "none"
+      });
+      inputdata = [];
+      for (k = 0; k < rows[0].geojson.features.length; k++) {
+        if (rows[0].geojson.features[k].properties.Izin === "dilanjutkan") {
+          inputdata.push(rows[0].geojson.features[k]);
+          showRekla.push(
+            <Table.Row>
+              <Table.Cell id={k} onClick={this._onclickrekla}>
+                {n + 1}
+              </Table.Cell>
+              <Table.Cell id={k} onClick={this._onclickrekla}>
+                {rows[0].geojson.features[k].properties.id}
+              </Table.Cell>
+              <Table.Cell id={k} onClick={this._onclickrekla}>
+                {rows[0].geojson.features[k].properties.Kode}
+              </Table.Cell>
+              <Table.Cell id={k} onClick={this._onclickrekla}>
+                {rows[0].geojson.features[k].properties.Pengembang}
+              </Table.Cell>
+              <Table.Cell id={k} onClick={this._onclickrekla}>
+                {rows[0].geojson.features[k].properties.Luasan}
+              </Table.Cell>
+              <Table.Cell id={k} onClick={this._onclickrekla}>
+                {rows[0].geojson.features[k].properties.Izin}
+              </Table.Cell>
+              <Table.Cell id={k} onClick={this._onclickrekla}>
+                {rows[0].geojson.features[k].properties["Nama Rencana"]}
+              </Table.Cell>
+            </Table.Row>
+          );
+          n++;
+        }
+      }
+      this.setState({ arrshowRekla: showRekla });
+    } else {
+      inputdata = [];
+      this.setState({ arrshowRekla: showRekla });
+    }
+    layer = {
+      yellow: {
+        type: "FeatureCollection",
+        features: inputdata
+      }
+    };
+  }
   _Inspect(e, { name, value }) {
     if ([name][0] === "datainspect") {
       if (value === 1) {
@@ -1224,7 +1399,13 @@ class App extends Component {
     }
   }
   onSelected = (viewport, item) => {
-    this.setState({ viewport });
+    this.setState({
+      viewport: {
+        latitude: viewport.latitude,
+        longitude: viewport.longitude,
+        zoom: 10
+      }
+    });
     console.log("Selected: ", item);
   };
   getLayersByUsername() {
@@ -1232,18 +1413,17 @@ class App extends Component {
     this.setState({ mapDimmerActive: true });
     axios
       .get(
-        "https://hnjp62bwxh.execute-api.us-west-2.amazonaws.com/GeoDev/getlayerbyusername",
+        "https://hnjp62bwxh.execute-api.us-west-2.amazonaws.com/GeoDev/getlayerbyusername?username=andreas_ithb",
         {
           params: {
-            username: "yacob89"
+            username: "andreas_ithb"
           }
         }
       )
       .then(response => {
         // handle success
         const layerList = response.data;
-        var inputdata = [];
-        var i, j, k;
+        var i;
         for (i = 0; i < layerList.length; i++) {
           rows.push({
             _id: layerList[i]._id,
@@ -1259,38 +1439,54 @@ class App extends Component {
             visibility: "visible"
           });
         }
-        this.setState({
-          layerlists: rows
-          // results: rows
-        });
-
-        //INPUT DATA
-        for (j = 0; j < rows.length; j++) {
-          for (k = 0; k < rows[j].geojson.features.length; k++) {
-            inputdata.push(rows[j].geojson.features[k]);
-          }
-        }
-        this.setState({ datajson: inputdata });
-        layer = {
-          yellow: {
-            type: "FeatureCollection",
-            features: inputdata
-          }
-        };
-        // this.setState({ mapDimmerActive: false });
       });
-    // .catch(error => {
-    //   console.log("Axios error: ", error);
-    //   this.setState({ mapDimmerActive: false });
-    // });
   }
+  _showdatajson() {
+    if (this.state.tableRekla === "none") {
+      inputdata = [];
+      var k;
+      //INPUT DATA
+      if (this.state.offrekla === "block") {
+        for (k = 0; k < rows[0].geojson.features.length; k++) {
+          inputdata.push(rows[0].geojson.features[k]);
+        }
+      }
+      if (this.state.offtitik === "block") {
+        for (k = 0; k < rows[1].geojson.features.length; k++) {
+          inputdata.push(rows[1].geojson.features[k]);
+        }
+      }
+      if (this.state.offduren === "block") {
+        for (k = 0; k < rows[2].geojson.features.length; k++) {
+          inputdata.push(rows[2].geojson.features[k]);
+        }
+      }
+      if (this.state.offsurvei === "block") {
+        for (k = 0; k < rows[3].geojson.features.length; k++) {
+          inputdata.push(rows[3].geojson.features[k]);
+        }
+      }
+      if (this.state.offjalan === "block") {
+        for (k = 0; k < rows[4].geojson.features.length; k++) {
+          inputdata.push(rows[4].geojson.features[k]);
+        }
+      }
 
+      layer = {
+        yellow: {
+          type: "FeatureCollection",
+          features: inputdata
+        }
+      };
+    }
+  }
   // TAMPILAN UI
   render() {
     return (
       // PAGE
       <div id="Page">
         {/* MAPBOX AND DRAW */}
+      {this._showdatajson()}
         <MapGL
           style={{ width: "100%", height: "576px" }}
           mapStyle={this.state.mapstyle}
@@ -1374,20 +1570,39 @@ class App extends Component {
                 type="fill"
                 source={layerId}
                 paint={{
-                  "fill-color": ["get","color"],
-                  "fill-opacity": ["case",["boolean",["feature-state","hover"],false],1,0.8]
+                  "fill-color": ["get", "fill"],
+                  "fill-opacity": [
+                    "case",
+                    ["boolean", ["feature-state", "hover"], false],
+                    1,
+                    0.8
+                  ]
                 }}
                 filter={["==", "$type", "Polygon"]}
               />
               <Layer
                 id="point"
-                type="circle"
+                type="symbol"
                 source={layerId}
                 paint={{
-                  "circle-radius": 2,
-                  "circle-color": "#B42222"
+                  "icon-color": ["get", "fill"]
                 }}
+                layout={{ "icon-image": "monument-15" }}
                 filter={["==", "$type", "Point"]}
+              />
+              <Layer
+                id="line"
+                type="line"
+                source={layerId}
+                layout={{
+                  "line-join": "round",
+                  "line-cap": "round"
+                }}
+                paint={{
+                  "line-color": ["get", "fill"],
+                  "line-width": 5
+                }}
+                filter={["==", "$type", "LineString"]}
               />
             </React.Fragment>
           ))}
@@ -1708,6 +1923,38 @@ class App extends Component {
             <Table.Body>{this.state.arrshowCCTV}</Table.Body>
           </Table>
 
+          {/* REKLAMASI DETAILS */}
+          <Table
+            collapsing
+            size="small"
+            style={{ display: this.state.tableRekla }}
+          >
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell />
+                <Table.HeaderCell>
+                  <center>id</center>
+                </Table.HeaderCell>
+                <Table.HeaderCell>
+                  <center>Kode</center>
+                </Table.HeaderCell>
+                <Table.HeaderCell>
+                  <center>Pengembangan</center>
+                </Table.HeaderCell>
+                <Table.HeaderCell>
+                  <center>Luasan</center>
+                </Table.HeaderCell>
+                <Table.HeaderCell>
+                  <center>Izin</center>
+                </Table.HeaderCell>
+                <Table.HeaderCell>
+                  <center>Nama</center>
+                </Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>{this.state.arrshowRekla}</Table.Body>
+          </Table>
+
           {/* CLOSE BUTTON */}
           <Button
             compact
@@ -1719,7 +1966,9 @@ class App extends Component {
                 arrshowPolice: [],
                 tablepolice: "none",
                 arrshowCCTV: [],
-                tableCCTV: "none"
+                tableCCTV: "none",
+                arrshowRekla: [],
+                tableRekla: "none",
               })
             }
             style={{
@@ -1747,23 +1996,23 @@ class App extends Component {
             <Form size="mini">
               <Form.Group>
                 Field:
-                <Form.Field control={Select} options={[]} width={2} />
+                <Form.Field
+                  control={Select}
+                  options={[{ key: "a", text: "Izin", value: 1 }]}
+                  width={2}
+                />
                 Type:
                 <Form.Field
                   width={2}
                   control={Select}
-                  options={[
-                    { key: "a", text: "==", value: 1 },
-                    { key: "b", text: "!=", value: 2 },
-                    { key: "c", text: ">", value: 3 },
-                    { key: "d", text: ">=", value: 4 },
-                    { key: "e", text: "<", value: 5 },
-                    { key: "f", text: "<=", value: 6 },
-                    { key: "g", text: "include", value: 7 }
-                  ]}
+                  options={[{ key: "a", text: "==", value: 1 }]}
                 />
                 Value:
-                <Form.Input width={2} />
+                <Form.Input
+                  width={2}
+                  name="eliminasi"
+                  onChange={this._eliminasi}
+                />
               </Form.Group>
             </Form>
             <Button.Group
@@ -1818,8 +2067,8 @@ class App extends Component {
           <h3>Select layer to inspect.</h3>
           <h3>
             When this feature is active, you can click at the selected layer on
-            the map to audit property data. Don't
-            forget to activate layer and set icon first.
+            the map to audit property data. Don't forget to activate layer and
+            set icon first.
           </h3>
           <Form size="mini">
             <Form.Field>
@@ -2135,6 +2384,153 @@ class App extends Component {
                   />
                 </Table.Cell>
                 <Table.Cell>Banjir 2000</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell collapsing>
+                  <Button
+                    icon="eye"
+                    compact
+                    style={{ display: this.state.ontitik, float: "left" }}
+                    size="mini"
+                    onClick={() =>
+                      this.setState({
+                        ontitik: "none",
+                        offtitik: "block"
+                      })
+                    }
+                  />
+                  <Button
+                    icon="eye slash"
+                    compact
+                    style={{ display: this.state.offtitik, float: "left" }}
+                    size="mini"
+                    onClick={() =>
+                      this.setState({
+                        ontitik: "block",
+                        offtitik: "none"
+                      })
+                    }
+                  />
+                </Table.Cell>
+                <Table.Cell>Titik Banjir Jakarta</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell collapsing>
+                  <Button
+                    icon="eye"
+                    compact
+                    style={{ display: this.state.onrekla, float: "left" }}
+                    size="mini"
+                    onClick={() =>
+                      this.setState({
+                        onrekla: "none",
+                        offrekla: "block"
+                      })
+                    }
+                  />
+                  <Button
+                    icon="eye slash"
+                    compact
+                    style={{ display: this.state.offrekla, float: "left" }}
+                    size="mini"
+                    onClick={() =>
+                      this.setState({
+                        onrekla: "block",
+                        offrekla: "none"
+                      })
+                    }
+                  />
+                </Table.Cell>
+                <Table.Cell onClick={() => this._showRekla()}>
+                  Reklamasi Jakarta
+                </Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell collapsing>
+                  <Button
+                    icon="eye"
+                    compact
+                    style={{ display: this.state.onduren, float: "left" }}
+                    size="mini"
+                    onClick={() =>
+                      this.setState({
+                        onduren: "none",
+                        offduren: "block"
+                      })
+                    }
+                  />
+                  <Button
+                    icon="eye slash"
+                    compact
+                    style={{ display: this.state.offduren, float: "left" }}
+                    size="mini"
+                    onClick={() =>
+                      this.setState({
+                        onduren: "block",
+                        offduren: "none"
+                      })
+                    }
+                  />
+                </Table.Cell>
+                <Table.Cell>Tanjung Duren</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell collapsing>
+                  <Button
+                    icon="eye"
+                    compact
+                    style={{ display: this.state.onsurvei, float: "left" }}
+                    size="mini"
+                    onClick={() =>
+                      this.setState({
+                        onsurvei: "none",
+                        offsurvei: "block"
+                      })
+                    }
+                  />
+                  <Button
+                    icon="eye slash"
+                    compact
+                    style={{ display: this.state.offsurvei, float: "left" }}
+                    size="mini"
+                    onClick={() =>
+                      this.setState({
+                        onsurvei: "block",
+                        offsurvei: "none"
+                      })
+                    }
+                  />
+                </Table.Cell>
+                <Table.Cell>Survey Tanjung Duren</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell collapsing>
+                  <Button
+                    icon="eye"
+                    compact
+                    style={{ display: this.state.onjalan, float: "left" }}
+                    size="mini"
+                    onClick={() =>
+                      this.setState({
+                        onjalan: "none",
+                        offjalan: "block"
+                      })
+                    }
+                  />
+                  <Button
+                    icon="eye slash"
+                    compact
+                    style={{ display: this.state.offjalan, float: "left" }}
+                    size="mini"
+                    onClick={() =>
+                      this.setState({
+                        onjalan: "block",
+                        offjalan: "none"
+                      })
+                    }
+                  />
+                </Table.Cell>
+                <Table.Cell>Jalan di Jakarta</Table.Cell>
               </Table.Row>
             </Table.Body>
           </Table>
