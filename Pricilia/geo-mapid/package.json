@@ -19,7 +19,7 @@
     "@urbica/react-map-gl": "^1.6.0",
     "@urbica/react-map-gl-cluster": "^0.1.0",
     "@urbica/react-map-gl-draw": "^0.3.1",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "deck.gl": "^7.1.9",
     "mapbox-gl": "^1.0.0",
     "react": "^16.8.6",
